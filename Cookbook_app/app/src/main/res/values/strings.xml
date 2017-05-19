@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Cookbook_app</string>
+    <string name="hello_blank_fragment">Dummy info</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="api_title">Title</string>
+    <string name="api_sourcewebite">Website</string>
+    <string name="api_servings">Serving</string>
+    <string name="api_category">Category</string>
+    <string name="api_time">time</string>
+
 </resources>
