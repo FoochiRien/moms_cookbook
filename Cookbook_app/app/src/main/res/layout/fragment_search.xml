@@ -3,11 +3,14 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:padding="5dp"
+             android:background="#d4ab8c"
              tools:context="com.adrienne.cookbook_app.Search.SearchFragment"
     android:id="@+id/api_search_fragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/api_searchresult_recyclerview"
+        android:padding="10dp"
+        android:backgroundTint="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

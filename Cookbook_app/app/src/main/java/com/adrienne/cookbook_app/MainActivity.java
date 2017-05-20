@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         CookbookPagerAdapter pagerAdapter = new CookbookPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);

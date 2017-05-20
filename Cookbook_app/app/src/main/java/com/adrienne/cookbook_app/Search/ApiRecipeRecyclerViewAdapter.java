@@ -33,7 +33,7 @@ public class ApiRecipeRecyclerViewAdapter extends RecyclerView.Adapter<ApiRecipe
         Picasso.with(holder.mApiImage.getContext()).load(currentApiRecipe.getApiImage()).into(holder.mApiImage);
         holder.mApiTitle.setText(currentApiRecipe.getApiTitle());
         holder.mApiWebsiteSource.setText(currentApiRecipe.getApiWebsiteSource());
-        holder.mApiServing.setText(currentApiRecipe.getApiServings());
+        holder.mApiServing.setText(String.valueOf(currentApiRecipe.getApiServings()));
 
     }
 

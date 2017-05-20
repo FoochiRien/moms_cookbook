@@ -27,7 +27,7 @@ public class Recipe {
     private String shareAs;
     @SerializedName("yield")
     @Expose
-    private Integer yield;
+    private Double yield;
     @SerializedName("dietLabels")
     @Expose
     private List<String> dietLabels = null;
@@ -55,9 +55,9 @@ public class Recipe {
     @SerializedName("totalDaily")
     @Expose
     private TotalDaily totalDaily;
-    @SerializedName("digest")
-    @Expose
-    private List<Digest> digest = null;
+//    @SerializedName("digest")
+//    @Expose
+//    private List<Digest> digest = null;
 
     public String getUri() {
         return uri;
@@ -107,11 +107,11 @@ public class Recipe {
         this.shareAs = shareAs;
     }
 
-    public Integer getYield() {
+    public Double getYield() {
         return yield;
     }
 
-    public void setYield(Integer yield) {
+    public void setYield(Double yield) {
         this.yield = yield;
     }
 
@@ -187,12 +187,12 @@ public class Recipe {
         this.totalDaily = totalDaily;
     }
 
-    public List<Digest> getDigest() {
-        return digest;
-    }
-
-    public void setDigest(List<Digest> digest) {
-        this.digest = digest;
-    }
+//    public List<Digest> getDigest() {
+//        return digest;
+//    }
+//
+//    public void setDigest(List<Digest> digest) {
+//        this.digest = digest;
+//    }
 
 }

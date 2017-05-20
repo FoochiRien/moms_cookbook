@@ -10,11 +10,11 @@ import android.widget.TextView;
 public class ApiRecipe {
 
     private String apiImage, apiTitle, apiWebsiteSource;
-    private int apiServings;
+    private Double apiServings;
 
 
     public ApiRecipe(String apiImage, String apiTitle, String apiWebsiteSource,
-                     int apiServings) {
+                     Double apiServings) {
         this.apiImage = apiImage;
         this.apiTitle = apiTitle;
         this.apiWebsiteSource = apiWebsiteSource;
@@ -34,7 +34,7 @@ public class ApiRecipe {
         return apiWebsiteSource;
     }
 
-    public int getApiServings() {
+    public Double getApiServings() {
         return apiServings;
     }
 
