@@ -37,7 +37,7 @@ public class SearchFragment extends Fragment {
     public static final String TAG = "edamamapi ------";
     public static final String APP_ID = "6b2b7746";
 
-
+//    https://api.edamam.com/search?q=dessert,apples&app_id=6b2b7746&app_key=c8f3d9dbc5a7c4cdd4c7ce39db3848a1
 
     private OnFragmentInteractionListener mListener;
 
