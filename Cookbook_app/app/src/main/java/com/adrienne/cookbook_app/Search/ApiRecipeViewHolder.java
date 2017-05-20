@@ -14,8 +14,7 @@ import com.adrienne.cookbook_app.R;
 public class ApiRecipeViewHolder extends RecyclerView.ViewHolder{
 
     ImageView mApiImage;
-    TextView mApiTitle, mApiWebsiteSource, mApiCategory, mApiDirections, mApiIngredients,
-            mApiServing, mApiTime;
+    TextView mApiTitle, mApiWebsiteSource, mApiServing;
     View mRootview;
 
 
@@ -26,9 +25,8 @@ public class ApiRecipeViewHolder extends RecyclerView.ViewHolder{
         mApiImage = (ImageView) itemView.findViewById(R.id.api_recipe_image);
         mApiTitle = (TextView) itemView.findViewById(R.id.api_recipe_title);
         mApiWebsiteSource = (TextView) itemView.findViewById(R.id.api_recipe_source_website);
-        mApiCategory = (TextView) itemView.findViewById(R.id.api_recipe_category);
         mApiServing = (TextView) itemView.findViewById(R.id.api_recipe_servings);
-        mApiTime = (TextView) itemView.findViewById(R.id.api_recipe_time);
+
 
     }
 

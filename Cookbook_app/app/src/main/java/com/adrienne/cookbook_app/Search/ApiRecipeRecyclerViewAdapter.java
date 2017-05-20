@@ -30,12 +30,11 @@ public class ApiRecipeRecyclerViewAdapter extends RecyclerView.Adapter<ApiRecipe
     @Override
     public void onBindViewHolder(ApiRecipeViewHolder holder, int position) {
     final ApiRecipe currentApiRecipe = mApiRecipeList.get(position);
-//        Picasso.with(holder.mApiImage.getContext()).load().into(holder.mApiImage);
+        Picasso.with(holder.mApiImage.getContext()).load(currentApiRecipe.getApiImage()).into(holder.mApiImage);
         holder.mApiTitle.setText(currentApiRecipe.getApiTitle());
-        holder.mApiCategory.setText(currentApiRecipe.getApiCategory());
         holder.mApiWebsiteSource.setText(currentApiRecipe.getApiWebsiteSource());
         holder.mApiServing.setText(currentApiRecipe.getApiServings());
-//        holder.mApiTime.(currentApiRecipe.getApiTime());
+
     }
 
     @Override

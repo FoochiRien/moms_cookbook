@@ -21,10 +21,9 @@ public class RecipeFragment extends Fragment {
 
 
     // TODO: Rename and change types and number of parameters
-    public static RecipeFragment newInstance(String param1, String param2) {
+    public static RecipeFragment newInstance() {
         RecipeFragment fragment = new RecipeFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,9 +31,9 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
     }
 
     @Override
@@ -47,7 +46,7 @@ public class RecipeFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -71,6 +70,6 @@ public class RecipeFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
     }
 }

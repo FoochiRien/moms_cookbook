@@ -2,7 +2,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.adrienne.cookbook_app.Recipe.RecipeFragment">
+             tools:context="com.adrienne.cookbook_app.Recipe.RecipeFragment"
+        android:id="@+id/fragment_recipe">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

@@ -14,23 +14,23 @@ import com.adrienne.cookbook_app.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MyCookbookActivity.OnFragmentInteractionListener} interface
+ * {@link MyCookbookFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MyCookbookActivity#newInstance} factory method to
+ * Use the {@link MyCookbookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyCookbookActivity extends Fragment {
+public class MyCookbookFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
 
-    public MyCookbookActivity() {
+    public MyCookbookFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static MyCookbookActivity newInstance(String param1, String param2) {
-        MyCookbookActivity fragment = new MyCookbookActivity();
+    public static MyCookbookFragment newInstance() {
+        MyCookbookFragment fragment = new MyCookbookFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
@@ -40,9 +40,9 @@ public class MyCookbookActivity extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+//        if (getArguments() != null) {
+//
+//        }
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MyCookbookActivity extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -79,6 +79,6 @@ public class MyCookbookActivity extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
     }
 }
