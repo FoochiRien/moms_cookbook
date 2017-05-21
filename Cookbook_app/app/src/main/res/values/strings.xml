@@ -9,4 +9,6 @@
     <string name="api_category">Category</string>
     <string name="api_time">time</string>
 
+    <string name="app_hint_for_query">Enter search criteria</string>
+    <string name="app_api_search">Search</string>
 </resources>

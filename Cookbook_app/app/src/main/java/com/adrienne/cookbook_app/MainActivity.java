@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
 import com.adrienne.cookbook_app.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity implements SearchFragment.OnFragmentInteractionListener, RecipeFragment.OnFragmentInteractionListener, MyCookbookFragment.OnFragmentInteractionListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
 
             Toast.makeText(this, "SummaryList ", Toast.LENGTH_SHORT).show();
         }
+
 
 
 
