@@ -15,6 +15,7 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
+import com.adrienne.cookbook_app.My_cookbook.db_cookbook.DBAssetHelper;
 import com.adrienne.cookbook_app.Recipe.RecipeFragment;
 import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
 import com.adrienne.cookbook_app.Search.SearchFragment;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DBAssetHelper dbSetup = new DBAssetHelper(MainActivity.this);
+        dbSetup.getReadableDatabase();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         CookbookPagerAdapter pagerAdapter = new CookbookPagerAdapter(getSupportFragmentManager());
