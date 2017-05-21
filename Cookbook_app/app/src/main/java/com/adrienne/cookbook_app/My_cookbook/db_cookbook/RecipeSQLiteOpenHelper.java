@@ -32,6 +32,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String COL_NOTES = "notes";
     private static final String COL_SOURCETITLE = "sourcetitle";
     private static final String COL_SOURCEWEBSITE = "sourcewebsite";
+    private static final String COL_BOOKMARKED = "bookmarked";
 
     private static final String CREATE_RECIPE_TABLE = "CREATE TABLE" + RECIPE_TABLE_NAME + "(" +
             COL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -44,7 +45,8 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
             COL_CATEGORY + "TEXT, " +
             COL_NOTES + "TEXT, " +
             COL_SOURCETITLE + "TEXT, " +
-            COL_SOURCEWEBSITE + "TEXT )";
+            COL_SOURCEWEBSITE + "TEXT, " +
+            COL_BOOKMARKED + "INTEGER )";
 
 
     //-------------Singleton -------------------
@@ -94,10 +96,11 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
                 String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
                 String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
-                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE))
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getString(cursor.getColumnIndex(COL_BOOKMARKED));
 
                 MyRecipe myRecipe = new MyRecipe(id, url, title, ingredients, directions,
-                        servings, cooktime, category, notes, sourcetitle, sourcewebsite);
+                        servings, cooktime, category, notes, sourcetitle, sourcewebsite, bookmarked);
                 myrecipe.add(myrecipe);
                 cursor.moveToNext();
             }
@@ -105,6 +108,10 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         cursor.close();
         return myrecipe;
     }*/
+
+    //search
+    //add
+    //remove
 
 
 //--end bracket dont delete
