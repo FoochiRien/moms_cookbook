@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,11 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.R;
 import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.EdamamAPI;
 import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.EdamamInterface;
@@ -51,7 +48,7 @@ public class SearchFragment extends Fragment {
 
 //    https://api.edamam.com/search?q=dessert,apples&app_id=6b2b7746&app_key=c8f3d9dbc5a7c4cdd4c7ce39db3848a1
 
-    private OnFragmentInteractionListener mListener;
+    private SearchOnFragmentInteractionListener mListener;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -127,6 +124,7 @@ public class SearchFragment extends Fragment {
                         list.add(new ApiRecipe(edamamList.getHits().get(i).getRecipe().getImage(),
                                 edamamList.getHits().get(i).getRecipe().getLabel(),
                                 edamamList.getHits().get(i).getRecipe().getSource(),
+                                edamamList.getHits().get(i).getRecipe().getUrl(),
                                 edamamList.getHits().get(i).getRecipe().getYield()));
 
                     }
@@ -191,11 +189,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof SearchOnFragmentInteractionListener) {
+            mListener = (SearchOnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement SearchOnFragmentInteractionListener");
         }
     }
 
@@ -205,7 +203,7 @@ public class SearchFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface SearchOnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction();
     }
@@ -237,6 +235,7 @@ public class SearchFragment extends Fragment {
                         list.add(new ApiRecipe(edamamList.getHits().get(i).getRecipe().getImage(),
                                 edamamList.getHits().get(i).getRecipe().getLabel(),
                                 edamamList.getHits().get(i).getRecipe().getSource(),
+                                edamamList.getHits().get(i).getRecipe().getUrl(),
                                 edamamList.getHits().get(i).getRecipe().getYield()));
 
                     }
@@ -283,6 +282,7 @@ public class SearchFragment extends Fragment {
                         list.add(new ApiRecipe(edamamList.getHits().get(i).getRecipe().getImage(),
                                 edamamList.getHits().get(i).getRecipe().getLabel(),
                                 edamamList.getHits().get(i).getRecipe().getSource(),
+                                edamamList.getHits().get(i).getRecipe().getUrl(),
                                 edamamList.getHits().get(i).getRecipe().getYield()));
 
                     }
