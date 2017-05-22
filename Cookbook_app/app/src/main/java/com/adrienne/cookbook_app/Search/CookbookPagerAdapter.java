@@ -1,11 +1,12 @@
 package com.adrienne.cookbook_app.Search;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
-import com.adrienne.cookbook_app.Recipe.RecipeFragment;
+import com.adrienne.cookbook_app.RecipeDetail.RecipeFragment;
 
 /**
  * Created by Admin on 5/19/17.
@@ -25,7 +26,7 @@ public class CookbookPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return SearchFragment.newInstance();
             case 2:
-                return RecipeFragment.newInstance();
+                return RecipeFragment.newInstance(Bundle.EMPTY);
             default:
                 return null;
         }

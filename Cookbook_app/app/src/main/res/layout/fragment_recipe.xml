@@ -2,13 +2,20 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.adrienne.cookbook_app.Recipe.RecipeFragment"
-        android:id="@+id/fragment_recipe">
+             android:id="@+id/fragment_recipe_container"
+             tools:context="com.adrienne.cookbook_app.RecipeDetail.RecipeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/fragment_recipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:orientation="vertical">
+
+    <include layout="@layout/api_recipe_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 
 </FrameLayout>

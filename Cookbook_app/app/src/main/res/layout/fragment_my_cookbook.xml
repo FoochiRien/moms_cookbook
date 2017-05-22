@@ -5,10 +5,11 @@
              tools:context="com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment"
     android:id="@+id/fragment_mycookbook">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello"/>
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/mycookbook_layout_recyclerview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"/>
 
 </FrameLayout>

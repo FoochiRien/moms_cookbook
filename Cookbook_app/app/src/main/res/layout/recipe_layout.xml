@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    android:id="@+id/recipe_layout">
+
+
+    <TextView
+        android:id="@+id/recipe_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"/>
+
+    <TextView
+        android:id="@+id/recipe_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"/>
+
+    <TextView
+        android:id="@+id/recipe_directions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="directions"/>
+
+    <TextView
+        android:id="@+id/recipe_servings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="servings"/>
+
+    <TextView
+        android:id="@+id/recipe_cooktime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="cooktime"/>
+
+    <TextView
+        android:id="@+id/recipe_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="notes"/>
+
+    <TextView
+        android:id="@+id/recipe_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="source"/>
+
+    <TextView
+        android:id="@+id/recipe_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="category"/>
+
+
+</LinearLayout>

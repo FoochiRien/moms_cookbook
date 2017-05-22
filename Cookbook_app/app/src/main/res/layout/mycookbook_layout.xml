@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/cookbook_image"
+        android:layout_width="323dp"
+        android:layout_height="395dp"
+        android:background="#e7c1a8"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.511"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/cookbook_category"
+        app:layout_constraintVertical_bias="0.744"/>
+
+    <TextView
+        android:id="@+id/cookbook_title"
+        android:text="title"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_width="292dp"
+        android:layout_height="43dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cookbook_image"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="@+id/cookbook_image"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/cookbook_image"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/cookbook_image"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintVertical_bias="0.928"/>
+
+    <TextView
+        android:id="@+id/cookbook_serving"
+        android:layout_width="53dp"
+        android:layout_height="28dp"
+        android:text="servings"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/cookbook_image"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/cookbook_image"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintTop_toTopOf="@+id/cookbook_image"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cookbook_image"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.034"/>
+
+    <TextView
+        android:id="@+id/cookbook_category"
+        android:layout_width="203dp"
+        android:layout_height="30dp"
+        android:text="category"
+        tools:layout_editor_absoluteX="91dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="79dp"/>
+
+
+</android.support.constraint.ConstraintLayout>
