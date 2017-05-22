@@ -4,16 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
+import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
 import com.adrienne.cookbook_app.RecipeDetail.RecipeFragment;
 import com.adrienne.cookbook_app.Search.ApiRecipe;
 import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
@@ -24,7 +31,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, RecipeFragment.OnFragmentInteractionListener, MyCookbookFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.OnFragmentInteractionListener {
 
     public static final String TAG = "MAINACTIVITY: ";
     public static final String KEY = "ApiRecipeKey-title";
@@ -33,19 +40,42 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
     public static final String KEY3 = "ApiRecipeKey-serving";
     public static final String KEY4 = "ApiRecipeKey-url";
 
+    CookbookPagerAdapter mPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        CookbookPagerAdapter pagerAdapter = new CookbookPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
+        mPagerAdapter = new CookbookPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.viewpager_tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return false;
+            }
+        });
+
+
+
+
+
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -53,30 +83,10 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         if (networkInfo != null && networkInfo.isConnected()) {
 
         } else{
-
+            //todo create load image to connect
             Toast.makeText(this, "SummaryList ", Toast.LENGTH_SHORT).show();
         }
 
-
-        Intent displayApiRecipeIntent = getIntent();
-        String apiRecipe = displayApiRecipeIntent.getStringExtra(KEY);
-        Log.d(TAG, "onCreate: ------" + KEY + apiRecipe);
-        String apiRecipeImage = displayApiRecipeIntent.getStringExtra(KEY1);
-        String apiRecipeWebsite = displayApiRecipeIntent.getStringExtra(KEY2);
-        String apiRecipeServing = displayApiRecipeIntent.getStringExtra(KEY3);
-        String apiRecipeUrl = displayApiRecipeIntent.getStringExtra(KEY4);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY, apiRecipe);
-        bundle.putString(KEY1, apiRecipeImage);
-        bundle.putString(KEY2, apiRecipeWebsite);
-        bundle.putString(KEY3, apiRecipeServing);
-        bundle.putString(KEY4, apiRecipeUrl);
-
-        Fragment recipeFragment = new RecipeFragment().newInstance(bundle);
-//        getSupportFragmentManager().beginTransaction().add(R.id.fragment_recipe_container, recipeFragment).commit();
-
-        Log.d(TAG, "onCreate: ----" + bundle);
 
     }
 

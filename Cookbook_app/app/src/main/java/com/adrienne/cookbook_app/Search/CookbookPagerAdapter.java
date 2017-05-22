@@ -25,8 +25,6 @@ public class CookbookPagerAdapter extends FragmentPagerAdapter {
                 return MyCookbookFragment.newInstance();
             case 1:
                 return SearchFragment.newInstance();
-            case 2:
-                return RecipeFragment.newInstance(Bundle.EMPTY);
             default:
                 return null;
         }
@@ -35,7 +33,7 @@ public class CookbookPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
     @Override
     public CharSequence getPageTitle(int position){
@@ -44,8 +42,6 @@ public class CookbookPagerAdapter extends FragmentPagerAdapter {
                 return "Cookbook";
             case 1:
                 return "Web Search";
-            case 2:
-                return "Recipe";
             default:
                 return null;
         }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.R;
+import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,7 +51,8 @@ public class ApiRecipeRecyclerViewAdapter extends RecyclerView.Adapter<ApiRecipe
                 String servings = apiRecipe.getApiServings().toString();
                 String url = apiRecipe.getApiUrl();
                 Intent displayApiRecipeIntent = new Intent(v.getContext().getApplicationContext(),
-                        MainActivity.class);
+                        RecipeDetailActivity.class);
+
                 displayApiRecipeIntent.putExtra(MainActivity.KEY, title);
                 displayApiRecipeIntent.putExtra(MainActivity.KEY1, image);
                 displayApiRecipeIntent.putExtra(MainActivity.KEY2, website);

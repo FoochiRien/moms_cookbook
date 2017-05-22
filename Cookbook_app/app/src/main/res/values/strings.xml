@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cookbook_app</string>
+    <string name="app_name">Moms Cookbook</string>
     <string name="hello_blank_fragment">Dummy info</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -12,4 +12,14 @@
     <string name="app_hint_for_query">Enter search criteria</string>
     <string name="app_api_search">Search</string>
     <string name="api_readmore">To Full Recipe</string>
+    <string name="toolbar">Moms Cookbook</string>
+    <string name="app_moms_cookbook">Moms Cookbook</string>
+    <string name="mycookbook">My Cookbook</string>
+    <string name="add_recipe">Add Recipe:</string>
+    <string name="enter_recipe_manually">Enter Recipe Manually</string>
+    <string name="enter_recipe_photo">Add Recipe from photo gallery</string>
+    <string name="search">Search</string>
+    <string name="name_of_app">Moms Cookbook</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
