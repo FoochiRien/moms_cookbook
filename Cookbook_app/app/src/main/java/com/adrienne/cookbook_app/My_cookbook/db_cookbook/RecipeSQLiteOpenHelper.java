@@ -2,8 +2,19 @@ package com.adrienne.cookbook_app.My_cookbook.db_cookbook;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
+
+import com.adrienne.cookbook_app.My_cookbook.Directions;
+import com.adrienne.cookbook_app.My_cookbook.Ingredients;
+import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
+import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Admin on 5/20/17.
@@ -29,11 +40,11 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String COL_BOOKMARKED = "bookmarked";
 
     private static final String DIRECTIONS_TABLE_NAME = "directions";
-    private static final String COL_RECIPE_DIRECTIONS = "recipe_directions_title";
+    private static final String COL_RECIPE_D_ID = "recipe_directions_id";
     private static final String COL_DIRECTIONS = "directions";
 
     private static final String INGREDIENTS_TABLE_NAME = "ingredients";
-    private static final String COL_RECIPE_INGREDIENTS = "recipe_ingredients_title";
+    private static final String COL_RECIPE_ID = "recipe_ingredients_id";
     private static final String COL_INGREDIENTS = "ingredients";
 
     private static final String CREATE_RECIPE_TABLE = "CREATE TABLE" + RECIPE_TABLE_NAME + "(" +
@@ -51,13 +62,13 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_DIRECTIONS_TABLE = "CREATE TABLE" +
             DIRECTIONS_TABLE_NAME + "(" +
             COL_ID + "INTEGER PRIMARY KEY, " +
-            COL_RECIPE_DIRECTIONS + "TEXT, " +
+            COL_RECIPE_D_ID + "INTEGER, " +
             COL_DIRECTIONS + "TEXT )";
 
     private static final String CREATE_INGREDIENTS_TABLE = "CREATE TABLE" +
             INGREDIENTS_TABLE_NAME + "(" +
             COL_ID + "INTEGER PRIMARY KEY, " +
-            COL_RECIPE_INGREDIENTS + "TEXT, " +
+            COL_RECIPE_ID + "INTEGER, " +
             COL_INGREDIENTS + "TEXT )";
 
 
@@ -95,12 +106,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     // add recipe to cookbook from api
     public void addApiRecipetoCookbook(String apiImage, String apiRecipe, String apiServing,
-                                       String apiCategories, String apiWebsite, String apiUrl){
+                                       String apiCategories, String apiWebsite, String apiUrl) {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_IMAGE, apiImage );
-        values.put(COL_TITLE, apiRecipe );
+        values.put(COL_IMAGE, apiImage);
+        values.put(COL_TITLE, apiRecipe);
         values.put(COL_SERVINGS, apiServing);
         values.put(COL_COOKTIME, "");
         values.put(COL_CATEGORY, apiCategories);
@@ -108,77 +119,270 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(COL_SOURCETITLE, apiWebsite);
         values.put(COL_SOURCEWEBSITE, apiUrl);
         values.put(COL_BOOKMARKED, "");
-        db.insert(RECIPE_TABLE_NAME,null, values);
+        db.insert(RECIPE_TABLE_NAME, null, values);
         db.close();
     }
+
+    //REMOVE ITEM FROM COOKBOOK
+
 
     //----Cookbook search. The user is able to search through recipes in their
     //----own cookbook.
 
-//    public List<MyRecipe> getAllRecipes() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.query(RECIPE_TABLE_NAME,
-//                null, null, null, null, null, null);
-//
-//        List<MyRecipe> myrecipes = new ArrayList<>();
-//
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//           INGREDIENTS_TABLE_NAME.toString()
-//                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
-//                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
-//                String ingredients = cursor.getString(cursor.getColumnIndex(COL_INGREDIENTS));
-//                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
-//                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
-//                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
-//                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
-//                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
-//                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
-//                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
-//                String bookmarked = cursor.getString(cursor.getColumnIndex(COL_BOOKMARKED));
-//
-//                MyRecipe recipeforshow = new MyRecipe( image,  sourcetitle, title,
-//                        notes, category,sourcewebsite, servings, cooktime ,
-//                        INGREDIENTS_TABLE_NAME.ingredients, directions, bookmarked);
-//                myrecipes.add(recipeforshow);
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
-//        return myrecipes;
-//    }
+    public List<MyRecipe> getAllRecipes() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                null, null, null, null, null, null);
 
-//    public List<MyRecipe> getAllRecipes() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.query(RECIPE_TABLE_NAME,
-//                null, null, null, null, null, null);
-//        List<MyRecipe> myrecipe = new ArrayList<>();
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//                long id = cursor.getLong(cursor.getColumnIndex(COL_ID));
-//                String url = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
-//                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
-//                String ingredients = cursor.getString(cursor.getColumnIndex(COL_INGREDIENTS));
-//                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
-//                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
-//                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
-//                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
-//                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
-//                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
-//                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
-//                String bookmarked = cursor.getString(cursor.getColumnIndex(COL_BOOKMARKED));
-//
-//                MyRecipe myRecipe = new MyRecipe(id, url, title, ingredients, directions,
-//                        servings, cooktime, category, notes, sourcetitle, sourcewebsite, bookmarked);
-//                myrecipe.add(myrecipe);
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
-//        return myrecipe;
+        List<MyRecipe> myrecipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+
+
+                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                        notes, category, sourcewebsite, servings, cooktime, directions,
+                        ingredients, bookmarked);
+                myrecipes.add(recipeforshow);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myrecipes;
+    }
+
+    public List<String> getAllIngredients(long recipeid) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + INGREDIENTS_TABLE_NAME +
+                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
+                " = " + INGREDIENTS_TABLE_NAME + "." + COL_RECIPE_ID);
+
+        String selection = recipeid + "";
+
+        Cursor cursor = builder.query(db,
+                null, selection, null, null, null, null, null);
+
+        List<String> myingredients = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                int recipe_id = cursor.getInt(cursor.getColumnIndex(COL_RECIPE_ID));
+                String ingredient = cursor.getString(cursor.getColumnIndex(COL_INGREDIENTS));
+
+                myingredients.add(ingredient);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myingredients;
+
+
+    }
+
+    public List<String> getAllDirections(long recipeid) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + DIRECTIONS_TABLE_NAME +
+                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
+                " = " + DIRECTIONS_TABLE_NAME + "." + COL_RECIPE_D_ID);
+
+        String selection = recipeid + "";
+
+        Cursor cursor = builder.query(db,
+                null, selection, null, null, null, null);
+
+        List<String> mydirections = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                int recipe_id = cursor.getInt(cursor.getColumnIndex(COL_RECIPE_D_ID));
+                String ingredient = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
+
+                mydirections.add(ingredient);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return mydirections;
+    }
+
     //search
-    //add
-    //remove
+    public List<MyRecipe> sortByTitle() {
+        SQLiteDatabase db = getReadableDatabase();
+//todo check variation with period and without out try putting coltitile in selction spot and only
+        //todo collate no case in order by
+        String orderby = COL_TITLE + " COLLATE NOCASE.ASC";
+
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                null, null, null, null, null, orderby);
+
+        List<MyRecipe> myrecipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+
+
+                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                        notes, category, sourcewebsite, servings, cooktime, directions,
+                        ingredients, bookmarked);
+                myrecipes.add(recipeforshow);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myrecipes;
+    }
+
+    //search the titles or categories
+    public List<MyRecipe> searchByTitleOrCategory(String query) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COL_TITLE + " LIKE ? " + " OR " + COL_CATEGORY + " LIKE ?";
+
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                null,
+                selection,
+                new String[]{" % " + query + " % " + query + " % "}, null, null, null);
+
+        List<MyRecipe> myrecipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+
+
+                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                        notes, category, sourcewebsite, servings, cooktime, directions,
+                        ingredients, bookmarked);
+                myrecipes.add(recipeforshow);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myrecipes;
+    }
+
+    public void removeRecipeFromCookbook(long recipeid) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        String whereclause = recipeid + " = ? ";
+
+        db.delete(RECIPE_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_ID)});
+        db.delete(DIRECTIONS_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_RECIPE_D_ID)});
+        db.delete(INGREDIENTS_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_RECIPE_ID)});
+        db.close();
+
+    }
+
+    //ADD BOOKMARK
+    public void addBookmark(long id) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BOOKMARKED, "1");
+        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = "+ id,null );
+        db.close();
+    }
+
+    //
+    public void removeBookmark(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_BOOKMARKED, "0");
+        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = "+ id,null );
+        db.close();
+    }
+
+    public List<MyRecipe> getBookmarkItems() {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COL_BOOKMARKED + " = ?";
+
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                new String[]{},
+                selection,
+                new String[]{"1"},
+                null,
+                null,
+                null);
+
+        List<MyRecipe> myrecipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+
+
+                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                        notes, category, sourcewebsite, servings, cooktime, directions,
+                        ingredients, bookmarked);
+                myrecipes.add(recipeforshow);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myrecipes;
+    }
 
 
 //--end bracket dont delete

@@ -1,6 +1,7 @@
 package com.adrienne.cookbook_app.My_cookbook;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 5/21/17.
@@ -11,12 +12,12 @@ public class MyRecipe {
     private String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl;
     private Float mServings, mCookTime;
     private int mBookmarked;
-    ArrayList<Directions>  mDirections;
-    ArrayList<Ingredients> mIngredients;
+    List<Directions> mDirections;
+    List<Ingredients> mIngredients;
 
     public MyRecipe(String image, String sourceTitle, String title, String notes, String category,
-                    String sourceUrl, Float servings, Float cookTime, ArrayList<Directions> directions,
-                    ArrayList<Ingredients> ingredients, int bookmarked) {
+                    String sourceUrl, Float servings, Float cookTime, List<Directions> directions,
+                    List<Ingredients> ingredients, int bookmarked) {
         mImage = image;
         mSourceTitle = sourceTitle;
         mTitle = title;
@@ -54,7 +55,7 @@ public class MyRecipe {
         mTitle = title;
     }
 
-    public ArrayList<Directions> getDirections() {
+    public List<Directions> getDirections() {
         return mDirections;
     }
 
@@ -62,7 +63,7 @@ public class MyRecipe {
         mDirections = directions;
     }
 
-    public ArrayList<Ingredients> getIngredients() {
+    public List<Ingredients> getIngredients() {
         return mIngredients;
     }
 

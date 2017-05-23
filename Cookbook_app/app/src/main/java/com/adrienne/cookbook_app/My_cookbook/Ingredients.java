@@ -8,8 +8,8 @@ public class Ingredients {
 
     private String mIngredientsRecipeTitle, mIngredients;
 
-    public Ingredients(String ingredientsRecipeTitle, String ingredients) {
-        mIngredientsRecipeTitle = ingredientsRecipeTitle;
+    public Ingredients( String ingredients) {
+
         mIngredients = ingredients;
     }
 
@@ -21,12 +21,5 @@ public class Ingredients {
         mIngredients = ingredients;
     }
 
-    public String getIngredientsRecipeTitle() {
 
-        return mIngredientsRecipeTitle;
-    }
-
-    public void setIngredientsRecipeTitle(String ingredientsRecipeTitle) {
-        mIngredientsRecipeTitle = ingredientsRecipeTitle;
-    }
 }
