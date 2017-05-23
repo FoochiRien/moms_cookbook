@@ -5,51 +5,81 @@
               android:layout_height="match_parent"
               android:id="@+id/api_recipe_detail_layout"
               android:layout_gravity="center_horizontal"
-              android:padding="5dp"
               android:layout_marginTop="10dp">
 
-    <ImageView
-        android:id="@+id/api_recipe_detail_bookmark"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-      android:paddingRight="20dp"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_favorite"/>
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/api_recipe_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight=".80"
+            android:padding="5dp"
+            android:text="Title"
+            android:textAlignment="center"
+            android:textSize="25dp"/>
+
+        <ImageView
+            android:id="@+id/api_recipe_detail_bookmark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight=".20"
+            android:paddingRight="10dp"
+            android:elevation="3dp"
+            android:src="@drawable/ic_favorite"/>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/api_recipe_detail_image"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:elevation="4dp"
         android:layout_gravity="center_horizontal"
         android:background="#e68037"/>
-    <TextView
-        android:id="@+id/api_recipe_detail_title"
-        android:textAlignment="center"
-        android:textSize="25dp"
-        android:padding="5dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"/>
 
     <TextView
         android:id="@+id/api_recipe_detail_source"
-        android:textAlignment="center"
-        android:padding="10dp"
+        android:padding="7dp"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
+        android:textStyle="italic"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="Source"/>
+
 
     <TextView
         android:id="@+id/api_recipe_detail_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="20dp"
+        android:layout_marginBottom="20dp"
         android:textStyle="bold"
         android:textAlignment="center"
+        android:textColor="#273cd7"
         android:text="@string/api_readmore"/>
+
+    <TextView
+        android:text="@string/api_categories"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        android:id="@+id/enter_categories_for_apirecipe"
+        android:hint="@string/enter_categories"
+        android:layout_gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

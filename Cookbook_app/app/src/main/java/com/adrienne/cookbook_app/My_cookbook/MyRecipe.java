@@ -1,4 +1,4 @@
-package com.adrienne.cookbook_app;
+package com.adrienne.cookbook_app.My_cookbook;
 
 import java.util.ArrayList;
 
@@ -6,15 +6,17 @@ import java.util.ArrayList;
  * Created by Admin on 5/21/17.
  */
 
-public class Recipe {
+public class MyRecipe {
 
-    String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl;
-    Float mServings, mCookTime;
-    ArrayList<String> mIngredients, mDirections;
+    private String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl;
+    private Float mServings, mCookTime;
+    private int mBookmarked;
+    ArrayList<Directions>  mDirections;
+    ArrayList<Ingredients> mIngredients;
 
-    public Recipe(String image, String sourceTitle, String title, String notes, String category,
-                  String sourceUrl, Float servings, Float cookTime, ArrayList<String> ingredients,
-                  ArrayList<String> directions) {
+    public MyRecipe(String image, String sourceTitle, String title, String notes, String category,
+                    String sourceUrl, Float servings, Float cookTime, ArrayList<Directions> directions,
+                    ArrayList<Ingredients> ingredients, int bookmarked) {
         mImage = image;
         mSourceTitle = sourceTitle;
         mTitle = title;
@@ -23,8 +25,9 @@ public class Recipe {
         mSourceUrl = sourceUrl;
         mServings = servings;
         mCookTime = cookTime;
-        mIngredients = ingredients;
         mDirections = directions;
+        mIngredients = ingredients;
+        mBookmarked = bookmarked;
     }
 
     public String getImage() {
@@ -51,20 +54,20 @@ public class Recipe {
         mTitle = title;
     }
 
-    public ArrayList<String> getIngredients() {
-        return mIngredients;
-    }
-
-    public void setIngredients(ArrayList<String> ingredients) {
-        mIngredients = ingredients;
-    }
-
-    public ArrayList<String> getDirections() {
+    public ArrayList<Directions> getDirections() {
         return mDirections;
     }
 
-    public void setDirections(ArrayList<String> directions) {
+    public void setDirections(ArrayList<Directions> directions) {
         mDirections = directions;
+    }
+
+    public ArrayList<Ingredients> getIngredients() {
+        return mIngredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredients> ingredients) {
+        mIngredients = ingredients;
     }
 
     public String getNotes() {
@@ -105,5 +108,13 @@ public class Recipe {
 
     public void setCookTime(Float cookTime) {
         mCookTime = cookTime;
+    }
+
+    public int getBookmarked() {
+        return mBookmarked;
+    }
+
+    public void setBookmarked(int bookmarked) {
+        mBookmarked = bookmarked;
     }
 }

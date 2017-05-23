@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
 import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.DBAssetHelper;
-//import com.adrienne.cookbook_app.Recipe.RecipeFragment;
+//import com.adrienne.cookbook_app.My_cookbook.MyRecipe.RecipeFragment;
 import com.adrienne.cookbook_app.RecipeDetail.RecipeFragment;
 import com.adrienne.cookbook_app.Search.ApiRecipe;
 import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
 
         } else{
             //todo create load image to connect
-            Toast.makeText(this, "SummaryList ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You have fallen off the grid. Try again later.", Toast.LENGTH_LONG).show();
         }
 
 

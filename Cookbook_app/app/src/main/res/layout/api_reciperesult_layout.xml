@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/api_searchresultrecipe_layout"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             android:elevation="4dp"
-                                             android:orientation="horizontal"
-                                             android:padding="5dp">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/api_searchresultrecipe_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="9dp"
+              android:background="#ffffff"
+              android:elevation="4dp"
+              android:orientation="horizontal"
+              android:padding="5dp">
 
     <ImageView
         android:id="@+id/api_recipe_image"
@@ -18,7 +20,7 @@
         android:layout_marginTop="8dp"
         android:background="#de8484"
         android:paddingRight="5dp"
-     />
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,29 +28,30 @@
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingTop="10dp">
-    <TextView
-        android:id="@+id/api_recipe_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        android:text="@string/api_title"/>
 
-    <TextView
-        android:id="@+id/api_recipe_source_website"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/api_sourcewebite"/>
+        <TextView
+            android:id="@+id/api_recipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/api_title"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/api_recipe_source_website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/api_sourcewebite"/>
 
 
-    <TextView
-        android:id="@+id/api_recipe_servings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/api_servings"/>
+        <TextView
+            android:id="@+id/api_recipe_servings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/api_servings"/>
 
-       </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -12,7 +12,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DBAssetHelper extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "recipe.DB";
+    private static final String DATABASE_NAME = "cookbook.db";
     private static final int DATABASE_VERSION = 1;
 
 

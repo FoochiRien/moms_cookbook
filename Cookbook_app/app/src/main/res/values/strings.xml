@@ -22,4 +22,6 @@
     <string name="name_of_app">Moms Cookbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="api_categories">Categories:</string>
+    <string name="enter_categories">Enter categories. Use a , inbetween.</string>
 </resources>
