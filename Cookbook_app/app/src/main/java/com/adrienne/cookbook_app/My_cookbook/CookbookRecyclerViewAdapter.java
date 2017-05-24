@@ -1,7 +1,6 @@
 package com.adrienne.cookbook_app.My_cookbook;
 
 import android.content.Intent;
-import android.renderscript.Sampler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.adrienne.cookbook_app.R;
 import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
-import com.adrienne.cookbook_app.Search.ApiRecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
 public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookViewHolder> {
 
     private List<MyRecipe> mMyRecipeList;
-    private MyCookbookFragment.OnFragmentInteractionListener mcookbookListener;
+    private MyCookbookFragment.CookbookOnFragmentInteractionListener mcookbookListener;
 
     public CookbookRecyclerViewAdapter(List<MyRecipe> myRecipeList) {
         mMyRecipeList = myRecipeList;
@@ -42,8 +40,6 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
         holder.mRecipeTitle.setText(currentMyRecipe.getTitle());
         holder.mCategory.setText(currentMyRecipe.getCategory());
         holder.mServing.setText(String.valueOf(currentMyRecipe.getServings()));
-        //todo onclick for mycookbook to recipe activity
-        //todo add column in database to determine the view to show
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +53,9 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
                 v.getContext().startActivity(displayRecipeIntent);
             }
         });
+
+        //todo add remove and bookmark
+        //todo add bookmark search 
 
     }
 

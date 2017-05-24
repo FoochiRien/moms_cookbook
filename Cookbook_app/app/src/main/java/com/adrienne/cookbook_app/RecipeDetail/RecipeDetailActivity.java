@@ -39,6 +39,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements SearchFra
     public static final String KEY2 = "ApiRecipeKey-website";
     public static final String KEY3 = "ApiRecipeKey-serving";
     public static final String KEY4 = "ApiRecipeKey-url";
+    public static final String View_To_Show = "view-to-show";
+    public static final String RECIPE_ID = "recipeId";
 
 
     @Override
@@ -50,7 +52,33 @@ public class RecipeDetailActivity extends AppCompatActivity implements SearchFra
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Recipe");
 
+        //todo switch to chose view for detail of recipe
+        Intent displayRecipeIntent = getIntent();
+        final String viewToShow = displayRecipeIntent.getStringExtra(View_To_Show);
+        final String recipeId = displayRecipeIntent.getStringExtra()
 
+        public String returnView() {
+
+            switch (viewToShow) {
+                case "api":
+                    return apiRecipeDisplay(RECIPE_ID);
+                case "manual":
+                    return;
+                case "photo":
+                    return;
+                default:
+                    return null;
+            }
+        }
+
+
+
+
+    }
+//todo  android:id="@+id/apirecipe_detail_screen"   android:id="@+id/manuelyentered_recipe_layout"
+    //todo add add for ingre and directions in db
+
+    public void apiRecipeDisplay(String recipeId){
         //view for the recipe detail
         mApiImage = (ImageView) findViewById(R.id.api_recipe_detail_image);
         mApiTitle = (TextView) findViewById(R.id.api_recipe_detail_title);
@@ -59,7 +87,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements SearchFra
         mFavApiRecipe = (ImageView) findViewById(R.id.api_recipe_detail_bookmark);
         mApiUrl = (TextView) findViewById(R.id.api_recipe_detail_url);
 
-       // recieves information from the api to be displayed
+        // recieves information from the api to be displayed
         Intent displayApiRecipeIntent = getIntent();
         final String apiRecipe = displayApiRecipeIntent.getStringExtra(KEY);
         final String apiImage = displayApiRecipeIntent.getStringExtra(KEY1);
@@ -100,9 +128,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements SearchFra
             }
         });
 
+
+
     }
-//todo  android:id="@+id/apirecipe_detail_screen"   android:id="@+id/manuelyentered_recipe_layout"
-    //todo
 
 
     @Override

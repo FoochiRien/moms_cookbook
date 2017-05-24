@@ -22,12 +22,10 @@ public class CookbookPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Bundle bundledArgs = new Bundle();
-        bundledArgs.putString();
+
         switch(position){
             case 0:
-                bundledArgs.putString();
-                return MyCookbookFragment.newInstance(bundledArgs);
+                return MyCookbookFragment.newInstance();
             case 1:
                 return SearchFragment.newInstance();
             default:

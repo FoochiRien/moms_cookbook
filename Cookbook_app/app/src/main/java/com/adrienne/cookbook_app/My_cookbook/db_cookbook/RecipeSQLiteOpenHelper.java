@@ -278,11 +278,11 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         String selection = COL_RECIPE_ID + " = ?";
-        String recipeId = ;
+        String recipe_id = Long.toString(recipeId);
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
                 new String[]{},
                 selection,
-                new String[]{recipeId},
+                new String[]{recipe_id},
                 null,
                 null,
                 null);
@@ -292,7 +292,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                long recipe_Id = cursor.getInt(cursor.getColumnIndex(COL_ID));
 
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
@@ -308,7 +308,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
+                MyRecipe recipeforshow = new MyRecipe(recipe_Id, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
                         ingredients, bookmarked, viewtoshow);
                 myrecipes.add(recipeforshow);

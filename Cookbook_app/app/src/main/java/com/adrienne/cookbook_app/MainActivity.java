@@ -1,39 +1,32 @@
 package com.adrienne.cookbook_app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
-import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
+import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.DBAssetHelper;
 //import com.adrienne.cookbook_app.My_cookbook.MyRecipe.RecipeFragment;
-import com.adrienne.cookbook_app.RecipeDetail.RecipeFragment;
-import com.adrienne.cookbook_app.Search.ApiRecipe;
+import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
-import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.K;
 import com.adrienne.cookbook_app.Search.SearchFragment;
 
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.CookbookOnFragmentInteractionListener {
 
     public static final String TAG = "MAINACTIVITY: ";
     public static final String KEY = "ApiRecipeKey-title";
@@ -43,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
     public static final String KEY4 = "ApiRecipeKey-url";
 
     CookbookPagerAdapter mPagerAdapter;
+
+    List<MyRecipe> mMyRecipeList;
+    private CookbookRecyclerViewAdapter mAdapter;
 
 
     @Override
@@ -73,12 +69,10 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 return false;
             }
         });
-
-
-
 
 
 

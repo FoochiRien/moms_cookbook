@@ -1,15 +1,55 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/fragment_mycookbook"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment"
-    android:id="@+id/fragment_mycookbook">
+             android:background="#f4d8c3"
 
+             tools:context="com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment">
 
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/mycookbook_layout_recyclerview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cookbook_search_layout"
+            android:layout_marginBottom="8dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/cookbook_search_query"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.70"
+                android:hint="@string/app_hint_for_query"/>
+
+            <ImageView
+                android:id="@+id/cookbook_submit_query"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:src="@android:drawable/ic_search_category_default"/>
+
+            <ImageView
+                android:id="@+id/cookbook_sortaz"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:src="@drawable/ic_sort_az"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mycookbook_layout_recyclerview"
+            android:layout_below="@id/cookbook_search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:padding="8dp"/>
+
+    </RelativeLayout>
 </FrameLayout>

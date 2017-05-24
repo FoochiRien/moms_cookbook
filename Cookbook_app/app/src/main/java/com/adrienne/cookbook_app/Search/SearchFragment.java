@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment {
 
     public ApiRecipeRecyclerViewAdapter mApiRecipeRecyclerViewAdapter;
     // query for api term
-    private String query, categoryFilter;;
+    private String query, categoryFilter;
 
     private EditText mApiQuery;
     private ImageView mSearch, mCategoryFilter;
@@ -145,6 +145,7 @@ public class SearchFragment extends Fragment {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 apiSearchOptions();
             }
         });

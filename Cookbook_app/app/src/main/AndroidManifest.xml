@@ -23,6 +23,10 @@
         </activity>
         <activity android:name=".RecipeDetail.WebActivity">
         </activity>
+        <activity android:name=".Add_recipe.ManualEnterRecipeActivity">
+        </activity>
+        <activity android:name=".Add_recipe.AddRecipeByPhotoActivity">
+        </activity>
     </application>
 
 </manifest>
