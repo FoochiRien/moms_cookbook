@@ -9,15 +9,17 @@ import java.util.List;
 
 public class MyRecipe {
 
-    private String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl;
+    private String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl, mViewToShow;
     private Float mServings, mCookTime;
     private int mBookmarked;
+    private long mRecipeId;
     List<Directions> mDirections;
     List<Ingredients> mIngredients;
 
-    public MyRecipe(String image, String sourceTitle, String title, String notes, String category,
+    public MyRecipe(Long recipeId, String image, String sourceTitle, String title, String notes, String category,
                     String sourceUrl, Float servings, Float cookTime, List<Directions> directions,
-                    List<Ingredients> ingredients, int bookmarked) {
+                    List<Ingredients> ingredients, int bookmarked, String viewToShow) {
+        mRecipeId = recipeId;
         mImage = image;
         mSourceTitle = sourceTitle;
         mTitle = title;
@@ -29,6 +31,15 @@ public class MyRecipe {
         mDirections = directions;
         mIngredients = ingredients;
         mBookmarked = bookmarked;
+        mViewToShow = viewToShow;
+    }
+
+    public long getRecipeId() {
+        return mRecipeId;
+    }
+
+    public void setRecipeId(long recipeId) {
+        mRecipeId = recipeId;
     }
 
     public String getImage() {
@@ -117,5 +128,13 @@ public class MyRecipe {
 
     public void setBookmarked(int bookmarked) {
         mBookmarked = bookmarked;
+    }
+
+    public String getViewToShow() {
+        return mViewToShow;
+    }
+
+    public void setViewToShow(String viewToShow) {
+        mViewToShow = viewToShow;
     }
 }

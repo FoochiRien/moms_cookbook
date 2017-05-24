@@ -5,15 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/recipe_detail_screen"
+    android:id="@+id/apirecipe_detail_screen"
     android:orientation="vertical"
     tools:context="com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity">
 
-    <include layout="@layout/appbar_all_other_pages_layout"/>
+    <include layout="@layout/toolbar_all_other_pages_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/recipe_detail_view"
             android:layout_width="match_parent"

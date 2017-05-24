@@ -1,11 +1,14 @@
 package com.adrienne.cookbook_app.My_cookbook;
 
+import android.content.Intent;
 import android.renderscript.Sampler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.adrienne.cookbook_app.R;
+import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
 import com.adrienne.cookbook_app.Search.ApiRecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -32,13 +35,28 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
     }
 
     @Override
-    public void onBindViewHolder(CookbookViewHolder holder, int position) {
-    final MyRecipe  currentMyRecipe = mMyRecipeList.get(position);
+    public void onBindViewHolder(final CookbookViewHolder holder, int position) {
+        final MyRecipe currentMyRecipe = mMyRecipeList.get(position);
 
         Picasso.with(holder.mRecipeImage.getContext()).load(currentMyRecipe.getImage()).into(holder.mRecipeImage);
         holder.mRecipeTitle.setText(currentMyRecipe.getTitle());
         holder.mCategory.setText(currentMyRecipe.getCategory());
         holder.mServing.setText(String.valueOf(currentMyRecipe.getServings()));
+        //todo onclick for mycookbook to recipe activity
+        //todo add column in database to determine the view to show
+        holder.mRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final MyRecipe myRecipe = mMyRecipeList.get(holder.getAdapterPosition());
+                long recipeId = myRecipe.getRecipeId();
+                String viewToShow = myRecipe.getViewToShow();
+                Intent displayRecipeIntent = new Intent(v.getContext().getApplicationContext(),
+                        RecipeDetailActivity.class);
+                displayRecipeIntent.putExtra("Recipe_Id", recipeId);
+                displayRecipeIntent.putExtra("View", viewToShow);
+                v.getContext().startActivity(displayRecipeIntent);
+            }
+        });
 
     }
 
@@ -47,7 +65,7 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
         return mMyRecipeList.size();
     }
 
-    public void getnewCookbook(List<MyRecipe> newMyRecipe){
+    public void getnewCookbook(List<MyRecipe> newMyRecipe) {
         mMyRecipeList = newMyRecipe;
         notifyDataSetChanged();
     }

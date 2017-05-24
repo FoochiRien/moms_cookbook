@@ -11,11 +11,14 @@
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp">
 
+
+
     <include
         layout="@layout/custom_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     </android.support.design.widget.AppBarLayout>
+
 
 </LinearLayout>

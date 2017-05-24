@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:id="@+id/drawer_all_other_layout"
+    android:id="@+id/toolbar_all_other_layout"
+    android:background="#ffaa4a"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:layout_height="wrap_content">
 
-    <include layout="@layout/appbar_all_other_pages_layout"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:gravity="bottom"
+        android:textColor="#ffffff"
+        android:layout_weight=".75"
+        android:text="@string/toolbar"/>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation_all_other_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_drawertop_layout"
-        app:menu="@menu/drawer_menu_layout"/>
+    <ImageView
+        android:id="@+id/to_home_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".10"
+        android:src="@drawable/ic_action_home"/>
+    </LinearLayout>
 
-</android.support.v4.widget.DrawerLayout>
+</android.support.v7.widget.Toolbar>

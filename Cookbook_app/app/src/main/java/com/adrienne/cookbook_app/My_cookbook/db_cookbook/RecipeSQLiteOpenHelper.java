@@ -38,6 +38,8 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String COL_SOURCETITLE = "sourcetitle";
     private static final String COL_SOURCEWEBSITE = "sourcewebsite";
     private static final String COL_BOOKMARKED = "bookmarked";
+    private static final String COL_VIEW_TO_SHOW = "view_to_show";
+    //todo add col for view to show add to DB
 
     private static final String DIRECTIONS_TABLE_NAME = "directions";
     private static final String COL_RECIPE_D_ID = "recipe_directions_id";
@@ -57,7 +59,9 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
             COL_NOTES + "TEXT, " +
             COL_SOURCETITLE + "TEXT, " +
             COL_SOURCEWEBSITE + "TEXT, " +
-            COL_BOOKMARKED + "INTEGER )";
+            COL_BOOKMARKED + "INTEGER, " +
+            COL_VIEW_TO_SHOW + "TEXT )";
+
 
     private static final String CREATE_DIRECTIONS_TABLE = "CREATE TABLE" +
             DIRECTIONS_TABLE_NAME + "(" +
@@ -119,9 +123,52 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(COL_SOURCETITLE, apiWebsite);
         values.put(COL_SOURCEWEBSITE, apiUrl);
         values.put(COL_BOOKMARKED, "");
+        values.put(COL_VIEW_TO_SHOW, "api");
         db.insert(RECIPE_TABLE_NAME, null, values);
         db.close();
     }
+//
+//    public void addManualRecipetoCookbook( String manualTitle, String manualServing,
+//                                       String manualCategories, String manualCooktime, manualCategory,
+//                                           manualNotes, manualBookmark) {
+//
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COL_IMAGE, apiImage);
+//        values.put(COL_TITLE, apiRecipe);
+//        values.put(COL_SERVINGS, apiServing);
+//        values.put(COL_COOKTIME, "");
+//        values.put(COL_CATEGORY, apiCategories);
+//        values.put(COL_NOTES, "");
+//        values.put(COL_SOURCETITLE, apiWebsite);
+//        values.put(COL_SOURCEWEBSITE, apiUrl);
+//        values.put(COL_BOOKMARKED, "");
+//        values.put(COL_VIEW_TO_SHOW, "api");
+//        db.insert(RECIPE_TABLE_NAME, null, values);
+//        db.close();
+//    }
+
+    //
+//    public void addManualRecipetoCookbook( String manualTitle, String manualServing,
+//                                       String manualCategories, String manualCooktime, manualCategory,
+//                                           manualNotes, manualBookmark) {
+//
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COL_IMAGE, apiImage);
+//        values.put(COL_TITLE, apiRecipe);
+//        values.put(COL_SERVINGS, apiServing);
+//        values.put(COL_COOKTIME, "");
+//        values.put(COL_CATEGORY, apiCategories);
+//        values.put(COL_NOTES, "");
+//        values.put(COL_SOURCETITLE, apiWebsite);
+//        values.put(COL_SOURCEWEBSITE, apiUrl);
+//        values.put(COL_BOOKMARKED, "");
+//        values.put(COL_VIEW_TO_SHOW, "api");
+//        db.insert(RECIPE_TABLE_NAME, null, values);
+//        db.close();
+//    }
+
 
     //REMOVE ITEM FROM COOKBOOK
 
@@ -139,7 +186,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
 
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
@@ -152,11 +199,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
                 String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
-                        ingredients, bookmarked);
+                        ingredients, bookmarked, viewtoshow);
                 myrecipes.add(recipeforshow);
                 cursor.moveToNext();
             }
@@ -226,6 +274,52 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         return mydirections;
     }
 
+    public List<MyRecipe> getRecipe(long recipeId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selection = COL_RECIPE_ID + " = ?";
+        String recipeId = ;
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                new String[]{},
+                selection,
+                new String[]{recipeId},
+                null,
+                null,
+                null);
+
+        List<MyRecipe> myrecipes = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
+
+
+                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
+                        notes, category, sourcewebsite, servings, cooktime, directions,
+                        ingredients, bookmarked, viewtoshow);
+                myrecipes.add(recipeforshow);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return myrecipes;
+    }
+
+
     //search
     public List<MyRecipe> sortByTitle() {
         SQLiteDatabase db = getReadableDatabase();
@@ -241,7 +335,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
 
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
@@ -254,11 +348,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
                 String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
-                        ingredients, bookmarked);
+                        ingredients, bookmarked, viewtoshow);
                 myrecipes.add(recipeforshow);
                 cursor.moveToNext();
             }
@@ -296,11 +391,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
                 String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
-                        ingredients, bookmarked);
+                        ingredients, bookmarked, viewtoshow);
                 myrecipes.add(recipeforshow);
                 cursor.moveToNext();
             }
@@ -358,7 +454,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                int recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
 
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
@@ -371,11 +467,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
                 String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(image, sourcetitle, title,
+                MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
-                        ingredients, bookmarked);
+                        ingredients, bookmarked, viewtoshow);
                 myrecipes.add(recipeforshow);
                 cursor.moveToNext();
             }
