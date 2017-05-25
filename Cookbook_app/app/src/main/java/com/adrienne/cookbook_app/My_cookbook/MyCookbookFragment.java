@@ -56,6 +56,7 @@ public class MyCookbookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myRecipe = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllRecipes();
 
     }
 
@@ -63,7 +64,6 @@ public class MyCookbookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myRecipe = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllRecipes();
 
         return inflater.inflate(R.layout.fragment_my_cookbook, container, false);
     }

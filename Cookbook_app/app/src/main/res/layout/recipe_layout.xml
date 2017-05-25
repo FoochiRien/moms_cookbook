@@ -5,9 +5,6 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar_all_other_pages_layout"/>
-
-
     <TextView
         android:id="@+id/recipe_title"
         android:layout_width="match_parent"

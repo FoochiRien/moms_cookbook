@@ -15,16 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
+
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
-import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
+
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.DBAssetHelper;
-//import com.adrienne.cookbook_app.My_cookbook.MyRecipe.RecipeFragment;
-import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
+
 import com.adrienne.cookbook_app.Search.CookbookPagerAdapter;
 import com.adrienne.cookbook_app.Search.SearchFragment;
 
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.CookbookOnFragmentInteractionListener {
 
@@ -36,9 +34,6 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
     public static final String KEY4 = "ApiRecipeKey-url";
 
     CookbookPagerAdapter mPagerAdapter;
-
-    List<MyRecipe> mMyRecipeList;
-    private CookbookRecyclerViewAdapter mAdapter;
 
 
     @Override
@@ -65,10 +60,11 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                navigationView.findViewById(R.id.nav_addrecipe);
 
                 return false;
             }

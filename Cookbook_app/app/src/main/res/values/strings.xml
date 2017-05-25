@@ -24,4 +24,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="api_categories">Categories:</string>
     <string name="enter_categories">Enter categories. Use a , inbetween.</string>
+    <string name="categories">Categories</string>
+    <string name="notes">Notes</string>
+    <string name="enter_recipe_title">Title</string>
+    <string name="enter_recipe_category">Categories</string>
+    <string name="recipe_serving">Serving</string>
+    <string name="enter_recipe_cooktime">Cooktime</string>
+    <string name="recipe_notes">Notes</string>
+    <string name="save_recipe_button">Save Recipe</string>
+    <string name="enter_ingredients">Ingredients:</string>
+    <string name="enter_directions">Directions</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="find_photo">Pick Photo</string>
 </resources>

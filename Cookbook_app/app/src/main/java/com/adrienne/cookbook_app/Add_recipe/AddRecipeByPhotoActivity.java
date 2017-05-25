@@ -7,9 +7,9 @@ import com.adrienne.cookbook_app.R;
 
 public class AddRecipeByPhotoActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe_by_photo);
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_add_recipe_by_photo);
+//    }
 }

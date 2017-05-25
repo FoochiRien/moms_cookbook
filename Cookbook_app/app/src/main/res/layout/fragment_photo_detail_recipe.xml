@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/fragment_photodetail_cookbook"
+             tools:context="com.adrienne.cookbook_app.RecipeDetail.PhotoDetailRecipeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+   <include layout="@layout/toolbar_recipe"/>
+
+
+
+      <ScrollView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+    <include layout="@layout/photo_recipe_detail"></include>
+
+      </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

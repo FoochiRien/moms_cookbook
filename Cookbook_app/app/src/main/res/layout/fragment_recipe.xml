@@ -2,22 +2,24 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:id="@+id/fragment_recipe_container"
-             tools:context="com.adrienne.cookbook_app.RecipeDetail.RecipeFragment">
+             android:id="@+id/fragment_manualrecipe_cookbook"
+             tools:context="com.adrienne.cookbook_app.RecipeDetail.ManualEnterRecipeFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_recipe"/>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/recipe_detail_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-
-    </LinearLayout>
+ <include layout="@layout/recipe_layout"/>
 
     </ScrollView>
+
+
+</LinearLayout>
 
 </FrameLayout>

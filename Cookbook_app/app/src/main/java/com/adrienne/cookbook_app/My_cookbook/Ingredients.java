@@ -6,7 +6,7 @@ package com.adrienne.cookbook_app.My_cookbook;
 
 public class Ingredients {
 
-    private String mIngredientsRecipeTitle, mIngredients;
+    private String mIngredients;
 
     public Ingredients( String ingredients) {
 

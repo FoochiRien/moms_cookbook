@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".Add_recipe.AddRecipeByPhotoActivity">
         </activity>
+        <activity android:name=".Search.ApiResultDetailActivity">
+        </activity>
     </application>
 
 </manifest>

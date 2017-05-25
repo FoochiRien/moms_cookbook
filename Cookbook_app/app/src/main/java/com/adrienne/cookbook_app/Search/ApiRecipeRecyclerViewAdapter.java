@@ -51,7 +51,7 @@ public class ApiRecipeRecyclerViewAdapter extends RecyclerView.Adapter<ApiRecipe
                 String servings = apiRecipe.getApiServings().toString();
                 String url = apiRecipe.getApiUrl();
                 Intent displayApiRecipeIntent = new Intent(v.getContext().getApplicationContext(),
-                        RecipeDetailActivity.class);
+                        ApiResultDetailActivity.class);
 
                 displayApiRecipeIntent.putExtra(MainActivity.KEY, title);
                 displayApiRecipeIntent.putExtra(MainActivity.KEY1, image);

@@ -10,9 +10,9 @@
         android:id="@+id/nav_addrecipe"
         android:title="@string/enter_recipe_manually"/>
 
-    <item
-        android:id="@+id/nav_addrecipephoto"
-        android:title="@string/enter_recipe_photo"/>
+    <!--<item-->
+        <!--android:id="@+id/nav_addrecipephoto"-->
+        <!--android:title="@string/enter_recipe_photo"/>-->
 
 
     <item

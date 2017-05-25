@@ -54,8 +54,7 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
             }
         });
 
-        //todo add remove and bookmark
-        //todo add bookmark search 
+
 
     }
 

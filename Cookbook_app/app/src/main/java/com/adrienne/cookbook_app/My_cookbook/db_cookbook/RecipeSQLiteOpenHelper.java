@@ -127,47 +127,47 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         db.insert(RECIPE_TABLE_NAME, null, values);
         db.close();
     }
-//
-//    public void addManualRecipetoCookbook( String manualTitle, String manualServing,
-//                                       String manualCategories, String manualCooktime, manualCategory,
-//                                           manualNotes, manualBookmark) {
-//
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COL_IMAGE, apiImage);
-//        values.put(COL_TITLE, apiRecipe);
-//        values.put(COL_SERVINGS, apiServing);
-//        values.put(COL_COOKTIME, "");
-//        values.put(COL_CATEGORY, apiCategories);
-//        values.put(COL_NOTES, "");
-//        values.put(COL_SOURCETITLE, apiWebsite);
-//        values.put(COL_SOURCEWEBSITE, apiUrl);
-//        values.put(COL_BOOKMARKED, "");
-//        values.put(COL_VIEW_TO_SHOW, "api");
-//        db.insert(RECIPE_TABLE_NAME, null, values);
-//        db.close();
-//    }
+
+    public void addManualRecipetoCookbook( String manualTitle, String manualServing,
+                                       String manualCategories, String manualCooktime,
+                                           String manualNotes, String manualBookmark) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IMAGE, "");
+        values.put(COL_TITLE, manualTitle);
+        values.put(COL_SERVINGS, manualServing);
+        values.put(COL_COOKTIME, manualCooktime);
+        values.put(COL_CATEGORY, manualCategories);
+        values.put(COL_NOTES, manualNotes);
+        values.put(COL_SOURCETITLE, "");
+        values.put(COL_SOURCEWEBSITE, "");
+        values.put(COL_BOOKMARKED, "");
+        values.put(COL_VIEW_TO_SHOW, "manual");
+        db.insert(RECIPE_TABLE_NAME, null, values);
+        db.close();
+    }
 
     //
-//    public void addManualRecipetoCookbook( String manualTitle, String manualServing,
-//                                       String manualCategories, String manualCooktime, manualCategory,
-//                                           manualNotes, manualBookmark) {
-//
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COL_IMAGE, apiImage);
-//        values.put(COL_TITLE, apiRecipe);
-//        values.put(COL_SERVINGS, apiServing);
-//        values.put(COL_COOKTIME, "");
-//        values.put(COL_CATEGORY, apiCategories);
-//        values.put(COL_NOTES, "");
-//        values.put(COL_SOURCETITLE, apiWebsite);
-//        values.put(COL_SOURCEWEBSITE, apiUrl);
-//        values.put(COL_BOOKMARKED, "");
-//        values.put(COL_VIEW_TO_SHOW, "api");
-//        db.insert(RECIPE_TABLE_NAME, null, values);
-//        db.close();
-//    }
+    public void addPhotoRecipetoCookbook(String manualImage, String manualTitle, String manualServing,
+                                       String manualCategories, String manualCooktime,
+                                         String manualNotes, String manualBookmark) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IMAGE, manualImage);
+        values.put(COL_TITLE, manualTitle);
+        values.put(COL_SERVINGS, manualServing);
+        values.put(COL_COOKTIME, manualCooktime);
+        values.put(COL_CATEGORY, manualCategories);
+        values.put(COL_NOTES, manualNotes);
+        values.put(COL_SOURCETITLE, "");
+        values.put(COL_SOURCEWEBSITE, "");
+        values.put(COL_BOOKMARKED, "");
+        values.put(COL_VIEW_TO_SHOW, "photo");
+        db.insert(RECIPE_TABLE_NAME, null, values);
+        db.close();
+    }
 
 
     //REMOVE ITEM FROM COOKBOOK
@@ -213,7 +213,9 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         return myrecipes;
     }
 
-    public List<String> getAllIngredients(long recipeid) {
+
+
+    public List<Ingredients> getAllIngredients(long recipeid) {
         SQLiteDatabase db = getReadableDatabase();
 
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
@@ -226,7 +228,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = builder.query(db,
                 null, selection, null, null, null, null, null);
 
-        List<String> myingredients = new ArrayList<>();
+        List<Ingredients> myingredients = new ArrayList();
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -244,7 +246,28 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<String> getAllDirections(long recipeid) {
+//    public void insertRecipe(MyRecipe myRecipe){
+//        SQLiteDatabase db = getWritableDatabase();
+//        long recipeId = db.insert(RECIPE_TABLE_NAME, null, values);
+//        insertIngredients(ingredient, recipeId);
+//        insertDirections(directions, recipeId);
+//    }
+//
+//    public void insertIngredients(Ingredients ingredient, long recipeId){
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COL_RECIPE_ID, recipeId);
+//        db.insert(INGREDIENTS_TABLE_NAME, null, values);
+//    }
+//
+//    public void insertDirections(Directions directions, long recipeId){
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COL_RECIPE_ID, recipeId);
+//        db.insert(DIRECTIONS_TABLE_NAME, null, values);
+//    }
+
+    public List<Directions> getAllDirections(long recipeid) {
 
         SQLiteDatabase db = getReadableDatabase();
 
