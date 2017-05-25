@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.adrienne.cookbook_app.R;
-import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.Ingredient;
+
 
 import java.util.List;
 
@@ -42,30 +42,30 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
         if (viewType == VIEW_TYPE_ADD) {
             //inflate layout
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            return new IngredientsViewHolder(inflater.inflate(R.layout.ingredient_for_manual_recipe, parent, false));
+            return new AddViewHolder(inflater.inflate(R.layout.custom_add_button_for_direction_recycler, parent, false));
         } else {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            return new IngredientsViewHolder(inflater.inflate(R.layout.custom_add_button_for_direction_recycler, parent, false));
+            return new IngredientsViewHolder(inflater.inflate(R.layout.ingredient_for_manual_recipe, parent, false));
         }
 
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof AddViewHolder) {
-            //TODO ADD THINGS
-            AddViewHolder addViewHolder = (AddViewHolder) holder;
-            ((AddViewHolder) holder).mAddButton.getText().toString();
+//        if (holder instanceof AddViewHolder) {
+//            //TODO ADD THINGS
+//            AddViewHolder addViewHolder = (AddViewHolder) holder;
+//            ((AddViewHolder) holder).mAddButton.getText().toString();
 
 //            super.onBindViewHolder(addViewHolder, mIngredientsList.get(position) );
 //            mIngredientsList.add(position, mIngredientsList.get(position).setIngredients(mIngredientsList);
-
-        } else {
-            //TODO INGREDIENT THINGS
-            IngredientsViewHolder ingredientsViewHolder = (IngredientsViewHolder) holder;
-            ingredientsViewHolder.mRecipeIngredients.setText(mIngredientsList.get(position).getIngredients());
-            ingredientsViewHolder.mRecipeIngredients.addTextChangedListener(new CustomTextWatcher());
-        }
+//
+//        } else {
+//            //TODO INGREDIENT THINGS
+//            IngredientsViewHolder ingredientsViewHolder = (IngredientsViewHolder) holder;
+//            ingredientsViewHolder.mRecipeIngredients.setText(mIngredientsList.get(position).getIngredients());
+//            ingredientsViewHolder.mRecipeIngredients.addTextChangedListener(new CustomTextWatcher());
+//        }
 
     }
 

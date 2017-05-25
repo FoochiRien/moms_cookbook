@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,18 +34,21 @@ import java.util.List;
 public class MyCookbookFragment extends Fragment {
 
     public CookbookRecyclerViewAdapter mCookbookRecyclerViewAdapter;
+    private RecipeSQLiteOpenHelper mDBHelper;
 
     private String mQueryCookbook;
     private EditText mqueryCookbookEditText;
     private ImageView mSearch, mSort;
     List<MyRecipe> myRecipe;
+
+
     private CookbookOnFragmentInteractionListener mCookbookListener;
+
 
     public MyCookbookFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static MyCookbookFragment newInstance() {
         MyCookbookFragment fragment = new MyCookbookFragment();
         Bundle args = new Bundle();
@@ -56,7 +60,7 @@ public class MyCookbookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myRecipe = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllRecipes();
+
 
     }
 
@@ -78,33 +82,52 @@ public class MyCookbookFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        myRecipe = new ArrayList<>();
+
         mqueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);
         mSearch = (ImageView) view.findViewById(R.id.cookbook_submit_query);
         mQueryCookbook = mqueryCookbookEditText.getText().toString();
         mSort = (ImageView) view.findViewById(R.id.cookbook_sortaz);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.mycookbook_layout_recyclerview);
-        mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(new ArrayList<MyRecipe>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
+
+        if(mDBHelper.getAllRecipes() != null) {
+            myRecipe = mDBHelper.getAllRecipes();
+        }
+
+
+
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.mycookbook_layout_recyclerview);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
-        mCookbookRecyclerViewAdapter.getnewCookbook(myRecipe);
+
+
+
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRecipe= RecipeSQLiteOpenHelper.getInstance(getContext()).searchByTitleOrCategory(mQueryCookbook);
-                mCookbookRecyclerViewAdapter.getnewCookbook(myRecipe);
+                myRecipe = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
+                mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+
             }
         });
 
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRecipe= RecipeSQLiteOpenHelper.getInstance(getContext()).sortByTitle();
-                mCookbookRecyclerViewAdapter.getnewCookbook(myRecipe);
+                myRecipe = mDBHelper.sortByTitle();
+                mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+
             }
         });
+
 
 
     }

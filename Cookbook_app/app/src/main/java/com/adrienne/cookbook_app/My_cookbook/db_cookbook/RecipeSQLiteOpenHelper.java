@@ -50,30 +50,30 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String COL_INGREDIENTS = "ingredients";
 
     private static final String CREATE_RECIPE_TABLE = "CREATE TABLE" + RECIPE_TABLE_NAME + "(" +
-            COL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL_IMAGE + "TEXT, " +
-            COL_TITLE + "TEXT, " +
-            COL_SERVINGS + "INTEGER, " +
-            COL_COOKTIME + "INTEGER, " +
-            COL_CATEGORY + "TEXT, " +
-            COL_NOTES + "TEXT, " +
-            COL_SOURCETITLE + "TEXT, " +
-            COL_SOURCEWEBSITE + "TEXT, " +
-            COL_BOOKMARKED + "INTEGER, " +
-            COL_VIEW_TO_SHOW + "TEXT )";
+            COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COL_IMAGE + " TEXT, " +
+            COL_TITLE + " TEXT, " +
+            COL_SERVINGS + " INTEGER, " +
+            COL_COOKTIME + " INTEGER, " +
+            COL_CATEGORY + " TEXT, " +
+            COL_NOTES + " TEXT, " +
+            COL_SOURCETITLE + " TEXT, " +
+            COL_SOURCEWEBSITE + " TEXT, " +
+            COL_BOOKMARKED + " INTEGER, " +
+            COL_VIEW_TO_SHOW + " TEXT )";
 
 
     private static final String CREATE_DIRECTIONS_TABLE = "CREATE TABLE" +
             DIRECTIONS_TABLE_NAME + "(" +
-            COL_ID + "INTEGER PRIMARY KEY, " +
-            COL_RECIPE_D_ID + "INTEGER, " +
-            COL_DIRECTIONS + "TEXT )";
+            COL_ID + " INTEGER PRIMARY KEY, " +
+            COL_RECIPE_D_ID + " INTEGER, " +
+            COL_DIRECTIONS + " TEXT )";
 
     private static final String CREATE_INGREDIENTS_TABLE = "CREATE TABLE" +
             INGREDIENTS_TABLE_NAME + "(" +
-            COL_ID + "INTEGER PRIMARY KEY, " +
-            COL_RECIPE_ID + "INTEGER, " +
-            COL_INGREDIENTS + "TEXT )";
+            COL_ID + " INTEGER PRIMARY KEY, " +
+            COL_RECIPE_ID + " INTEGER, " +
+            COL_INGREDIENTS + " TEXT )";
 
 
     //-------------Singleton -------------------
@@ -149,25 +149,25 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     //
-    public void addPhotoRecipetoCookbook(String manualImage, String manualTitle, String manualServing,
-                                       String manualCategories, String manualCooktime,
-                                         String manualNotes, String manualBookmark) {
-
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COL_IMAGE, manualImage);
-        values.put(COL_TITLE, manualTitle);
-        values.put(COL_SERVINGS, manualServing);
-        values.put(COL_COOKTIME, manualCooktime);
-        values.put(COL_CATEGORY, manualCategories);
-        values.put(COL_NOTES, manualNotes);
-        values.put(COL_SOURCETITLE, "");
-        values.put(COL_SOURCEWEBSITE, "");
-        values.put(COL_BOOKMARKED, "");
-        values.put(COL_VIEW_TO_SHOW, "photo");
-        db.insert(RECIPE_TABLE_NAME, null, values);
-        db.close();
-    }
+//    public void addPhotoRecipetoCookbook(String manualImage, String manualTitle, String manualServing,
+//                                       String manualCategories, String manualCooktime,
+//                                         String manualNotes, String manualBookmark) {
+//
+//        SQLiteDatabase db = getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COL_IMAGE, manualImage);
+//        values.put(COL_TITLE, manualTitle);
+//        values.put(COL_SERVINGS, manualServing);
+//        values.put(COL_COOKTIME, manualCooktime);
+//        values.put(COL_CATEGORY, manualCategories);
+//        values.put(COL_NOTES, manualNotes);
+//        values.put(COL_SOURCETITLE, "");
+//        values.put(COL_SOURCEWEBSITE, "");
+//        values.put(COL_BOOKMARKED, "");
+//        values.put(COL_VIEW_TO_SHOW, "photo");
+//        db.insert(RECIPE_TABLE_NAME, null, values);
+//        db.close();
+//    }
 
 
     //REMOVE ITEM FROM COOKBOOK
@@ -186,7 +186,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                long recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                long recipeId = cursor.getLong(cursor.getColumnIndex(COL_ID));
 
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
@@ -218,25 +218,33 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     public List<Ingredients> getAllIngredients(long recipeid) {
         SQLiteDatabase db = getReadableDatabase();
 
+//        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+//        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + INGREDIENTS_TABLE_NAME +
+//                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
+//                " = " + INGREDIENTS_TABLE_NAME + "." + COL_RECIPE_ID);
+
+
+
+
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(RECIPE_TABLE_NAME + " JOIN " + INGREDIENTS_TABLE_NAME +
-                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
-                " = " + INGREDIENTS_TABLE_NAME + "." + COL_RECIPE_ID);
+                " ON " + COL_ID +
+                " = " + COL_RECIPE_ID);
 
         String selection = recipeid + "";
 
         Cursor cursor = builder.query(db,
                 null, selection, null, null, null, null, null);
 
-        List<Ingredients> myingredients = new ArrayList();
+        List<Ingredients> myingredients = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                int recipe_id = cursor.getInt(cursor.getColumnIndex(COL_RECIPE_ID));
+                long recipe_id = cursor.getLong(cursor.getColumnIndex(COL_RECIPE_ID));
                 String ingredient = cursor.getString(cursor.getColumnIndex(COL_INGREDIENTS));
 
-                myingredients.add(ingredient);
+                myingredients.add(new Ingredients(ingredient));
                 cursor.moveToNext();
             }
         }
@@ -246,26 +254,50 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     }
 
-//    public void insertRecipe(MyRecipe myRecipe){
-//        SQLiteDatabase db = getWritableDatabase();
-//        long recipeId = db.insert(RECIPE_TABLE_NAME, null, values);
-//        insertIngredients(ingredient, recipeId);
-//        insertDirections(directions, recipeId);
-//    }
-//
-//    public void insertIngredients(Ingredients ingredient, long recipeId){
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COL_RECIPE_ID, recipeId);
-//        db.insert(INGREDIENTS_TABLE_NAME, null, values);
-//    }
-//
-//    public void insertDirections(Directions directions, long recipeId){
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COL_RECIPE_ID, recipeId);
-//        db.insert(DIRECTIONS_TABLE_NAME, null, values);
-//    }
+    public void insertRecipe(MyRecipe myRecipe){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COL_IMAGE, myRecipe.getImage());
+        values.put(COL_TITLE, myRecipe.getTitle());
+        values.put(COL_SERVINGS, myRecipe.getServings());
+        values.put(COL_COOKTIME, myRecipe.getCookTime());
+        values.put(COL_CATEGORY, myRecipe.getCategory());
+        values.put(COL_NOTES, myRecipe.getNotes());
+        values.put(COL_SOURCETITLE, myRecipe.getSourceTitle());
+        values.put(COL_SOURCEWEBSITE, myRecipe.getSourceUrl());
+        values.put(COL_BOOKMARKED, myRecipe.getBookmarked());
+        values.put(COL_VIEW_TO_SHOW, myRecipe.getViewToShow());
+
+
+        long recipeId = db.insert(RECIPE_TABLE_NAME, null, values);
+        for(Ingredients ingredient : myRecipe.getIngredients())
+        {
+            insertIngredients(ingredient, recipeId);
+        }
+        for(Directions directions : myRecipe.getDirections())
+        {
+            insertDirections(directions, recipeId);
+        }
+
+
+    }
+
+    public void insertIngredients(Ingredients ingredient, long recipeId){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_RECIPE_ID, recipeId);
+        values.put(COL_INGREDIENTS, ingredient.getIngredients());
+        db.insert(INGREDIENTS_TABLE_NAME, null, values);
+    }
+
+    public void insertDirections(Directions direction, long recipeId){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_RECIPE_ID, recipeId);
+        values.put(COL_DIRECTIONS, direction.getDirections());
+        db.insert(DIRECTIONS_TABLE_NAME, null, values);
+    }
 
     public List<Directions> getAllDirections(long recipeid) {
 
@@ -281,15 +313,15 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = builder.query(db,
                 null, selection, null, null, null, null);
 
-        List<String> mydirections = new ArrayList<>();
+        List<Directions> mydirections = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                int recipe_id = cursor.getInt(cursor.getColumnIndex(COL_RECIPE_D_ID));
-                String ingredient = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
+                long recipe_id = cursor.getLong(cursor.getColumnIndex(COL_RECIPE_D_ID));
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
 
-                mydirections.add(ingredient);
+                mydirections.add(new Directions(directions));
                 cursor.moveToNext();
             }
         }
@@ -348,7 +380,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 //todo check variation with period and without out try putting coltitile in selction spot and only
         //todo collate no case in order by
-        String orderby = COL_TITLE + " COLLATE NOCASE.ASC";
+        String orderby = COL_TITLE + " COLLATE NOCASE ASC";
 
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
                 null, null, null, null, null, orderby);
@@ -504,6 +536,47 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         return myrecipes;
     }
 
+    public int searchBookmark(long recipeId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+
+        String selection = COL_BOOKMARKED + " = ?";
+
+        Cursor cursor = db.query(RECIPE_TABLE_NAME,
+                new String[]{},
+                selection,
+                new String[]{"1"},
+                null,
+                null,
+                null);
+
+        int bookmarkSearch = 0;
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
+                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                List ingredients = getAllIngredients(recipeId);
+                List directions = getAllDirections(recipeId);
+                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
+                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
+                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
+                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
+                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
+                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
+                int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
+                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
+
+                bookmarkSearch = bookmarked;
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return bookmarkSearch;
+    }
 
 //--end bracket dont delete
 }

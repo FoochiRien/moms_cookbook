@@ -6,20 +6,13 @@ package com.adrienne.cookbook_app.My_cookbook;
 
 public class Directions {
 
-    private String mDirectionsRecipeTitle, mDirections;
+    private String  mDirections;
 
-    public Directions(String directionsRecipeTitle, String directions) {
-        mDirectionsRecipeTitle = directionsRecipeTitle;
+    public Directions( String directions) {
+
         mDirections = directions;
     }
 
-    public String getDirectionsRecipeTitle() {
-        return mDirectionsRecipeTitle;
-    }
-
-    public void setDirectionsRecipeTitle(String directionsRecipeTitle) {
-        mDirectionsRecipeTitle = directionsRecipeTitle;
-    }
 
     public String getDirections() {
         return mDirections;

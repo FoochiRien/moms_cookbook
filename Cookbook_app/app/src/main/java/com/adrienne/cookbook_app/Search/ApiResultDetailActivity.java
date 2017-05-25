@@ -31,7 +31,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     TextView mApiTitle, mApiWebsiteSource, mApiUrl;
     EditText mCategories;
 
-    public RecipeSQLiteOpenHelper mDBHelper;
+    private RecipeSQLiteOpenHelper mDBHelper;
 
     String apiCategories;
 
@@ -40,6 +40,8 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api_result_detail);
+
+        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getApplicationContext());
 
         mApiImage = (ImageView) findViewById(R.id.api_recipe_detail_image);
         mApiTitle = (TextView) findViewById(R.id.api_recipe_detail_title);
@@ -55,7 +57,6 @@ public class ApiResultDetailActivity extends AppCompatActivity {
         final String apiWebsite = displayApiRecipeIntent.getStringExtra(KEY2);
         final String apiServing = displayApiRecipeIntent.getStringExtra(KEY3);
         final String apiUrl = displayApiRecipeIntent.getStringExtra(KEY4);
-
 
         // information displayed on the main screen
         mApiTitle.setText(apiRecipe);
@@ -73,6 +74,8 @@ public class ApiResultDetailActivity extends AppCompatActivity {
                 Toast.makeText(ApiResultDetailActivity.this, "Congrats. The recipe has been added " +
                                 "to your cookbook.",
                         Toast.LENGTH_SHORT).show();
+
+
 
             }
         });

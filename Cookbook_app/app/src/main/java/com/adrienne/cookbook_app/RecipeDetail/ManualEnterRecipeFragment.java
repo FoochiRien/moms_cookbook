@@ -3,11 +3,15 @@ package com.adrienne.cookbook_app.RecipeDetail;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
@@ -20,6 +24,7 @@ import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.adrienne.cookbook_app.MainActivity.KEY;
@@ -44,9 +49,9 @@ public class ManualEnterRecipeFragment extends Fragment {
 
     TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView;
 
-    CookbookRecyclerViewAdapter mCookbookAdapter;
-    DirectionsRecyclerViewAdapter mDirectionsAdapter;
     IngredientsRecyclerViewAdapter mIngredientsAdapter;
+    DirectionsRecyclerViewAdapter mDirectionsAdapter;
+
 
 
     public ManualEnterRecipeFragment() {
@@ -75,7 +80,7 @@ public class ManualEnterRecipeFragment extends Fragment {
         View recipeView = inflater.inflate(R.layout.recipe_layout, container, false);
 
         Bundle bundle = getArguments();
-        long mRecipeId = bundle.getInt(RECIPE_ID);
+        long mRecipeId = bundle.getLong(RECIPE_ID);
         //----retrieve data from the first table
         List<MyRecipe> myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipe(mRecipeId);
         Log.d(TAG, "onCreateView: " + myRecipes);
@@ -94,6 +99,7 @@ public class ManualEnterRecipeFragment extends Fragment {
         mServingView = (TextView) recipeView.findViewById(R.id.recipe_servings);
         mCookTimeView = (TextView) recipeView.findViewById(R.id.recipe_cooktime);
 
+
         mTitleView.setText(title);
         mNotesView.setText(notes);
         mCategoryView.setText(category);
@@ -103,6 +109,17 @@ public class ManualEnterRecipeFragment extends Fragment {
         Log.d(TAG, "onCreateView: RECIPE " + title);
 
         List<Ingredients> ingredients = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllIngredients(mRecipeId);
+
+        RecyclerView recyclerView = (RecyclerView) recipeView.findViewById(R.id.recipe_directions_list);
+        mDirectionsAdapter = new DirectionsRecyclerViewAdapter(new ArrayList<Directions>());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(mDirectionsAdapter);
+
+        RecyclerView recyclerView2 = (RecyclerView) recipeView.findViewById(R.id.recipe_ingredients_list);
+        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<Ingredients>());
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        recyclerView2.setAdapter(mIngredientsAdapter);
+
 
 
 

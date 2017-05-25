@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
 import com.adrienne.cookbook_app.Search.SearchFragment;
@@ -22,6 +26,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
     public static final String View_To_Show = "view-to-show";
     public static final String RECIPE_ID = "recipeId";
 
+   ImageView mBookmark, mDelete, mHome;
+    long recipeId = 0;
 
 
     @Override
@@ -31,12 +37,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
         mDBHelper = RecipeSQLiteOpenHelper.getInstance(this);
 
+
+
         Intent displayRecipeIntent = getIntent();
         final String viewToShow = displayRecipeIntent.getStringExtra(View_To_Show);
-        final String recipeId = displayRecipeIntent.getStringExtra(RECIPE_ID);
+        recipeId = displayRecipeIntent.getLongExtra(RECIPE_ID, recipeId);
 
         Bundle bundle = new Bundle();
-        bundle.putString(RECIPE_ID, recipeId);
+        bundle.putLong(RECIPE_ID, recipeId);
 
         if(viewToShow != null) {
 
@@ -65,25 +73,42 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         }
 
 
+        mBookmark = (ImageView) findViewById(R.id.add_to_bookmark);
+        mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int bookmarked = mDBHelper.searchBookmark(recipeId);
+                if (bookmarked == 1) {
+                    Toast.makeText(RecipeDetailActivity.this, "Removing from your Cookbook.",
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+                    mDBHelper.addBookmark(recipeId);
+                    Toast.makeText(RecipeDetailActivity.this, "Added to your cookbook.", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
 
 
+        mDelete = (ImageView) findViewById(R.id.delete_recipe);
+        mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDBHelper.removeRecipeFromCookbook(recipeId);
+                Toast.makeText(RecipeDetailActivity.this, "BYE, BYE, BYE. It's gone from you cookbook",
+                        Toast.LENGTH_SHORT).show();
 
+            }
+        });
 
-
-
-
-
-        //todo add remove and bookmark
-        //todo add bookmark search
-
-
-
-
-
-
-
-
-
+        mHome = (ImageView) findViewById(R.id.to_home_button);
+        mHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RecipeDetailActivity.this, MainActivity.class));
+            }
+        });
 
     }
     @Override

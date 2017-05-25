@@ -61,7 +61,8 @@
         android:textSize="16dp"
         android:textStyle="bold"/>
 
-    <ListView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_ingredients_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -74,7 +75,8 @@
         android:padding="8dp"
         android:text="directions"/>
 
-    <ListView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_directions_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

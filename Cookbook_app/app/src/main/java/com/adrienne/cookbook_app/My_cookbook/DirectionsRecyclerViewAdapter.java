@@ -40,27 +40,29 @@ public class DirectionsRecyclerViewAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_ADD){
             //inflate layout
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            return new DirectionsViewHolder(inflater.inflate(R.layout.directions_for_manual_recipe, parent, false));
-        } else {
+
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             return new DirectionsViewHolder(inflater.inflate(R.layout.custom_add_button_for_direction_recycler, parent, false));
+        } else {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            return new DirectionsViewHolder(inflater.inflate(R.layout.directions_for_manual_recipe, parent, false));
         }
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof AddViewHolder)
-        {   AddViewHolder addViewHolder = (AddViewHolder) holder;
-            addViewHolder.mAddButton.getText().toString();
-            //TODO ADD THINGS
-
-        }
-        else
-        { DirectionsViewHolder directionsViewHolder = (DirectionsViewHolder) holder;
-            directionsViewHolder.mRecipeDirections.getText().toString();
-            //TODO INGREDIENT THINGS
-        }
+//        if(holder instanceof AddViewHolder)
+//        {   AddViewHolder addViewHolder = (AddViewHolder) holder;
+//            addViewHolder.mAddButton.getText().toString();
+//            //TODO ADD THINGS
+//
+//        }
+//        else
+//        { DirectionsViewHolder directionsViewHolder = (DirectionsViewHolder) holder;
+//            directionsViewHolder.mRecipeDirections.getText().toString();
+//            directionsViewHolder.mRecipeDirections.addTextChangedListener(new CustomTextWatcher());
+//            //TODO INGREDIENT THINGS
+//        }
     }
 
 

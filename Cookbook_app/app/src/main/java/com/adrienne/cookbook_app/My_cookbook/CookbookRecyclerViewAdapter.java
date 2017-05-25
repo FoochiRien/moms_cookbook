@@ -21,6 +21,7 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
     private List<MyRecipe> mMyRecipeList;
     private MyCookbookFragment.CookbookOnFragmentInteractionListener mcookbookListener;
 
+
     public CookbookRecyclerViewAdapter(List<MyRecipe> myRecipeList) {
         mMyRecipeList = myRecipeList;
     }
@@ -36,7 +37,7 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
     public void onBindViewHolder(final CookbookViewHolder holder, int position) {
         final MyRecipe currentMyRecipe = mMyRecipeList.get(position);
 
-        Picasso.with(holder.mRecipeImage.getContext()).load(currentMyRecipe.getImage()).into(holder.mRecipeImage);
+        Picasso.with(holder.mRecipeImage.getContext()).load(currentMyRecipe.getImage()).fit().into(holder.mRecipeImage);
         holder.mRecipeTitle.setText(currentMyRecipe.getTitle());
         holder.mCategory.setText(currentMyRecipe.getCategory());
         holder.mServing.setText(String.valueOf(currentMyRecipe.getServings()));

@@ -22,7 +22,7 @@
             android:text="@string/toolbar"/>
 
         <ImageView
-            android:id="@+id/recipefromapi_bookmark"
+            android:id="@+id/add_to_bookmark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -32,7 +32,7 @@
             android:src="@drawable/ic_bookmark_item"/>
 
         <ImageView
-            android:id="@+id/recipefromapi_delete"
+            android:id="@+id/delete_recipe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
