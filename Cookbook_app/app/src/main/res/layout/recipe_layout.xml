@@ -3,7 +3,8 @@
               android:id="@+id/manuelyentered_recipe_layout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/recipe_title"
@@ -45,41 +46,42 @@
             android:layout_height="wrap_content"
             android:layout_weight=".50"
             android:text="cooktime"
-            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textAlignment="textStart"
             android:textStyle="italic"/>
 
     </LinearLayout>
 
 
 
-    <TextView
-        android:id="@+id/recipe_ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Ingredients"
-        android:textSize="16dp"
-        android:textStyle="bold"/>
+    <!--<TextView-->
+        <!--android:id="@+id/recipe_ingredients"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="8dp"-->
+        <!--android:text="Ingredients"-->
+        <!--android:textSize="16dp"-->
+        <!--android:textStyle="bold"/>-->
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_ingredients_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recipe_ingredients_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
 
-    <TextView
-        android:id="@+id/recipe_directions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="directions"/>
+    <!--<TextView-->
+        <!--android:id="@+id/recipe_directions"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="8dp"-->
+        <!--android:text="directions"/>-->
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_directions_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recipe_directions_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
 
     <TextView
@@ -89,6 +91,7 @@
         android:textSize="14dp"
         android:textStyle="bold"
         android:padding="8dp"
+        android:textAllCaps="true"
         android:text="notes"/>
 
     <TextView
@@ -105,6 +108,7 @@
         android:textSize="14dp"
         android:textStyle="bold"
         android:padding="8dp"
+        android:textAllCaps="true"
         android:text="category"/>
 
     <TextView

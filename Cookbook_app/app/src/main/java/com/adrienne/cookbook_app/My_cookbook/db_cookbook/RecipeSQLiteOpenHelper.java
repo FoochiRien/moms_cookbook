@@ -329,13 +329,13 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         return mydirections;
     }
 
-    public List<MyRecipe> getRecipe(long recipeId) {
+    public List<MyRecipe> getRecipeDisplay(long recipeId) {
         SQLiteDatabase db = getReadableDatabase();
 
-        String selection = COL_RECIPE_ID + " = ?";
+        String selection = COL_ID + " = ?";
         String recipe_id = Long.toString(recipeId);
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
-                new String[]{},
+                null,
                 selection,
                 new String[]{recipe_id},
                 null,

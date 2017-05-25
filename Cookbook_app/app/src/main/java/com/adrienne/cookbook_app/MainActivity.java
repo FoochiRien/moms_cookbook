@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -109,6 +111,11 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
             Toast.makeText(this, "You have fallen off the grid. Try again later.", Toast.LENGTH_LONG).show();
         }
 
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(.getWindowToken(), 0);
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
 

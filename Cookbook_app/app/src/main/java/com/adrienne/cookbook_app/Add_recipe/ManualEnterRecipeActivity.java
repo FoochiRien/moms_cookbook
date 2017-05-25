@@ -1,15 +1,17 @@
 package com.adrienne.cookbook_app.Add_recipe;
 
+import android.content.Context;
 import android.content.Intent;
-import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.Directions;
@@ -38,6 +40,8 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
     IngredientsRecyclerViewAdapter mIngredientsAdapter;
     DirectionsRecyclerViewAdapter mDirectionsAdapter;
 
+    private RecipeSQLiteOpenHelper mDBHelper;
+
     List<Ingredients> recipeIngredients;
     List<Directions> recipeDirections;
 
@@ -47,6 +51,8 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_enter_recipe);
 
+        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getApplicationContext());
+
         mRecipeTitle = (EditText) findViewById(R.id.enter_recipe_title);
         mRecipeNotes = (EditText) findViewById(R.id.enter_recipe_notes);
         mRecipeCategory = (EditText) findViewById(R.id.enter_recipe_category);
@@ -55,18 +61,28 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
         mSaveRecipe = (Button) findViewById(R.id.save_recipe_button);
 
 
-        recipeTitle = mRecipeTitle.getText().toString();
-        recipeNotes = mRecipeNotes.getText().toString();
-        recipeCategory = mRecipeCategory.getText().toString();
-        recipeServing = mRecipeServing.getText().toString();
-        recipeCooktime = mCookTime.getText().toString();
+
 
         mSaveRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecipeSQLiteOpenHelper.getInstance(getApplicationContext())
-                        .addManualRecipetoCookbook(recipeTitle,recipeServing,
-                        recipeCategory, recipeCooktime, recipeNotes, null);
+                if (mRecipeTitle.getText().length() <= 0) {
+                    Toast.makeText(ManualEnterRecipeActivity.this, "Please enter a title or Return to home.",
+                            Toast.LENGTH_SHORT).show();
+                    mRecipeTitle.setError("Please enter a title or Return to home.");
+                } else {
+                    recipeTitle = mRecipeTitle.getText().toString();
+                    recipeNotes = mRecipeNotes.getText().toString();
+                    recipeCategory = mRecipeCategory.getText().toString();
+                    recipeServing = mRecipeServing.getText().toString();
+                    recipeCooktime = mCookTime.getText().toString();
+                    mDBHelper.addManualRecipetoCookbook(recipeTitle, recipeServing,
+                            recipeCategory, recipeCooktime, recipeNotes, null);
+                    Log.d(TAG, "onClick: save button" + recipeTitle);
+                    Toast.makeText(ManualEnterRecipeActivity.this, "Your recipe has been added.",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ManualEnterRecipeActivity.this, MainActivity.class));
+                }
             }
         });
 
@@ -77,8 +93,8 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
 
         RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.ingredients_recylerview);
         mIngredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<Ingredients>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        recyclerView.setAdapter(mIngredientsAdapter);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        recyclerView2.setAdapter(mIngredientsAdapter);
 
 
         mHomeButton = (ImageView) findViewById(R.id.to_home_button);

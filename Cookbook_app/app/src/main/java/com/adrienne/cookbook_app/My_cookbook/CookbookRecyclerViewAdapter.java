@@ -37,10 +37,14 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
     public void onBindViewHolder(final CookbookViewHolder holder, int position) {
         final MyRecipe currentMyRecipe = mMyRecipeList.get(position);
 
-        Picasso.with(holder.mRecipeImage.getContext()).load(currentMyRecipe.getImage()).fit().into(holder.mRecipeImage);
+        if (currentMyRecipe.getImage() == null || currentMyRecipe.getImage().trim().isEmpty()){
+            Picasso.with(holder.mRecipeImage.getContext()).load(R.drawable.defaultimage).fit().into(holder.mRecipeImage);
+        } else {
+            Picasso.with(holder.mRecipeImage.getContext()).load(currentMyRecipe.getImage()).fit().into(holder.mRecipeImage);
+        }
         holder.mRecipeTitle.setText(currentMyRecipe.getTitle());
-        holder.mCategory.setText(currentMyRecipe.getCategory());
-        holder.mServing.setText(String.valueOf(currentMyRecipe.getServings()));
+//        holder.mCategory.setText(currentMyRecipe.getCategory());
+//        holder.mServing.setText(String.valueOf(currentMyRecipe.getServings()));
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

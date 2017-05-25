@@ -15,6 +15,9 @@ public class Ingredients {
         mIngredients = ingredients;
     }
 
+    public Ingredients() {
+    }
+
     public String getIngredients() {
         return mIngredients;
     }

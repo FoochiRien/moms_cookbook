@@ -24,8 +24,8 @@ public class CookbookViewHolder extends RecyclerView.ViewHolder {
         mRootView = itemView.findViewById(R.id.cookbook_layout);
         mRecipeImage = (ImageView) itemView.findViewById(R.id.cookbook_image);
         mRecipeTitle = (TextView) itemView.findViewById(R.id.cookbook_title);
-        mServing = (TextView) itemView.findViewById(R.id.cookbook_serving);
-        mCategory = (TextView) itemView.findViewById(R.id.cookbook_category);
+//        mServing = (TextView) itemView.findViewById(R.id.cookbook_serving);
+//        mCategory = (TextView) itemView.findViewById(R.id.cookbook_category);
 
     }
 

@@ -99,9 +99,8 @@ public class MyCookbookFragment extends Fragment {
 
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.mycookbook_layout_recyclerview);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
 

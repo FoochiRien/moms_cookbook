@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     ImageView mApiImage, mFavApiRecipe;
     TextView mApiTitle, mApiWebsiteSource, mApiUrl;
     EditText mCategories;
+
 
     private RecipeSQLiteOpenHelper mDBHelper;
 
@@ -75,8 +77,6 @@ public class ApiResultDetailActivity extends AppCompatActivity {
                                 "to your cookbook.",
                         Toast.LENGTH_SHORT).show();
 
-
-
             }
         });
 
@@ -92,5 +92,8 @@ public class ApiResultDetailActivity extends AppCompatActivity {
                 startActivity(displayUrl);
             }
         });
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
+
 }

@@ -36,4 +36,6 @@
     <string name="enter_directions">Directions</string>
     <string name="take_photo">Take Photo</string>
     <string name="find_photo">Pick Photo</string>
+    <string name="add_ingredient">Add ingrediens</string>
+    <string name="add_directions">Add directions</string>
 </resources>

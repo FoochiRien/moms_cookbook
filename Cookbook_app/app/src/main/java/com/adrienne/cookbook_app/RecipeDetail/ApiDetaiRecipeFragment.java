@@ -1,14 +1,26 @@
 package com.adrienne.cookbook_app.RecipeDetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.adrienne.cookbook_app.MainActivity;
+import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
+import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +33,15 @@ import com.adrienne.cookbook_app.R;
 public class ApiDetaiRecipeFragment extends Fragment {
 
     public static final String TAG = "API COOKBOOK FRAG";
+
+    public static final String RECIPE_ID = "recipeId";
+
+    TextView mCBApiTitle, mCBApiWebsiteSource, mCBApiUrl;
+    ImageView mCBApiImage;
+    ImageView mBookmark, mDelete, mHome;
+
+    RecipeSQLiteOpenHelper mDBHelper;
+    List<MyRecipe> mRecipeList;
 
     private OnFragmentInteractionListener mApiCookbookListener;
 
@@ -50,15 +71,90 @@ public class ApiDetaiRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_api_detai_recipe, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Bundle bundle = getArguments();
+        final long recipeId = bundle.getLong(RECIPE_ID);
+        Log.d(TAG, "onViewCreated:  recipeId" + recipeId);
+        List<MyRecipe> myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(recipeId);
+//        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
+//        mRecipeList = mDBHelper.getRecipeDisplay(recipeId);
+//        Log.d(TAG, "onViewCreated: title " + );
+//        if(mRecipeList!=null && mRecipeList.size()>0)
+//        {
+        String title = myRecipes.get(0).getTitle();
+        String source = myRecipes.get(0).getSourceTitle();
+        final String url = myRecipes.get(0).getSourceUrl();
+        String image = myRecipes.get(0).getImage();
+
+        mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
+        mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
+        mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
+        mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
+
+        mBookmark = (ImageView) view.findViewById(R.id.add_to_bookmark);
+        mDelete = (ImageView) view.findViewById(R.id.delete_recipe);
+        mHome = (ImageView) view.findViewById(R.id.to_home_button);
+
+        mCBApiUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayUrl = new Intent(getContext(), WebActivity.class);
+                displayUrl.putExtra("website", url);
+                startActivity(displayUrl);
+            }
+        });
+
+        mCBApiTitle.setText(title);
+        mCBApiWebsiteSource.setText(source);
+        Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
 
 
+        mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int bookmarked = mDBHelper.searchBookmark(recipeId);
+                if (bookmarked == 1) {
+                    Toast.makeText(getContext(), "Removing from your Cookbook.",
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+                    mDBHelper.addBookmark(recipeId);
+                    Toast.makeText(getContext(), "Added to your cookbook.", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+
+
+
+        mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDBHelper.removeRecipeFromCookbook(recipeId);
+                Toast.makeText(getContext(), "BYE, BYE, BYE. It's gone from you cookbook",
+                        Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), MainActivity.class));
+            }
+        });
+
+
+        mHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MainActivity.class));
+            }
+        });
 
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mApiCookbookListener != null) {
             mApiCookbookListener.onFragmentInteraction();

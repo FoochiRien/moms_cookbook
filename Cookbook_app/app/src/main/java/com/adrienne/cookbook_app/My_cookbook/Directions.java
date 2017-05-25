@@ -13,6 +13,9 @@ public class Directions {
         mDirections = directions;
     }
 
+    public Directions(){
+
+    }
 
     public String getDirections() {
         return mDirections;

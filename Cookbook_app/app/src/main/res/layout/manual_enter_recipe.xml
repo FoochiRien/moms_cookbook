@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:padding="6dp">
+              android:orientation="vertical"
+              android:padding="6dp">
 
 
     <EditText
         android:id="@+id/enter_recipe_title"
-        android:hint="@string/enter_recipe_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_recipe_title"/>
 
     <EditText
         android:id="@+id/enter_recipe_category"
-        android:hint="@string/enter_recipe_category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_recipe_category"/>
 
     <EditText
         android:id="@+id/enter_recipe_serving"
-        android:hint="@string/recipe_serving"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/recipe_serving"/>
 
-        <EditText
-            android:id="@+id/enter_recipe_cooktime"
-            android:hint="@string/enter_recipe_cooktime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/enter_recipe_cooktime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_recipe_cooktime"/>
 
     <EditText
         android:id="@+id/enter_recipe_notes"
-        android:hint="@string/recipe_notes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/recipe_notes"/>
+
     <TextView
-        android:text="@string/enter_ingredients"
-        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/enter_ingredients"
+        android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ingredients_recylerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <TextView
-        android:text="@string/enter_directions"
-        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/enter_directions"
+        android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/directions_recyclerview"
@@ -61,9 +62,9 @@
 
     <Button
         android:id="@+id/save_recipe_button"
-        android:textAllCaps="true"
-        android:text="@string/save_recipe_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/save_recipe_button"
+        android:textAllCaps="true"/>
 
 </LinearLayout>
