@@ -85,35 +85,38 @@ public class ApiDetaiRecipeFragment extends Fragment {
 //        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 //        mRecipeList = mDBHelper.getRecipeDisplay(recipeId);
 //        Log.d(TAG, "onViewCreated: title " + );
-//        if(mRecipeList!=null && mRecipeList.size()>0)
-//        {
-        String title = myRecipes.get(0).getTitle();
-        String source = myRecipes.get(0).getSourceTitle();
-        final String url = myRecipes.get(0).getSourceUrl();
-        String image = myRecipes.get(0).getImage();
+        if(mRecipeList!=null && mRecipeList.size()>0) {
+            String title = myRecipes.get(0).getTitle();
+            String source = myRecipes.get(0).getSourceTitle();
+            final String url = myRecipes.get(0).getSourceUrl();
+            String image = myRecipes.get(0).getImage();
 
-        mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
-        mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
-        mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
-        mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
+            mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
+            mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
+            mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
+            mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
 
+
+
+            mCBApiUrl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent displayUrl = new Intent(getContext(), WebActivity.class);
+                    displayUrl.putExtra("website", url);
+                    startActivity(displayUrl);
+                }
+            });
+
+            mCBApiTitle.setText(title);
+            mCBApiWebsiteSource.setText(source);
+            Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
+        } else {
+            Toast.makeText(getContext(), "Sorry about that. Return to home.", Toast.LENGTH_SHORT).show();
+        }
+        
         mBookmark = (ImageView) view.findViewById(R.id.add_to_bookmark);
         mDelete = (ImageView) view.findViewById(R.id.delete_recipe);
         mHome = (ImageView) view.findViewById(R.id.to_home_button);
-
-        mCBApiUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent displayUrl = new Intent(getContext(), WebActivity.class);
-                displayUrl.putExtra("website", url);
-                startActivity(displayUrl);
-            }
-        });
-
-        mCBApiTitle.setText(title);
-        mCBApiWebsiteSource.setText(source);
-        Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
-
 
         mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
