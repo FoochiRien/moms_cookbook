@@ -20,6 +20,9 @@ import com.adrienne.cookbook_app.R;
 
 public class PhotoDetailRecipeFragment extends Fragment {
 
+    /*This was the feature I most wanted to implement but didnt happen as of publication for class
+    * I'm going to continue to work on this. */
+
     public static final String TAG = "PHOTO DETAIL FRAG";
     private OnFragmentInteractionListener mPhotoDetailListener;
 

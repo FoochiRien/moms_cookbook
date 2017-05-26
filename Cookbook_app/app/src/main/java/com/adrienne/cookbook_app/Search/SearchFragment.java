@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment {
         mApiQuery = (EditText) view.findViewById(R.id.api_search_query);
         mCategoryFilter = (ImageView) view.findViewById(R.id.api_search_category);
 
-
+        //Searches the API and returns the results
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.api_searchresult_recyclerview);
         mApiRecipeRecyclerViewAdapter = new ApiRecipeRecyclerViewAdapter(new ArrayList<ApiRecipe>());
@@ -141,6 +141,12 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
+        /*The following are search options for the api. Due to the limiations of the api I had to make
+        some hard calls about what should be included in the search paramters. I decided to go with
+        breakfast, lunch, and dinner not because they are options provided by the service but I figured
+        the likely hood of the words being present in titles would be great.  */
+
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override

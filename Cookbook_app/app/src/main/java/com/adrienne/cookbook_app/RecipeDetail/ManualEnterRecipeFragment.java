@@ -79,7 +79,6 @@ public class ManualEnterRecipeFragment extends Fragment {
         }
     }
 
-   // Bundle[{ApiRecipeKey-website=Serious Eats, ApiRecipeKey-serving=4.0, ApiRecipeKey-image=https://www.edamam.com/web-img/a07/a07d1a6832f5b1051578653ca8c8e12d.jpg, ApiRecipeKey-title=Rhubarb Juice, ApiRecipeKey-url=http://www.seriouseats.com/recipes/2013/05/tart-unsweetened-homemade-rhubarb-juice-recipe.html}]
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +92,9 @@ public class ManualEnterRecipeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+/* I really thought this page would be simplest, but it actually caused me more problems.
+* And caused me to have to alter what I could display. I didn't think about databases and classes
+* well which showed here the most. */
 
         mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 
@@ -128,6 +130,9 @@ public class ManualEnterRecipeFragment extends Fragment {
         mCookTimeView.setText(cooktime);
 
         Log.d(TAG, "onCreateView: RECIPE " + title);
+
+        /* I had planned to do a listview for the ingredients and directions. However it turns out
+        * i didnt think it through well and I was going to have to do double work. */
 
         List<Ingredients> ingredients = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllIngredients(recipeId);
 

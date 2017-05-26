@@ -20,6 +20,9 @@ import java.util.List;
 
 public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
 
+    /*This allows the user to add lines in the
+    * manual enter recipe section. */
+
     private List<Ingredients> mIngredientsList;
     public static final int VIEW_TYPE_ADD = 1;
     public static final int VIEW_TYPE_INGREDIENT = 2;

@@ -36,6 +36,9 @@ public class ApiRecipeRecyclerViewAdapter extends RecyclerView.Adapter<ApiRecipe
     @Override
     public void onBindViewHolder(final ApiRecipeViewHolder holder, final int position) {
     final ApiRecipe currentApiRecipe = mApiRecipeList.get(position);
+
+        /* This adapter displays the api search results in a fragment which is displayed on launch*/
+
         Picasso.with(holder.mApiImage.getContext()).load(currentApiRecipe.getApiImage()).into(holder.mApiImage);
         holder.mApiTitle.setText(currentApiRecipe.getApiTitle());
         holder.mApiWebsiteSource.setText(currentApiRecipe.getApiWebsiteSource());

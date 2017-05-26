@@ -32,6 +32,11 @@ import java.util.List;
  */
 public class ApiDetaiRecipeFragment extends Fragment {
 
+    //We spent time trying to figure out why this one isnt working when the manual does and
+    //it uses the same method calls, but at this point I'm not sure why. It throws an error message
+    //which is actually a toast and it doesn't crash. The user isn't able to view a detail of the
+    //recipe directly they would have to do another search.
+
     public static final String TAG = "API COOKBOOK FRAG";
 
     public static final String RECIPE_ID = "recipeId";
@@ -113,7 +118,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Sorry about that. Return to home.", Toast.LENGTH_SHORT).show();
         }
-        
+
         mBookmark = (ImageView) view.findViewById(R.id.add_to_bookmark);
         mDelete = (ImageView) view.findViewById(R.id.delete_recipe);
         mHome = (ImageView) view.findViewById(R.id.to_home_button);

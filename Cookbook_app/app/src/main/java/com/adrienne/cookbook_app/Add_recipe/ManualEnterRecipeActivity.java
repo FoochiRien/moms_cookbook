@@ -45,6 +45,9 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
     List<Ingredients> recipeIngredients;
     List<Directions> recipeDirections;
 
+    /*User can enter recipe manually. This was made way to complicated by under thinking. I am going
+    * to redo the input abilities to stream line the input process and the display process.*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
         mCookTime = (EditText) findViewById(R.id.enter_recipe_cooktime);
         mSaveRecipe = (Button) findViewById(R.id.save_recipe_button);
 
-
+        /*Pretty straigh forward data entry however, there is a recyclerview used to capture the
+        * ingredients and directions. The idea was so that they could be kept in order. */
 
 
         mSaveRecipe.setOnClickListener(new View.OnClickListener() {

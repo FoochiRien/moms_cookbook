@@ -19,6 +19,9 @@ import java.util.List;
 
 public class DirectionsRecyclerViewAdapter extends RecyclerView.Adapter {
 
+    /* Allows the user to  add in multiple lines for the directions. On review I'm going to remove
+    * this and replace it a string. */
+
    private List<Directions> mDirectionsList;
     public static final int VIEW_TYPE_ADD = 1;
     public static final int VIEW_TYPE_INGREDIENT = 2;

@@ -8,11 +8,14 @@ import java.util.List;
  */
 
 public class MyRecipe {
-
+    /*The parts of the recipes */
     private String mImage, mSourceTitle,mTitle, mNotes, mCategory, mSourceUrl, mViewToShow;
     private Float mServings, mCookTime;
     private int mBookmarked;
     private long mRecipeId;
+    //These two arrays should not even exist. When I begin working on the project after the class
+    //I'm going to begin by redoing the classes so that it isn't so BAD.
+    // Change to strings not arrays, remove joins from DB.
     List<Directions> mDirections;
     List<Ingredients> mIngredients;
 

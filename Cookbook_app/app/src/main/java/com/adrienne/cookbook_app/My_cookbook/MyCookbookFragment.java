@@ -83,6 +83,8 @@ public class MyCookbookFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* The fragment displays the collection of recipes on the home screen ie the cookbook.*/
+
         myRecipe = new ArrayList<>();
 
         mqueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);

@@ -24,6 +24,8 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
+        /* Web view for the recipe when user searches through the api*/
+
         mImageView = (ImageView) findViewById(R.id.to_home_button);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override

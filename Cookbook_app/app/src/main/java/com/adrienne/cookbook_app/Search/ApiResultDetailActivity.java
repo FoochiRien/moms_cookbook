@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 
 public class ApiResultDetailActivity extends AppCompatActivity {
 
+    /* Detail result for the api search.*/
+
     public static final String TAG = "api result activity";
 
     //---Keys for Api Intent

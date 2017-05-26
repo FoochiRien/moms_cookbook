@@ -34,7 +34,6 @@ import com.adrienne.cookbook_app.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.CookbookOnFragmentInteractionListener {
 
-    public static final String TAG = "MAINACTIVITY: ";
     public static final String KEY = "ApiRecipeKey-title";
     public static final String KEY1 = "ApiRecipeKey-image";
     public static final String KEY2 = "ApiRecipeKey-website";
@@ -54,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
         DBAssetHelper dbSetup = new DBAssetHelper(MainActivity.this);
         dbSetup.getReadableDatabase();
 
-
+        /* The Main Activity hows the Cookbook app and the Api Search.
+        * From here the user is able to view the recipes that they have added manually or
+        * from an search on the API. */
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         mPagerAdapter = new CookbookPagerAdapter(getSupportFragmentManager());
@@ -111,8 +112,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
             Toast.makeText(this, "You have fallen off the grid. Try again later.", Toast.LENGTH_LONG).show();
         }
 
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(.getWindowToken(), 0);
+
 
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
