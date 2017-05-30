@@ -58,7 +58,7 @@
         android:text="@string/enter_directions"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_ingredients_list"
+        android:id="@+id/display_ingredients_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

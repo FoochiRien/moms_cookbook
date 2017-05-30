@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
+import com.adrienne.cookbook_app.My_cookbook.DisplayRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.IngredientsRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
@@ -43,7 +44,7 @@ public class ManualEnterRecipeFragment extends Fragment {
     TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView;
     ImageView mBookmark, mDelete, mHome;
 
-    IngredientsRecyclerViewAdapter mIngredientsAdapter;
+    DisplayRecyclerViewAdapter mDisplayRecyclerViewAdapter;
 
 
     private RecipeSQLiteOpenHelper mDBHelper;
@@ -122,10 +123,10 @@ public class ManualEnterRecipeFragment extends Fragment {
         * i didnt think it through well and I was going to have to do double work. */
 
 
-        RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.recipe_ingredients_list);
-        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(myRecipes.getIngredients());
-        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        recyclerView2.setAdapter(mIngredientsAdapter);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.display_ingredients_list);
+        mDisplayRecyclerViewAdapter = new DisplayRecyclerViewAdapter(myRecipes.getIngredients());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(mDisplayRecyclerViewAdapter);
 
         mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

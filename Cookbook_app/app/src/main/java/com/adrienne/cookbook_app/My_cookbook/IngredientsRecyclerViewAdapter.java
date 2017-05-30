@@ -26,7 +26,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
     private List<String> mIngredientsList;
     public static final int VIEW_TYPE_ADD = 1;
     public static final int VIEW_TYPE_INGREDIENT = 2;
-  ;
+
 
     public IngredientsRecyclerViewAdapter(List<String> ingredientsList) {
         mIngredientsList = ingredientsList;
