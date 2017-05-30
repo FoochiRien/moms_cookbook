@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
-import com.adrienne.cookbook_app.My_cookbook.Directions;
-import com.adrienne.cookbook_app.My_cookbook.Ingredients;
+
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.Ingredient;
 
@@ -39,17 +38,11 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String COL_SOURCEWEBSITE = "sourcewebsite";
     private static final String COL_BOOKMARKED = "bookmarked";
     private static final String COL_VIEW_TO_SHOW = "view_to_show";
+    private static final String COL_DIRECTIONS = "directions";
     //todo add col for view to show add to DB
 
-    private static final String DIRECTIONS_TABLE_NAME = "directions";
-    private static final String COL_RECIPE_D_ID = "recipe_directions_id";
-    private static final String COL_DIRECTIONS = "directions";
 
-    private static final String INGREDIENTS_TABLE_NAME = "ingredients";
-    private static final String COL_RECIPE_ID = "recipe_ingredients_id";
-    private static final String COL_INGREDIENTS = "ingredients";
-
-    private static final String CREATE_RECIPE_TABLE = "CREATE TABLE" + RECIPE_TABLE_NAME + "(" +
+    private static final String CREATE_RECIPE_TABLE = "CREATE TABLE " + RECIPE_TABLE_NAME + "(" +
             COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COL_IMAGE + " TEXT, " +
             COL_TITLE + " TEXT, " +
@@ -60,18 +53,19 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
             COL_SOURCETITLE + " TEXT, " +
             COL_SOURCEWEBSITE + " TEXT, " +
             COL_BOOKMARKED + " INTEGER, " +
+            COL_DIRECTIONS + " TEXT, " +
             COL_VIEW_TO_SHOW + " TEXT )";
 
 
-    private static final String CREATE_DIRECTIONS_TABLE = "CREATE TABLE" +
-            DIRECTIONS_TABLE_NAME + "(" +
-            COL_ID + " INTEGER PRIMARY KEY, " +
-            COL_RECIPE_D_ID + " INTEGER, " +
-            COL_DIRECTIONS + " TEXT )";
+    private static final String INGREDIENTS_TABLE_NAME = "ingredients";
+    private static final String COL_INGRE_ID = "ingredient_id";
+    private static final String COL_RECIPE_ID = "recipe_id";
+    private static final String COL_INGREDIENTS = "ingredients";
 
-    private static final String CREATE_INGREDIENTS_TABLE = "CREATE TABLE" +
+
+    private static final String CREATE_INGREDIENTS_TABLE = "CREATE TABLE " +
             INGREDIENTS_TABLE_NAME + "(" +
-            COL_ID + " INTEGER PRIMARY KEY, " +
+            COL_INGRE_ID + " INTEGER PRIMARY KEY, " +
             COL_RECIPE_ID + " INTEGER, " +
             COL_INGREDIENTS + " TEXT )";
 
@@ -96,14 +90,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(CREATE_RECIPE_TABLE);
-        db.execSQL(CREATE_DIRECTIONS_TABLE);
         db.execSQL(CREATE_INGREDIENTS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + RECIPE_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DIRECTIONS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + INGREDIENTS_TABLE_NAME);
         this.onCreate(db);
     }
@@ -130,7 +122,8 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public void addManualRecipetoCookbook( String manualTitle, String manualServing,
                                        String manualCategories, String manualCooktime,
-                                           String manualNotes, String manualBookmark) {
+                                           String manualNotes, String manualBookmark,
+                                           String manualDirections, List<String> ingredients) {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -144,10 +137,23 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(COL_SOURCEWEBSITE, "");
         values.put(COL_BOOKMARKED, "");
         values.put(COL_VIEW_TO_SHOW, "manual");
-        db.insert(RECIPE_TABLE_NAME, null, values);
+        values.put(COL_DIRECTIONS, manualDirections);
+        long recipeid = db.insert(RECIPE_TABLE_NAME, null, values);
+        for(String ingredient : ingredients)
+        {
+            insertIngredients(ingredient, recipeid);
+        }
         db.close();
     }
 
+
+    public void insertIngredients(String ingredient, long recipeId){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_RECIPE_ID, recipeId);
+        values.put(COL_INGREDIENTS, ingredient);
+        db.insert(INGREDIENTS_TABLE_NAME, null, values);
+    }
     //
 //    public void addPhotoRecipetoCookbook(String manualImage, String manualTitle, String manualServing,
 //                                       String manualCategories, String manualCooktime,
@@ -191,7 +197,6 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
@@ -200,6 +205,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
                 String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
 
 
                 MyRecipe recipeforshow = new MyRecipe(recipeId, image, sourcetitle, title,
@@ -215,36 +221,24 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
 
 
-    public List<Ingredients> getAllIngredients(long recipeid) {
+    public List<String> getAllIngredients(long recipeid) {
         SQLiteDatabase db = getReadableDatabase();
 
-//        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-//        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + INGREDIENTS_TABLE_NAME +
-//                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
-//                " = " + INGREDIENTS_TABLE_NAME + "." + COL_RECIPE_ID);
+        String selection = COL_RECIPE_ID + " = ?";
+        String recipe_id = Long.toString(recipeid);
 
+        Cursor cursor = db.query(INGREDIENTS_TABLE_NAME,
+                null, selection, new String[]{recipe_id}, null, null, null, null);
 
-
-
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + INGREDIENTS_TABLE_NAME +
-                " ON " + COL_ID +
-                " = " + COL_RECIPE_ID);
-
-        String selection = recipeid + "";
-
-        Cursor cursor = builder.query(db,
-                null, selection, null, null, null, null, null);
-
-        List<Ingredients> myingredients = new ArrayList<>();
+        List<String> myingredients = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                long recipe_id = cursor.getLong(cursor.getColumnIndex(COL_RECIPE_ID));
+                long recipe_Id = cursor.getLong(cursor.getColumnIndex(COL_RECIPE_ID));
                 String ingredient = cursor.getString(cursor.getColumnIndex(COL_INGREDIENTS));
 
-                myingredients.add(new Ingredients(ingredient));
+                myingredients.add(ingredient);
                 cursor.moveToNext();
             }
         }
@@ -254,82 +248,8 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertRecipe(MyRecipe myRecipe){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
 
-        values.put(COL_IMAGE, myRecipe.getImage());
-        values.put(COL_TITLE, myRecipe.getTitle());
-        values.put(COL_SERVINGS, myRecipe.getServings());
-        values.put(COL_COOKTIME, myRecipe.getCookTime());
-        values.put(COL_CATEGORY, myRecipe.getCategory());
-        values.put(COL_NOTES, myRecipe.getNotes());
-        values.put(COL_SOURCETITLE, myRecipe.getSourceTitle());
-        values.put(COL_SOURCEWEBSITE, myRecipe.getSourceUrl());
-        values.put(COL_BOOKMARKED, myRecipe.getBookmarked());
-        values.put(COL_VIEW_TO_SHOW, myRecipe.getViewToShow());
-
-
-        long recipeId = db.insert(RECIPE_TABLE_NAME, null, values);
-        for(Ingredients ingredient : myRecipe.getIngredients())
-        {
-            insertIngredients(ingredient, recipeId);
-        }
-        for(Directions directions : myRecipe.getDirections())
-        {
-            insertDirections(directions, recipeId);
-        }
-
-
-    }
-
-    public void insertIngredients(Ingredients ingredient, long recipeId){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COL_RECIPE_ID, recipeId);
-        values.put(COL_INGREDIENTS, ingredient.getIngredients());
-        db.insert(INGREDIENTS_TABLE_NAME, null, values);
-    }
-
-    public void insertDirections(Directions direction, long recipeId){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COL_RECIPE_ID, recipeId);
-        values.put(COL_DIRECTIONS, direction.getDirections());
-        db.insert(DIRECTIONS_TABLE_NAME, null, values);
-    }
-
-    public List<Directions> getAllDirections(long recipeid) {
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-        builder.setTables(RECIPE_TABLE_NAME + " JOIN " + DIRECTIONS_TABLE_NAME +
-                " ON " + RECIPE_TABLE_NAME + "." + COL_ID +
-                " = " + DIRECTIONS_TABLE_NAME + "." + COL_RECIPE_D_ID);
-
-        String selection = recipeid + "";
-
-        Cursor cursor = builder.query(db,
-                null, selection, null, null, null, null);
-
-        List<Directions> mydirections = new ArrayList<>();
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-
-                long recipe_id = cursor.getLong(cursor.getColumnIndex(COL_RECIPE_D_ID));
-                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
-
-                mydirections.add(new Directions(directions));
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-        return mydirections;
-    }
-
-    public List<MyRecipe> getRecipeDisplay(long recipeId) {
+    public MyRecipe getRecipeDisplay(long recipeId) {
         SQLiteDatabase db = getReadableDatabase();
 
         String selection = COL_ID + " = ?";
@@ -342,7 +262,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 null,
                 null);
 
-        List<MyRecipe> myrecipes = new ArrayList<>();
+       MyRecipe myrecipes = null;
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -352,7 +272,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
@@ -363,10 +283,10 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
 
-                MyRecipe recipeforshow = new MyRecipe(recipe_Id, image, sourcetitle, title,
+                myrecipes = new MyRecipe(recipe_Id, image, sourcetitle, title,
                         notes, category, sourcewebsite, servings, cooktime, directions,
                         ingredients, bookmarked, viewtoshow);
-                myrecipes.add(recipeforshow);
+
                 cursor.moveToNext();
             }
         }
@@ -395,7 +315,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
@@ -438,7 +358,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
+                 String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
@@ -466,7 +386,6 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         String whereclause = recipeid + " = ? ";
 
         db.delete(RECIPE_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_ID)});
-        db.delete(DIRECTIONS_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_RECIPE_D_ID)});
         db.delete(INGREDIENTS_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_RECIPE_ID)});
         db.close();
 
@@ -514,7 +433,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
@@ -560,7 +479,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
                 String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
                 String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
                 List ingredients = getAllIngredients(recipeId);
-                List directions = getAllDirections(recipeId);
+                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
                 float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
                 float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
                 String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));

@@ -1,6 +1,5 @@
 package com.adrienne.cookbook_app.Add_recipe;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.adrienne.cookbook_app.MainActivity;
-import com.adrienne.cookbook_app.My_cookbook.Directions;
-import com.adrienne.cookbook_app.My_cookbook.DirectionsRecyclerViewAdapter;
-import com.adrienne.cookbook_app.My_cookbook.Ingredients;
+
 import com.adrienne.cookbook_app.My_cookbook.IngredientsRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
@@ -29,21 +26,21 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
     public static final String TAG = "MANUAL ENTER";
 
     //todo enter constants
-    EditText mRecipeTitle, mRecipeNotes, mRecipeCategory, mRecipeServing, mCookTime;
+    EditText mRecipeTitle, mRecipeNotes, mRecipeCategory, mRecipeServing, mCookTime, mRecipeIngredients,
+    mRecipeDirections;
     Button mSaveRecipe;
 
 
-    private String recipeTitle, recipeNotes, recipeCategory,recipeServing, recipeCooktime;
+    private String recipeTitle, recipeNotes, recipeCategory,recipeServing, recipeCooktime,
+            recipeDirections;
+
+    private List<String> mIngredients;
 
     ImageView mHomeButton;
 
     IngredientsRecyclerViewAdapter mIngredientsAdapter;
-    DirectionsRecyclerViewAdapter mDirectionsAdapter;
 
     private RecipeSQLiteOpenHelper mDBHelper;
-
-    List<Ingredients> recipeIngredients;
-    List<Directions> recipeDirections;
 
     /*User can enter recipe manually. This was made way to complicated by under thinking. I am going
     * to redo the input abilities to stream line the input process and the display process.*/
@@ -60,12 +57,18 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
         mRecipeNotes = (EditText) findViewById(R.id.enter_recipe_notes);
         mRecipeCategory = (EditText) findViewById(R.id.enter_recipe_category);
         mRecipeServing = (EditText) findViewById(R.id.enter_recipe_serving);
+        mRecipeDirections = (EditText) findViewById(R.id.enter_recipe_directions);
         mCookTime = (EditText) findViewById(R.id.enter_recipe_cooktime);
         mSaveRecipe = (Button) findViewById(R.id.save_recipe_button);
+        //todo ingredients
 
-        /*Pretty straigh forward data entry however, there is a recyclerview used to capture the
+        /*Pretty straight forward data entry however, there is a recyclerview used to capture the
         * ingredients and directions. The idea was so that they could be kept in order. */
 
+        RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.ingredients_recylerview);
+        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<String>());
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        recyclerView2.setAdapter(mIngredientsAdapter);
 
         mSaveRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +83,11 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
                     recipeCategory = mRecipeCategory.getText().toString();
                     recipeServing = mRecipeServing.getText().toString();
                     recipeCooktime = mCookTime.getText().toString();
+                    recipeDirections = mRecipeDirections.getText().toString();
+                    mIngredients = mIngredientsAdapter.getIngredients();
                     mDBHelper.addManualRecipetoCookbook(recipeTitle, recipeServing,
-                            recipeCategory, recipeCooktime, recipeNotes, null);
+                            recipeCategory, recipeCooktime, recipeNotes, null,  recipeDirections,
+                            mIngredients);
                     Log.d(TAG, "onClick: save button" + recipeTitle);
                     Toast.makeText(ManualEnterRecipeActivity.this, "Your recipe has been added.",
                             Toast.LENGTH_SHORT).show();
@@ -89,16 +95,6 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
                 }
             }
         });
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.directions_recyclerview);
-        mDirectionsAdapter = new DirectionsRecyclerViewAdapter(new ArrayList<Directions>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        recyclerView.setAdapter(mDirectionsAdapter);
-
-        RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.ingredients_recylerview);
-        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<Ingredients>());
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        recyclerView2.setAdapter(mIngredientsAdapter);
 
 
         mHomeButton = (ImageView) findViewById(R.id.to_home_button);

@@ -14,29 +14,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
-import com.adrienne.cookbook_app.My_cookbook.Directions;
-import com.adrienne.cookbook_app.My_cookbook.DirectionsRecyclerViewAdapter;
-import com.adrienne.cookbook_app.My_cookbook.Ingredients;
 import com.adrienne.cookbook_app.My_cookbook.IngredientsRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.adrienne.cookbook_app.MainActivity.KEY;
-import static com.adrienne.cookbook_app.MainActivity.KEY1;
-import static com.adrienne.cookbook_app.MainActivity.KEY2;
-import static com.adrienne.cookbook_app.MainActivity.KEY3;
-import static com.adrienne.cookbook_app.MainActivity.KEY4;
 
 
 public class ManualEnterRecipeFragment extends Fragment {
@@ -49,14 +38,13 @@ public class ManualEnterRecipeFragment extends Fragment {
 
     private OnFragmentInteractionListener mManualEnterListener;
     private List<MyRecipe> mRecipeList;
-    private List<Ingredients> recipeIngredients;
-    private List<Directions> recipeDirections;
+    private List<String> recipeIngredients;
 
     TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView;
     ImageView mBookmark, mDelete, mHome;
 
     IngredientsRecyclerViewAdapter mIngredientsAdapter;
-    DirectionsRecyclerViewAdapter mDirectionsAdapter;
+
 
     private RecipeSQLiteOpenHelper mDBHelper;
 
@@ -101,16 +89,15 @@ public class ManualEnterRecipeFragment extends Fragment {
         Bundle bundle = getArguments();
         final long recipeId = bundle.getLong(RECIPE_ID);
         //----retrieve data from the first table
-        List<MyRecipe> myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(recipeId);
+        MyRecipe myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(recipeId);
         Log.d(TAG, "onCreateView: " + myRecipes);
-        mRecipeList = mDBHelper.getRecipeDisplay(recipeId);
 
-        String title = myRecipes.get(0).getTitle();
-        String notes = myRecipes.get(0).getNotes();
-        String category = myRecipes.get(0).getCategory();
-        float serving2 = myRecipes.get(0).getServings();
+        String title = myRecipes.getTitle();
+        String notes = myRecipes.getNotes();
+        String category = myRecipes.getCategory();
+        float serving2 = myRecipes.getServings();
         String serving = serving2 + " servings";
-        float cooktime2 = myRecipes.get(0).getCookTime();
+        float cooktime2 = myRecipes.getCookTime();
         String cooktime = cooktime2 + "";
 
         mTitleView = (TextView) view.findViewById(R.id.recipe_title);
@@ -134,17 +121,11 @@ public class ManualEnterRecipeFragment extends Fragment {
         /* I had planned to do a listview for the ingredients and directions. However it turns out
         * i didnt think it through well and I was going to have to do double work. */
 
-        List<Ingredients> ingredients = RecipeSQLiteOpenHelper.getInstance(getContext()).getAllIngredients(recipeId);
 
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recipe_directions_list);
-//        mDirectionsAdapter = new DirectionsRecyclerViewAdapter(new ArrayList<Directions>());
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-//        recyclerView.setAdapter(mDirectionsAdapter);
-//
-//        RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.recipe_ingredients_list);
-//        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(new ArrayList<Ingredients>());
-//        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-//        recyclerView2.setAdapter(mIngredientsAdapter);
+        RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.recipe_ingredients_list);
+        mIngredientsAdapter = new IngredientsRecyclerViewAdapter(myRecipes.getIngredients());
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        recyclerView2.setAdapter(mIngredientsAdapter);
 
         mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

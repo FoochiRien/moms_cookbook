@@ -23,12 +23,12 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
     /*This allows the user to add lines in the
     * manual enter recipe section. */
 
-    private List<Ingredients> mIngredientsList;
+    private List<String> mIngredientsList;
     public static final int VIEW_TYPE_ADD = 1;
     public static final int VIEW_TYPE_INGREDIENT = 2;
   ;
 
-    public IngredientsRecyclerViewAdapter(List<Ingredients> ingredientsList) {
+    public IngredientsRecyclerViewAdapter(List<String> ingredientsList) {
         mIngredientsList = ingredientsList;
     }
 
@@ -60,7 +60,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
             ((AddViewHolder) holder).mAddButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mIngredientsList.add(new Ingredients());
+                    mIngredientsList.add(new String(""));
                     notifyItemInserted(mIngredientsList.size());
                 }
             });
@@ -68,7 +68,7 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
         } else {
 
             IngredientsViewHolder ingredientsViewHolder = (IngredientsViewHolder) holder;
-            ingredientsViewHolder.mRecipeIngredients.setText(mIngredientsList.get(position).getIngredients());
+            ingredientsViewHolder.mRecipeIngredients.setText(mIngredientsList.get(position));
             ingredientsViewHolder.mRecipeIngredients.addTextChangedListener(new CustomTextWatcher(((IngredientsViewHolder) holder).mRecipeIngredients,holder.getAdapterPosition()));
         }
 
@@ -104,9 +104,13 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void swapData(List<Ingredients> newIngredientsList){
+    public void swapData(List<String> newIngredientsList){
         mIngredientsList = newIngredientsList;
         notifyDataSetChanged();
+    }
+
+    public List<String> getIngredients(){
+        return mIngredientsList;
     }
 
     public class CustomTextWatcher implements TextWatcher{
@@ -127,9 +131,9 @@ public class IngredientsRecyclerViewAdapter extends RecyclerView.Adapter {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if(mEditText.getText().toString().trim().isEmpty()){
-                mIngredientsList.get(mPosition).setIngredients(null);
+                mIngredientsList.set(mPosition,null);
             } else {
-                mIngredientsList.get(mPosition).setIngredients(s.toString());
+                mIngredientsList.set(mPosition,s.toString());
             }
         }
 

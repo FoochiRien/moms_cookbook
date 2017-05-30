@@ -46,7 +46,8 @@ public class ApiDetaiRecipeFragment extends Fragment {
     ImageView mBookmark, mDelete, mHome;
 
     RecipeSQLiteOpenHelper mDBHelper;
-    List<MyRecipe> mRecipeList;
+    MyRecipe mRecipeList;
+    long mRecipeId;
 
     private OnFragmentInteractionListener mApiCookbookListener;
 
@@ -59,7 +60,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public static ApiDetaiRecipeFragment newInstance(Bundle bundle) {
         ApiDetaiRecipeFragment fragment = new ApiDetaiRecipeFragment();
         Bundle args = new Bundle();
-
+        args.putLong(RECIPE_ID,bundle.getLong(ManualEnterRecipeFragment.RECIPE_ID));
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +69,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            mRecipeId = getArguments().getLong(RECIPE_ID);
 
    }
     }
@@ -83,18 +84,17 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = getArguments();
-        final long recipeId = bundle.getLong(RECIPE_ID);
-        Log.d(TAG, "onViewCreated:  recipeId" + recipeId);
-        List<MyRecipe> myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(recipeId);
+
+        Log.d(TAG, "onViewCreated:  recipeId" + mRecipeId);
+       MyRecipe myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(mRecipeId);
 //        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 //        mRecipeList = mDBHelper.getRecipeDisplay(recipeId);
 //        Log.d(TAG, "onViewCreated: title " + );
-        if(mRecipeList!=null && mRecipeList.size()>0) {
-            String title = myRecipes.get(0).getTitle();
-            String source = myRecipes.get(0).getSourceTitle();
-            final String url = myRecipes.get(0).getSourceUrl();
-            String image = myRecipes.get(0).getImage();
+
+            String title = myRecipes.getTitle();
+            String source = myRecipes.getSourceTitle();
+            final String url = myRecipes.getSourceUrl();
+            String image = myRecipes.getImage();
 
             mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
             mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
@@ -115,9 +115,8 @@ public class ApiDetaiRecipeFragment extends Fragment {
             mCBApiTitle.setText(title);
             mCBApiWebsiteSource.setText(source);
             Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
-        } else {
-            Toast.makeText(getContext(), "Sorry about that. Return to home.", Toast.LENGTH_SHORT).show();
-        }
+
+
 
         mBookmark = (ImageView) view.findViewById(R.id.add_to_bookmark);
         mDelete = (ImageView) view.findViewById(R.id.delete_recipe);
@@ -126,13 +125,13 @@ public class ApiDetaiRecipeFragment extends Fragment {
         mBookmark.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                int bookmarked = mDBHelper.searchBookmark(recipeId);
+                int bookmarked = mDBHelper.searchBookmark(mRecipeId);
                 if (bookmarked == 1) {
                     Toast.makeText(getContext(), "Removing from your Cookbook.",
                             Toast.LENGTH_LONG).show();
 
                 } else {
-                    mDBHelper.addBookmark(recipeId);
+                    mDBHelper.addBookmark(mRecipeId);
                     Toast.makeText(getContext(), "Added to your cookbook.", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -144,7 +143,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
         mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDBHelper.removeRecipeFromCookbook(recipeId);
+                mDBHelper.removeRecipeFromCookbook(mRecipeId);
                 Toast.makeText(getContext(), "BYE, BYE, BYE. It's gone from you cookbook",
                         Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), MainActivity.class));
