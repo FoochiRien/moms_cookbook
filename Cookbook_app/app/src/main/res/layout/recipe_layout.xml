@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:textAlignment="center"
         android:padding="8dp"
         android:text="Title"
         android:textSize="20dp"
@@ -26,11 +27,12 @@
         android:textSize="14dp"
         android:textStyle="italic"/>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/recipe_servings"
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight=".50"
             android:text="servings"
-            android:textStyle="italic"/>
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/recipe_cooktime"
@@ -48,14 +51,20 @@
             android:text="cooktime"
             android:textAllCaps="true"
             android:textAlignment="textStart"
-            android:textStyle="italic"/>
+            android:textStyle="bold"
+            />
 
     </LinearLayout>
+
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enter_directions"/>
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:text="@string/enter_ingredients"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/display_ingredients_list"
@@ -64,7 +73,22 @@
         android:layout_marginTop="8dp"
         android:padding="10dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:padding="8dp"
+        android:text="@string/enter_directions"/>
 
+    <TextView
+        android:id="@+id/recipe_directions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="100"
+        android:paddingBottom="8dp"
+        android:layout_marginBottom="10dp"/>
 
 
 
@@ -92,15 +116,15 @@
         android:layout_height="wrap_content"
         android:textSize="14dp"
         android:textStyle="bold"
-        android:padding="8dp"
         android:textAllCaps="true"
+        android:padding="8dp"
         android:text="category"/>
 
     <TextView
         android:id="@+id/recipe_display_category"
         android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="99dp"/>
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>
