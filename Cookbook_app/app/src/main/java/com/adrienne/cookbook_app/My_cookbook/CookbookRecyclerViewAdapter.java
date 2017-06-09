@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.adrienne.cookbook_app.R;
-import com.adrienne.cookbook_app.RecipeDetail.RecipeDetailActivity;
+import com.adrienne.cookbook_app.DetailViewofRecipe.RecipeDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

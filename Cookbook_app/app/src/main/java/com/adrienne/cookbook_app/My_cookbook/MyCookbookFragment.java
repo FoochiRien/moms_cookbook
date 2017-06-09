@@ -1,13 +1,10 @@
 package com.adrienne.cookbook_app.My_cookbook;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +36,7 @@ public class MyCookbookFragment extends Fragment {
     private String mQueryCookbook;
     private EditText mqueryCookbookEditText;
     private ImageView mSearch, mSort;
-    List<MyRecipe> myRecipe;
+    List<MyRecipe> myRecipes;
 
 
     private CookbookOnFragmentInteractionListener mCookbookListener;
@@ -60,7 +57,13 @@ public class MyCookbookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myRecipes = new ArrayList<>();
+        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 
+        if(mDBHelper.getAllRecipes() != null) {
+            myRecipes = mDBHelper.getAllRecipes();
+        }
+//        mCookbookRecyclerViewAdapter.getnewCookbook(myRecipes);
 
     }
 
@@ -85,7 +88,7 @@ public class MyCookbookFragment extends Fragment {
 
         /* The fragment displays the collection of recipes on the home screen ie the cookbook.*/
 
-        myRecipe = new ArrayList<>();
+        myRecipes = new ArrayList<>();
 
         mqueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);
         mSearch = (ImageView) view.findViewById(R.id.cookbook_submit_query);
@@ -95,13 +98,13 @@ public class MyCookbookFragment extends Fragment {
         mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 
         if(mDBHelper.getAllRecipes() != null) {
-            myRecipe = mDBHelper.getAllRecipes();
+            myRecipes = mDBHelper.getAllRecipes();
         }
 
 
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.mycookbook_layout_recyclerview);
-        mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+        mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
@@ -112,9 +115,9 @@ public class MyCookbookFragment extends Fragment {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRecipe = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
-                mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+                myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+
 
             }
         });
@@ -122,9 +125,9 @@ public class MyCookbookFragment extends Fragment {
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRecipe = mDBHelper.sortByTitle();
-                mCookbookRecyclerViewAdapter = new CookbookRecyclerViewAdapter(myRecipe);
+                myRecipes = mDBHelper.sortByTitle();
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+
 
             }
         });

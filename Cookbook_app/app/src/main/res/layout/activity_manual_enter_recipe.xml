@@ -7,16 +7,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/manual_enter_recipe_container"
-    tools:context="com.adrienne.cookbook_app.Add_recipe.ManualEnterRecipeActivity">
+    tools:context="com.adrienne.cookbook_app.manual_enter_recipe.ManualEnterRecipeActivity">
 
 
-    <include layout="@layout/toolbar_all_other_pages_layout"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_activity_manual_enter_recipe"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    <include layout="@layout/manual_enter_recipe"/>
+        android:layout_height="wrap_content">
+
+    <include layout="@layout/manual_enter_recipe_layout"/>
 
     </ScrollView>
 

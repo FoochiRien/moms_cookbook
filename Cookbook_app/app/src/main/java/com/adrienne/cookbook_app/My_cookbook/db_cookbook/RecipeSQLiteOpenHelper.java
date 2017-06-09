@@ -5,15 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 
 
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
-import com.adrienne.cookbook_app.Search.EdamamAPI.EdamamResult.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by Admin on 5/20/17.

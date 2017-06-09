@@ -3,7 +3,7 @@
              android:id="@+id/api_search_fragment"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.adrienne.cookbook_app.Search.SearchFragment">
+             tools:context="com.adrienne.cookbook_app.APISearch.SearchFragment">
 
     <RelativeLayout
         android:id="@+id/api_search_fragment_layout"

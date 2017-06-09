@@ -3,14 +3,11 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:id="@+id/fragment_api_recipe_cookbook"
-             tools:context="com.adrienne.cookbook_app.RecipeDetail.ApiDetaiRecipeFragment">
+             tools:context="com.adrienne.cookbook_app.DetailViewofRecipe.SavedAPIRecipe.ApiDetaiRecipeFragment">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <include layout="@layout/toolbar_recipe"/>
-
 
         <TextView
             android:id="@+id/recipefromapi_detail_title"

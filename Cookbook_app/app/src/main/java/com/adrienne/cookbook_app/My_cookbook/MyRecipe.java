@@ -15,9 +15,7 @@ public class MyRecipe {
     private int mBookmarked;
     private long mRecipeId;
     private List<String> mIngredients;
-    //These two arrays should not even exist. When I begin working on the project after the class
-    //I'm going to begin by redoing the classes so that it isn't so BAD.
-    // Change to strings not arrays, remove joins from DB.
+
 
 
     public MyRecipe(Long recipeId, String image, String sourceTitle, String title, String notes, String category,

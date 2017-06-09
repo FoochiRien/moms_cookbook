@@ -3,14 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:id="@+id/fragment_manualrecipe_cookbook"
-             tools:context="com.adrienne.cookbook_app.RecipeDetail.ManualEnterRecipeFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <include layout="@layout/toolbar_recipe"/>
-
+             tools:context="com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnterRecipeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +13,6 @@
     </ScrollView>
 
 
-</LinearLayout>
+
 
 </FrameLayout>
