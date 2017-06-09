@@ -8,9 +8,9 @@ The app allows the user to search through an API, view basic information about t
 Link for Google Play Store: 
 https://play.google.com/store/apps/details?id=com.adrienne.cookbook_app
 
-<img src="screenshot.png" width="250"/>
-<img src="screenshotmenu.png" width="250"/>
-<img src="screenshotapi.png" width="250"/>
+<img src="images/Screen-Shot.png" width="725"/>
+<img src="images/screenshotmenu.png" width="250"/>
+<img src="images/screenshotapi.png" width="250"/>
 
 
 
