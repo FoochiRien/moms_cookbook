@@ -38,6 +38,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     TextView mApiTitle, mApiWebsiteSource, mApiUrl;
     EditText mCategories;
 
+    Class view = ApiResultDetailActivity.class;
 
     private RecipeSQLiteOpenHelper mDBHelper;
 
@@ -83,7 +84,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mDBHelper.addApiRecipetoCookbook(apiImage,apiRecipe, apiServing,apiCategories,
+                mDBHelper.addApiRecipetoCookbook(apiImage, apiRecipe, apiServing, apiCategories,
                         apiWebsite, apiUrl);
                 Toast.makeText(ApiResultDetailActivity.this, "Congrats. The recipe has been added " +
                                 "to your cookbook.",
@@ -106,39 +107,33 @@ public class ApiResultDetailActivity extends AppCompatActivity {
         });
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu_layout, menu);
+        MenuItem delete = menu.findItem(R.id.menu_delete);
+        MenuItem bookmark = menu.findItem(R.id.menu_bookmark);
+        MenuItem searchapi = menu.findItem(R.id.menu_searchapi);
+        delete.setVisible(false);
+        bookmark.setVisible(false);
+        searchapi.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        boolean mState = false;
-        switch(item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
             case R.id.menu_home:
                 startActivity(new Intent(ApiResultDetailActivity.this, MainActivity.class));
                 return true;
-            case R.id.menu_delete:
-                if(mState == false){
-                    item.setVisible(false);
-                }
-               return true;
-            case R.id.menu_bookmark:
-                if(mState == false){
-                    item.setVisible(false);
-                }
-               return true;
-            case R.id.menu_searchapi:
-                if(mState == false){
-                    item.setVisible(false);
-                }
-                return true;
             default:
-            return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
 

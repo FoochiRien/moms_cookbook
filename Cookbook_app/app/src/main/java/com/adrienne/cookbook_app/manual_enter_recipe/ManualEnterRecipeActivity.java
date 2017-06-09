@@ -5,7 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +29,7 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
     public static final String TAG = "MANUAL ENTER";
 
     //todo enter constants
-    EditText mRecipeTitle, mRecipeNotes, mRecipeCategory, mRecipeServing, mCookTime, mRecipeIngredients,
+    EditText mRecipeTitle, mRecipeNotes, mRecipeCategory, mRecipeServing, mCookTime,
     mRecipeDirections;
     Button mSaveRecipe;
 
@@ -48,6 +52,12 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_enter_recipe);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_manual_enter_recipe);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Mom's Cookbook");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         mDBHelper = RecipeSQLiteOpenHelper.getInstance(getApplicationContext());
 
@@ -94,7 +104,30 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu_layout, menu);
+        MenuItem delete = menu.findItem(R.id.menu_delete);
+        MenuItem bookmark = menu.findItem(R.id.menu_bookmark);
+        MenuItem searchapi = menu.findItem(R.id.menu_searchapi);
+        delete.setVisible(false);
+        bookmark.setVisible(false);
+        searchapi.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.menu_home:
+                startActivity(new Intent(ManualEnterRecipeActivity.this, MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

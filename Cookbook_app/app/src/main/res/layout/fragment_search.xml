@@ -25,20 +25,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/app_hint_for_query"
-                android:layout_weight="0.83"/>
+                android:layout_weight="0.55"/>
 
             <ImageView
                 android:id="@+id/api_submit_query"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".25"
                 android:src="@android:drawable/ic_search_category_default"/>
 
             <ImageView
                 android:id="@+id/api_search_category"
-                android:layout_width="20dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.17"
+                android:layout_weight="0.25"
                android:background="@drawable/ic_action_name"/>
+
+
         </LinearLayout>
 
 

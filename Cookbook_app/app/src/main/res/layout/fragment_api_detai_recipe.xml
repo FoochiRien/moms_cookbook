@@ -37,6 +37,7 @@
         android:textStyle="italic"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:text="Source"/>
 
 
@@ -69,7 +70,14 @@
         android:paddingLeft="20dp"
         android:textAlignment="center"
         android:layout_marginLeft="10dp"
-        android:text="test test test test"/>
+        android:text=""/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/edamam2_logo"/>
 
 </LinearLayout>
 

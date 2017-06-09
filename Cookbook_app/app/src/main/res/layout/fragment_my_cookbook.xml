@@ -3,8 +3,6 @@
              android:id="@+id/fragment_mycookbook"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#f4d8c3"
-
              tools:context="com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment">
 
     <RelativeLayout
@@ -40,6 +38,12 @@
                 android:layout_weight="0.15"
                 android:src="@drawable/ic_sort_az"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".15"
+                android:src="@drawable/ic_bookmark_recipe"/>
+
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
@@ -47,8 +51,7 @@
             android:layout_below="@id/cookbook_search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
+            android:background="#f4d8c3"
             android:padding="8dp"/>
 
     </RelativeLayout>

@@ -451,7 +451,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         cursor.close();
         return myrecipes;
     }
-
+    // checks to see if a bookmark has been assigned to a recipe
     public int searchBookmark(long recipeId) {
         SQLiteDatabase db = getReadableDatabase();
 

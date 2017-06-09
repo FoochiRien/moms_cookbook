@@ -7,7 +7,7 @@
     <string name="mycookbook">My Cookbook</string>
 
     <!--Enter Recipe Manually      -->
-    <string name="add_ingredient">Add ingrediens</string>
+    <string name="add_ingredient">Add ingredients</string>
     <string name="add_directions">Add directions</string>
     <string name="enter_ingredients">Ingredients:</string>
     <string name="enter_directions">Directions</string>

@@ -53,30 +53,21 @@ public class WebActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu_layout, menu);
+        MenuItem delete = menu.findItem(R.id.menu_delete);
+        MenuItem bookmark = menu.findItem(R.id.menu_bookmark);
+        MenuItem searchapi = menu.findItem(R.id.menu_searchapi);
+        delete.setVisible(false);
+        bookmark.setVisible(false);
+        searchapi.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean mState = false;
+
         switch(item.getItemId()) {
             case R.id.menu_home:
                 startActivity(new Intent(WebActivity.this, MainActivity.class));
-                return true;
-            case R.id.menu_delete:
-                if(mState == false){
-                    item.setVisible(false);
-                }
-                return true;
-            case R.id.menu_bookmark:
-                if(mState == false){
-                    item.setVisible(false);
-                }
-                return true;
-            case R.id.menu_searchapi:
-                if(mState == false){
-                    item.setVisible(false);
-                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

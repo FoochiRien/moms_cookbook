@@ -7,7 +7,8 @@
         android:id="@+id/add_to_ingredients_list"
         android:text="Add"
         android:layout_centerHorizontal="true"
-        android:background="#ece9e9"
+        android:layout_alignParentRight="true"
+        android:background="#fcf9f9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
