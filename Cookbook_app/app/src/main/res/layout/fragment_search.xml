@@ -24,6 +24,8 @@
                 android:id="@+id/api_search_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:imeOptions="actionGo"
                 android:hint="@string/app_hint_for_query"
                 android:layout_weight="0.55"/>
 

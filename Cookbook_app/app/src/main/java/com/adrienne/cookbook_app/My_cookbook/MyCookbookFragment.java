@@ -35,7 +35,7 @@ public class MyCookbookFragment extends Fragment {
 
     private String mQueryCookbook;
     private EditText mqueryCookbookEditText;
-    private ImageView mSearch, mSort;
+    private ImageView mSearch, mSort, mBookmark;
     List<MyRecipe> myRecipes;
 
 
@@ -63,8 +63,6 @@ public class MyCookbookFragment extends Fragment {
         if(mDBHelper.getAllRecipes() != null) {
             myRecipes = mDBHelper.getAllRecipes();
         }
-//        mCookbookRecyclerViewAdapter.getnewCookbook(myRecipes);
-
     }
 
     @Override
@@ -94,6 +92,7 @@ public class MyCookbookFragment extends Fragment {
         mSearch = (ImageView) view.findViewById(R.id.cookbook_submit_query);
         mQueryCookbook = mqueryCookbookEditText.getText().toString();
         mSort = (ImageView) view.findViewById(R.id.cookbook_sortaz);
+        mBookmark = (ImageView) view.findViewById(R.id.cookbook_bookmark);
 
         mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
 
@@ -108,31 +107,32 @@ public class MyCookbookFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
-
-
-
-
+        //search through the recipes that the user has selected for the cookbook
+        //Search through categories and title
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
-
-
             }
         });
-
+        // sort items in the bookmark by A to Z in the title
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myRecipes = mDBHelper.sortByTitle();
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
-
             }
         });
-
-
+        // displays items that the user marked with bookmark
+        mBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRecipes = mDBHelper.getBookmarkItems();
+                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+            }
+        });
 
     }
 

@@ -155,6 +155,7 @@ public class SearchFragment extends Fragment {
 
                 apiSearchOptions();
                 recyclerView.setAdapter(mApiRecipeRecyclerViewAdapter);
+
             }
         });
 

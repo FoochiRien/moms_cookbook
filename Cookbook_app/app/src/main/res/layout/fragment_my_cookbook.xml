@@ -22,6 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.70"
+                android:maxLines="1"
                 android:hint="@string/app_hint_for_query"/>
 
             <ImageView
@@ -39,6 +40,7 @@
                 android:src="@drawable/ic_sort_az"/>
 
             <ImageView
+                android:id="@+id/cookbook_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".15"
