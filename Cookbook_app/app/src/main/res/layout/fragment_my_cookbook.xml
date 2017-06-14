@@ -21,32 +21,39 @@
                 android:id="@+id/cookbook_search_query"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.70"
+                android:layout_weight="0.77"
                 android:maxLines="1"
+                android:imeOptions="actionGo"
+                android:inputType="text"
                 android:hint="@string/app_hint_for_query"/>
 
-            <ImageView
-                android:id="@+id/cookbook_submit_query"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".15"
-                android:src="@android:drawable/ic_search_category_default"/>
 
             <ImageView
                 android:id="@+id/cookbook_sortaz"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.15"
+                android:clickable="true"
+                android:elevation="5dp"
                 android:src="@drawable/ic_sort_az"/>
 
             <ImageView
                 android:id="@+id/cookbook_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight=".15"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:tint="#706d6d"
+                android:layout_weight=".08"
                 android:src="@drawable/ic_bookmark_recipe"/>
 
         </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_below="@+id/cookbook_search_layout"
+            android:id="@+id/cookbook_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mycookbook_layout_recyclerview"
@@ -55,6 +62,7 @@
             android:layout_height="wrap_content"
             android:background="#f4d8c3"
             android:padding="8dp"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 </FrameLayout>

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class ManualEnterRecipeFragment extends Fragment {
     private List<String> recipeIngredients;
 
     TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView;
+    ImageView mBookmarked;
 
     DisplayRecyclerViewAdapter mDisplayRecyclerViewAdapter;
 
@@ -92,12 +94,14 @@ public class ManualEnterRecipeFragment extends Fragment {
         String serving = serving2 + " servings";
         float cooktime2 = myRecipes.getCookTime();
         String cooktime = cooktime2 + "";
+        int bookmark = myRecipes.getBookmarked();
 
         mTitleView = (TextView) view.findViewById(R.id.recipe_title);
         mNotesView = (TextView) view.findViewById(R.id.recipe_notes);
         mCategoryView = (TextView) view.findViewById(R.id.recipe_category);
         mServingView = (TextView) view.findViewById(R.id.recipe_servings);
         mCookTimeView = (TextView) view.findViewById(R.id.recipe_cooktime);
+        mBookmarked = (ImageView) view.findViewById(R.id.menu_bookmark);
 
 
         mTitleView.setText(title);
@@ -107,6 +111,13 @@ public class ManualEnterRecipeFragment extends Fragment {
         mCookTimeView.setText(cooktime);
 
         Log.d(TAG, "onCreateView: RECIPE " + title);
+
+        if(bookmark == 1){
+        mBookmarked.setImageResource(R.drawable.ic_bookmark_recipe);
+        } else if (bookmark == 0){
+            mBookmarked.setImageResource(R.drawable.ic_bookmark_item);
+        }
+
 
         /* I had planned to do a listview for the ingredients and directions. However it turns out
         * i didnt think it through well and I was going to have to do double work. */
@@ -147,4 +158,7 @@ public class ManualEnterRecipeFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction();
     }
+
 }
+
+

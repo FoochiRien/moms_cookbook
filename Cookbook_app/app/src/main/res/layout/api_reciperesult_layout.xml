@@ -18,16 +18,16 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:background="#de8484"
+        android:background="#faf8f6"
         android:paddingRight="5dp"
         />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/api_recipe_title"
@@ -44,13 +44,25 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/api_sourcewebite"/>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/api_recipe_servings"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".20"
+            android:layout_height="wrap_content"
+            android:text="Test"/>
+
+        <TextView
+            android:layout_alignRight="@+id/api_recipe_servings"
+            android:layout_width="0dp"
+            android:layout_weight=".80"
+            android:textAlignment="textStart"
             android:layout_height="wrap_content"
             android:text="@string/api_servings"/>
+    </LinearLayout>
 
     </LinearLayout>
 

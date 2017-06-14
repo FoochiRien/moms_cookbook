@@ -18,11 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 
-import com.adrienne.cookbook_app.APISearch.ApiRecipe;
-import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.manual_enter_recipe.ManualEnterRecipeActivity;
 import com.adrienne.cookbook_app.My_cookbook.MyCookbookFragment;
 
@@ -31,8 +28,6 @@ import com.adrienne.cookbook_app.My_cookbook.db_cookbook.DBAssetHelper;
 import com.adrienne.cookbook_app.APISearch.CookbookPagerAdapter;
 import com.adrienne.cookbook_app.APISearch.SearchFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements SearchFragment.SearchOnFragmentInteractionListener, MyCookbookFragment.CookbookOnFragmentInteractionListener {

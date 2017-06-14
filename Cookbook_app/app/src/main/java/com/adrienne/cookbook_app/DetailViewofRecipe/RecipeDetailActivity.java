@@ -120,7 +120,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 Toast.makeText(RecipeDetailActivity.this, "BYE, BYE, BYE. It's gone from you cookbook",
                         Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RecipeDetailActivity.this, MainActivity.class));
-
                 return true;
             case R.id.menu_bookmark:
                 //checks to see if the item is already bookmarked in the DB
@@ -128,12 +127,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 //todo add visual image to page for bookmark
                 int bookmarked = mDBHelper.searchBookmark(recipeId);
                 if (bookmarked == 1) {
+                    mDBHelper.removeBookmark(recipeId);
+                    item.setIcon(R.drawable.ic_bookmark_item);
                     Toast.makeText(RecipeDetailActivity.this, "Removing from your Cookbook.",
                             Toast.LENGTH_LONG).show();
 
+
                 } else {
                     mDBHelper.addBookmark(recipeId);
-                    Toast.makeText(RecipeDetailActivity.this, "Added to your cookbook.", Toast.LENGTH_SHORT).show();
+                    item.setIcon(R.drawable.ic_bookmark_recipe);
+                    Toast.makeText(RecipeDetailActivity.this, "Added to your cookbook.", Toast.LENGTH_LONG).show();
                 }
                 return true;
             case R.id.menu_searchapi:

@@ -21,7 +21,7 @@
     <!--API Search Results      -->
     <string name="api_title">Title</string>
     <string name="api_sourcewebite">Website</string>
-    <string name="api_servings">Serving</string>
+    <string name="api_servings">Servings</string>
     <string name="api_category">Category</string>
     <string name="api_time">time</string>
     <string name="app_hint_for_query">Enter search criteria</string>

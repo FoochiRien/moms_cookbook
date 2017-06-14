@@ -5,13 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
@@ -32,10 +36,11 @@ public class MyCookbookFragment extends Fragment {
 
     public CookbookRecyclerViewAdapter mCookbookRecyclerViewAdapter;
     private RecipeSQLiteOpenHelper mDBHelper;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private String mQueryCookbook;
-    private EditText mqueryCookbookEditText;
-    private ImageView mSearch, mSort, mBookmark;
+    private EditText mQueryCookbookEditText;
+    private ImageView mSort, mBookmark;
     List<MyRecipe> myRecipes;
 
 
@@ -88,9 +93,8 @@ public class MyCookbookFragment extends Fragment {
 
         myRecipes = new ArrayList<>();
 
-        mqueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);
-        mSearch = (ImageView) view.findViewById(R.id.cookbook_submit_query);
-        mQueryCookbook = mqueryCookbookEditText.getText().toString();
+        mQueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);
+        mQueryCookbook = mQueryCookbookEditText.getText().toString();
         mSort = (ImageView) view.findViewById(R.id.cookbook_sortaz);
         mBookmark = (ImageView) view.findViewById(R.id.cookbook_bookmark);
 
@@ -109,13 +113,21 @@ public class MyCookbookFragment extends Fragment {
 
         //search through the recipes that the user has selected for the cookbook
         //Search through categories and title
-        mSearch.setOnClickListener(new View.OnClickListener() {
+        mQueryCookbookEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-                myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
-                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean search = false;
+                if(actionId == EditorInfo.IME_ACTION_GO){
+                    myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
+                    mQueryCookbookEditText.getText().clear();
+                    recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+                    search = true;
+                }
+                return search;
             }
         });
+
+
         // sort items in the bookmark by A to Z in the title
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +142,16 @@ public class MyCookbookFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 myRecipes = mDBHelper.getBookmarkItems();
+                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+            }
+        });
+
+        //swipe refresh for cookbook items
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.cookbook_swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myRecipes = mDBHelper.getAllRecipes();
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
             }
         });

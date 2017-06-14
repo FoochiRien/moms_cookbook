@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="#ffffff"
+            android:padding="8dp"
             android:layout_marginBottom="8dp"
             android:weightSum="1">
 
@@ -26,21 +27,18 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:imeOptions="actionGo"
+                android:inputType="text"
                 android:hint="@string/app_hint_for_query"
-                android:layout_weight="0.55"/>
 
-            <ImageView
-                android:id="@+id/api_submit_query"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".25"
-                android:src="@android:drawable/ic_search_category_default"/>
+                android:layout_weight="0.70"/>
+
 
             <ImageView
                 android:id="@+id/api_search_category"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25"
+                android:layout_weight="0.30"
+                android:padding="10dp"
                android:background="@drawable/ic_action_name"/>
 
 
@@ -55,5 +53,18 @@
             android:padding="5dp"
             android:layout_below="@+id/api_search_layout"/>
 
+        <ImageView
+            android:id="@+id/api_search_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ic_search_more"/>
+
     </RelativeLayout>
+
+
 </FrameLayout>

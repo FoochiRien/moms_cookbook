@@ -9,14 +9,17 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/menu_bookmark"
+        android:title="@string/menu_bookmark"
+        android:icon="@drawable/ic_bookmark_item"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_searchapi"
         android:title="@string/menu_search_api"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/menu_bookmark"
-        android:title="@string/menu_bookmark"
-        app:showAsAction="never"/>
+
 
     <item
         android:id="@+id/menu_delete"

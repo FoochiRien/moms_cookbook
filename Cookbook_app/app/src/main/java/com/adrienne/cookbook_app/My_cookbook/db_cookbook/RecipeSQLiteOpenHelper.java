@@ -295,8 +295,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     //search
     public List<MyRecipe> sortByTitle() {
         SQLiteDatabase db = getReadableDatabase();
-//todo check variation with period and without out try putting coltitile in selction spot and only
-        //todo collate no case in order by
+        //sorts the items in the cookbook by first name in ascending order
         String orderby = COL_TITLE + " COLLATE NOCASE ASC";
 
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
@@ -338,12 +337,12 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     public List<MyRecipe> searchByTitleOrCategory(String query) {
         SQLiteDatabase db = getReadableDatabase();
 
-        String selection = COL_TITLE + " LIKE ? " + " OR " + COL_CATEGORY + " LIKE ?";
+        String selection = COL_TITLE + " LIKE ? OR " + COL_CATEGORY + " LIKE ?";
 
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
                 null,
                 selection,
-                new String[]{" % " + query + " % " + query + " % "}, null, null, null);
+                new String[]{"%" + query + "%" + query + "%"}, null, null, null);
 
         List<MyRecipe> myrecipes = new ArrayList<>();
 
@@ -472,19 +471,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
 
                 recipeId = cursor.getInt(cursor.getColumnIndex(COL_ID));
-
-                String image = cursor.getString(cursor.getColumnIndex(COL_IMAGE));
-                String title = cursor.getString(cursor.getColumnIndex(COL_TITLE));
-                List ingredients = getAllIngredients(recipeId);
-                String directions = cursor.getString(cursor.getColumnIndex(COL_DIRECTIONS));
-                float servings = cursor.getFloat(cursor.getColumnIndex(COL_SERVINGS));
-                float cooktime = cursor.getFloat(cursor.getColumnIndex(COL_COOKTIME));
-                String category = cursor.getString(cursor.getColumnIndex(COL_CATEGORY));
-                String notes = cursor.getString(cursor.getColumnIndex(COL_NOTES));
-                String sourcetitle = cursor.getString(cursor.getColumnIndex(COL_SOURCETITLE));
-                String sourcewebsite = cursor.getString(cursor.getColumnIndex(COL_SOURCEWEBSITE));
                 int bookmarked = cursor.getInt(cursor.getColumnIndex(COL_BOOKMARKED));
-                String viewtoshow = cursor.getString(cursor.getColumnIndex(COL_VIEW_TO_SHOW));
 
                 bookmarkSearch = bookmarked;
                 cursor.moveToNext();

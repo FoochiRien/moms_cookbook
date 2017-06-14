@@ -10,11 +10,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.R;
@@ -38,14 +41,14 @@ public class SearchFragment extends Fragment {
     private String query, categoryFilter;
 
     private EditText mApiQuery;
-    private ImageView mSearch, mCategoryFilter;
+    private ImageView mCategoryFilter, mSearchMore;
 
     //Information for Api
     public static final String EDAMAM_SEARCH_URL = "https://api.edamam.com/";
     public static final String EDAMAM_API_KEY = "c8f3d9dbc5a7c4cdd4c7ce39db3848a1";
     public static final String TAG = "edamamapi ------";
     public static final String APP_ID = "6b2b7746";
-    public static final String RESULT_AMOUNT = "30";
+    public static String RESULT_AMOUNT = "30";
 
 //    https://api.edamam.com/search?q=dessert,apples&app_id=6b2b7746&app_key=c8f3d9dbc5a7c4cdd4c7ce39db3848a1
 
@@ -85,9 +88,9 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //switch statement for search "popular" default
         //query,breakfast, lunch, dinner
-        mSearch = (ImageView) view.findViewById(R.id.api_submit_query);
         mApiQuery = (EditText) view.findViewById(R.id.api_search_query);
         mCategoryFilter = (ImageView) view.findViewById(R.id.api_search_category);
+        mSearchMore = (ImageView) view.findViewById(R.id.api_search_more);
 
         //Searches the API and returns the results
 
@@ -101,7 +104,9 @@ public class SearchFragment extends Fragment {
 
         //This is the default search results that appear when the search api search runs
         //therefore i decided to hard code in the term, so that it WILL NOT be changed
-        Retrofit retrofit = new Retrofit.Builder()
+
+        getApiResults(RESULT_AMOUNT);
+       /* Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(EDAMAM_SEARCH_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -141,23 +146,28 @@ public class SearchFragment extends Fragment {
                 t.printStackTrace();
 
             }
-        });
+        });*/
 
         /*The following are search options for the api. Due to the limiations of the api I had to make
         some hard calls about what should be included in the search paramters. I decided to go with
         breakfast, lunch, and dinner not because they are options provided by the service but I figured
         the likely hood of the words being present in titles would be great.  */
 
-
-        mSearch.setOnClickListener(new View.OnClickListener() {
+        mApiQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-
-                apiSearchOptions();
-                recyclerView.setAdapter(mApiRecipeRecyclerViewAdapter);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+               boolean search = false;
+                if(actionId == EditorInfo.IME_ACTION_GO){
+                    apiSearchOptions(RESULT_AMOUNT);
+                    mApiQuery.getText().clear();
+                    recyclerView.setAdapter(mApiRecipeRecyclerViewAdapter);
+                    search = true;
+                }
+                return search;
 
             }
         });
+
 
         mCategoryFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,12 +197,24 @@ public class SearchFragment extends Fragment {
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                apiCategoryFilter(categoryFilter);
+                apiCategoryFilter(categoryFilter, RESULT_AMOUNT);
                 recyclerView.setAdapter(mApiRecipeRecyclerViewAdapter);
 
                 return ;
             }
 
+        });
+
+        mSearchMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int j = 31; 31 <= 91 ; j+=30) {
+                    j = j + 30;
+                    RESULT_AMOUNT = "j";
+                    getApiResults(RESULT_AMOUNT);
+                }
+
+                }
         });
 
 
@@ -221,7 +243,7 @@ public class SearchFragment extends Fragment {
     }
 
     //if there is no connection the user will refresh with this code
-    public void getApiResults(){
+    public void getApiResults(String RESULT_AMOUNT){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(EDAMAM_SEARCH_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -268,7 +290,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    public void apiSearchOptions(){
+    public void apiSearchOptions(String RESULT_AMOUNT){
         query = mApiQuery.getText().toString().trim();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -299,6 +321,7 @@ public class SearchFragment extends Fragment {
                                 edamamList.getHits().get(i).getRecipe().getYield()));
 
                     }
+
                     mApiRecipeRecyclerViewAdapter.swapData(list);
 
                 }
@@ -316,7 +339,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    public void apiCategoryFilter(String categoryFilter){
+    public void apiCategoryFilter(String categoryFilter, String RESULT_AMOUNT){
 
 
         Retrofit retrofit = new Retrofit.Builder()

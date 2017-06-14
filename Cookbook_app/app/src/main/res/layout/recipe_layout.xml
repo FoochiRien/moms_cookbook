@@ -17,7 +17,7 @@
         android:textSize="20dp"
         android:textStyle="bold"/>
 
-    <TextView
+<!--    <TextView
         android:id="@+id/recipe_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:text="source"
         android:textAllCaps="true"
         android:textSize="14dp"
-        android:textStyle="italic"/>
+        android:textStyle="italic"/>-->
 
 
     <LinearLayout
