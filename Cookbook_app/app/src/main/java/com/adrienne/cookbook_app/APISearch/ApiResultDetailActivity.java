@@ -38,7 +38,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     ImageView mApiImage, mFavApiRecipe, mEdamamImage_apiresults;
     TextView mApiTitle, mApiWebsiteSource, mApiUrl;
     EditText mCategories;
-    
+
     private RecipeSQLiteOpenHelper mDBHelper;
 
     String apiCategories;

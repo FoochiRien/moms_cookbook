@@ -16,7 +16,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
 
@@ -132,6 +134,7 @@ public class MyCookbookFragment extends Fragment {
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "clicked on sort", Toast.LENGTH_SHORT).show();
                 myRecipes = mDBHelper.sortByTitle();
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
 
@@ -141,6 +144,7 @@ public class MyCookbookFragment extends Fragment {
         mBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "clicked on bookmark", Toast.LENGTH_SHORT).show();
                 myRecipes = mDBHelper.getBookmarkItems();
                 recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
             }
