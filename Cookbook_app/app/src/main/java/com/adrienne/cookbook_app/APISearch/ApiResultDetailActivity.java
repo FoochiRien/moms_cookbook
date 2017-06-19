@@ -1,6 +1,7 @@
 package com.adrienne.cookbook_app.APISearch;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -34,12 +35,10 @@ public class ApiResultDetailActivity extends AppCompatActivity {
     public static final String KEY3 = "ApiRecipeKey-serving";
     public static final String KEY4 = "ApiRecipeKey-url";
 
-    ImageView mApiImage, mFavApiRecipe;
+    ImageView mApiImage, mFavApiRecipe, mEdamamImage_apiresults;
     TextView mApiTitle, mApiWebsiteSource, mApiUrl;
     EditText mCategories;
-
-    Class view = ApiResultDetailActivity.class;
-
+    
     private RecipeSQLiteOpenHelper mDBHelper;
 
     String apiCategories;
@@ -64,6 +63,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
         mCategories = (EditText) findViewById(R.id.enter_categories_for_apirecipe);
         mFavApiRecipe = (ImageView) findViewById(R.id.api_recipe_detail_bookmark);
         mApiUrl = (TextView) findViewById(R.id.api_recipe_detail_url);
+        mEdamamImage_apiresults = (ImageView) findViewById(R.id.edamam_searchresults);
 
 
         Intent displayApiRecipeIntent = getIntent();
@@ -109,6 +109,14 @@ public class ApiResultDetailActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 
+        mEdamamImage_apiresults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://developer.edamam.com");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

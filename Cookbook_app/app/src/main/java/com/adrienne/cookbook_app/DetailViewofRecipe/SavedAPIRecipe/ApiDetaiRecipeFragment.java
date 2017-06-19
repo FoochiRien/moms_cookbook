@@ -39,7 +39,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public static final String RECIPE_ID = "recipeId";
 
     TextView mCBApiTitle, mCBApiWebsiteSource, mCBApiUrl;
-    ImageView mCBApiImage;
+    ImageView mCBApiImage, mEdamamSavedRecipe;
 
 
     RecipeSQLiteOpenHelper mDBHelper;
@@ -97,6 +97,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
             mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
             mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
             mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
+            mEdamamSavedRecipe = (ImageView) view.findViewById(R.id.edamam_saved_recipe);
 
 
 
@@ -112,6 +113,15 @@ public class ApiDetaiRecipeFragment extends Fragment {
             mCBApiTitle.setText(title);
             mCBApiWebsiteSource.setText(source);
             Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
+
+        mEdamamSavedRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://developer.edamam.com");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
 
     }
