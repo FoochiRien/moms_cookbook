@@ -48,7 +48,8 @@ public class SearchFragment extends Fragment {
     public static final String EDAMAM_API_KEY = "c8f3d9dbc5a7c4cdd4c7ce39db3848a1";
     public static final String TAG = "edamamapi ------";
     public static final String APP_ID = "6b2b7746";
-    public static String RESULT_AMOUNT = "30";
+    public static final String RESULT_AMOUNT = "30";
+    public static String more_results;
 
 //    https://api.edamam.com/search?q=dessert,apples&app_id=6b2b7746&app_key=c8f3d9dbc5a7c4cdd4c7ce39db3848a1
 
@@ -105,7 +106,7 @@ public class SearchFragment extends Fragment {
         //This is the default search results that appear when the search api search runs
         //therefore i decided to hard code in the term, so that it WILL NOT be changed
 
-        getApiResults(RESULT_AMOUNT);
+        getApiResults();
        /* Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(EDAMAM_SEARCH_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -148,7 +149,7 @@ public class SearchFragment extends Fragment {
             }
         });*/
 
-        /*The following are search options for the api. Due to the limiations of the api I had to make
+        /*The following are search options for the api. Due to the limitations of the api I had to make
         some hard calls about what should be included in the search paramters. I decided to go with
         breakfast, lunch, and dinner not because they are options provided by the service but I figured
         the likely hood of the words being present in titles would be great.  */
@@ -208,11 +209,11 @@ public class SearchFragment extends Fragment {
         mSearchMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int j = 31; 31 <= 91 ; j+=30) {
-                    j = j + 30;
-                    RESULT_AMOUNT = "j";
-                    getApiResults(RESULT_AMOUNT);
-                }
+
+               int j = 30;
+                j += j + 30;
+               more_results= Integer.toString(j);
+                getMoreResults(more_results);
 
                 }
         });
@@ -243,7 +244,7 @@ public class SearchFragment extends Fragment {
     }
 
     //if there is no connection the user will refresh with this code
-    public void getApiResults(String RESULT_AMOUNT){
+    public void getApiResults(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(EDAMAM_SEARCH_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -383,6 +384,53 @@ public class SearchFragment extends Fragment {
 
             }
         });
+
+    }
+
+    public void getMoreResults(String more_results){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(EDAMAM_SEARCH_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        EdamamInterface edamanService = retrofit.create(EdamamInterface.class);
+
+        final Call<EdamamAPI> edamamAPICall = edamanService.getHits("popular", APP_ID, EDAMAM_API_KEY, more_results);
+        Log.d(TAG, "onViewCreated: " + edamamAPICall.request().toString());
+
+        edamamAPICall.enqueue(new Callback<EdamamAPI>() {
+            @Override
+            public void onResponse(Call<EdamamAPI> call, Response<EdamamAPI> response) {
+                EdamamAPI edamamList = response.body();
+                List<ApiRecipe> list = new ArrayList<ApiRecipe>();
+                if(edamamList == null){
+                    Log.d(TAG, "onResponse: null");
+                } else {
+                    Log.d(TAG, "onResponse: " + edamamList);
+
+                    for(int i = 0; i < edamamList.getHits().size()-1; i++){
+                        list.add(new ApiRecipe(edamamList.getHits().get(i).getRecipe().getImage(),
+                                edamamList.getHits().get(i).getRecipe().getLabel(),
+                                edamamList.getHits().get(i).getRecipe().getSource(),
+                                edamamList.getHits().get(i).getRecipe().getUrl(),
+                                edamamList.getHits().get(i).getRecipe().getYield()));
+
+                    }
+                    mApiRecipeRecyclerViewAdapter.swapData(list);
+
+                }
+                Log.d(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<EdamamAPI> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+                t.printStackTrace();
+
+            }
+
+        });
+
 
     }
 

@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnterRecipeFragment;
-import com.adrienne.cookbook_app.MainActivity;
+import com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnteredRecipeFragment;
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
@@ -59,7 +57,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public static ApiDetaiRecipeFragment newInstance(Bundle bundle) {
         ApiDetaiRecipeFragment fragment = new ApiDetaiRecipeFragment();
         Bundle args = new Bundle();
-        args.putLong(RECIPE_ID,bundle.getLong(ManualEnterRecipeFragment.RECIPE_ID));
+        args.putLong(RECIPE_ID,bundle.getLong(ManualEnteredRecipeFragment.RECIPE_ID));
         fragment.setArguments(args);
         return fragment;
     }

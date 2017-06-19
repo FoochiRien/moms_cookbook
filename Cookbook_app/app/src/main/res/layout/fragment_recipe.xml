@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:id="@+id/fragment_manualrecipe_cookbook"
-             tools:context="com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnterRecipeFragment">
+             tools:context="com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnteredRecipeFragment">
 
     <ScrollView
         android:layout_width="match_parent"

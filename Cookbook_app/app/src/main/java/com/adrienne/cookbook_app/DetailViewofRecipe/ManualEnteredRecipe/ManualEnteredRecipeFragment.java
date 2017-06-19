@@ -1,7 +1,6 @@
 package com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,14 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.MyRecipe;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
@@ -25,7 +21,7 @@ import java.util.List;
 
 
 
-public class ManualEnterRecipeFragment extends Fragment {
+public class ManualEnteredRecipeFragment extends Fragment {
 
     public static final String TAG = "ManualEnterRecFrag";
 
@@ -46,15 +42,15 @@ public class ManualEnterRecipeFragment extends Fragment {
     private RecipeSQLiteOpenHelper mDBHelper;
 
 
-    public ManualEnterRecipeFragment() {
+    public ManualEnteredRecipeFragment() {
         // Required empty public constructor
     }
 
-    public static ManualEnterRecipeFragment newInstance(Bundle bundle) {
-        ManualEnterRecipeFragment manualEnterRecipeFragment = new ManualEnterRecipeFragment();
+    public static ManualEnteredRecipeFragment newInstance(Bundle bundle) {
+        ManualEnteredRecipeFragment manualEnteredRecipeFragment = new ManualEnteredRecipeFragment();
 
-        manualEnterRecipeFragment.setArguments(bundle);
-        return manualEnterRecipeFragment;
+        manualEnteredRecipeFragment.setArguments(bundle);
+        return manualEnteredRecipeFragment;
     }
 
     @Override
@@ -112,15 +108,11 @@ public class ManualEnterRecipeFragment extends Fragment {
 
         Log.d(TAG, "onCreateView: RECIPE " + title);
 
-        if(bookmark == 1){
-        mBookmarked.setImageResource(R.drawable.ic_bookmark_recipe);
-        } else if (bookmark == 0){
-            mBookmarked.setImageResource(R.drawable.ic_bookmark_item);
+        if(bookmark == 0){
+
+        } else if (bookmark == 1){
+            mBookmarked.setImageResource(R.drawable.ic_bookmark_recipe);
         }
-
-
-        /* I had planned to do a listview for the ingredients and directions. However it turns out
-        * i didnt think it through well and I was going to have to do double work. */
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.display_ingredients_list);
@@ -129,7 +121,6 @@ public class ManualEnterRecipeFragment extends Fragment {
         recyclerView.setAdapter(mDisplayRecyclerViewAdapter);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed() {
         if (mManualEnterListener != null) {
             mManualEnterListener.onFragmentInteraction();
@@ -155,7 +146,7 @@ public class ManualEnterRecipeFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction();
     }
 

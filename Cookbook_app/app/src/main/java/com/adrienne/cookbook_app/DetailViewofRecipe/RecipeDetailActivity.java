@@ -11,17 +11,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.adrienne.cookbook_app.APISearch.SearchFragment;
-import com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnterRecipeFragment;
+import com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnteredRecipeFragment;
 import com.adrienne.cookbook_app.DetailViewofRecipe.SavedAPIRecipe.ApiDetaiRecipeFragment;
 import com.adrienne.cookbook_app.MainActivity;
-import com.adrienne.cookbook_app.My_cookbook.CookbookRecyclerViewAdapter;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
 
 public class RecipeDetailActivity extends AppCompatActivity implements
         ApiDetaiRecipeFragment.OnFragmentInteractionListener, PhotoDetailRecipeFragment.OnFragmentInteractionListener,
-        ManualEnterRecipeFragment.OnFragmentInteractionListener {
+        ManualEnteredRecipeFragment.OnFragmentInteractionListener {
 
     public static final String TAG = "recipe activity";
 
@@ -55,7 +53,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         recipeId = displayRecipeIntent.getLongExtra(RECIPE_ID, recipeId);
 
         Bundle bundle = new Bundle();
-        bundle.putLong(ManualEnterRecipeFragment.RECIPE_ID, recipeId);
+        bundle.putLong(ManualEnteredRecipeFragment.RECIPE_ID, recipeId);
 
         /*Due to how the information is entered I decided to do multiple layouts to reflect
         * the information provided. */
@@ -70,7 +68,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
 
                     return ;
                 case "manual":
-                    Fragment manualEnterFrag = ManualEnterRecipeFragment.newInstance(bundle);
+                    Fragment manualEnterFrag = ManualEnteredRecipeFragment.newInstance(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .add(R.id.apirecipe_detail_screen, manualEnterFrag).commit();
                     return ;
