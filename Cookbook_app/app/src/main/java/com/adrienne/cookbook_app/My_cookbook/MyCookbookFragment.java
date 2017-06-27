@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.adrienne.cookbook_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.adrienne.cookbook_app.DetailViewofRecipe.SavedAPIRecipe.ApiDetaiRecipeFragment.TAG;
 
 
 /**
@@ -93,10 +96,10 @@ public class MyCookbookFragment extends Fragment {
 
         /* The fragment displays the collection of recipes on the home screen ie the cookbook.*/
 
-        myRecipes = new ArrayList<>();
+        List<MyRecipe> myRecipes = new ArrayList<>();
 
         mQueryCookbookEditText = (EditText) view.findViewById(R.id.cookbook_search_query);
-        mQueryCookbook = mQueryCookbookEditText.getText().toString();
+
         mSort = (ImageView) view.findViewById(R.id.cookbook_sortaz);
         mBookmark = (ImageView) view.findViewById(R.id.cookbook_bookmark);
 
@@ -104,6 +107,7 @@ public class MyCookbookFragment extends Fragment {
 
         if(mDBHelper.getAllRecipes() != null) {
             myRecipes = mDBHelper.getAllRecipes();
+            Log.d(TAG, "onViewCreated: all recipes" + myRecipes);
         }
 
 
@@ -118,11 +122,14 @@ public class MyCookbookFragment extends Fragment {
         mQueryCookbookEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                List<MyRecipe> myRecipes ;
                 boolean search = false;
                 if(actionId == EditorInfo.IME_ACTION_GO){
+                    mQueryCookbook = mQueryCookbookEditText.getText().toString();
+                    Log.d(TAG, "onEditorAction: mquerycookbook " + mQueryCookbook);
                     myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
-                    mQueryCookbookEditText.getText().clear();
-                    recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+                    Log.d(TAG, "onEditorAction: results " + myRecipes);
+                    recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
                     search = true;
                 }
                 return search;
@@ -134,9 +141,11 @@ public class MyCookbookFragment extends Fragment {
         mSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<MyRecipe> myRecipes ;
                 Toast.makeText(getContext(), "clicked on sort", Toast.LENGTH_SHORT).show();
                 myRecipes = mDBHelper.sortByTitle();
-                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+                Log.d(TAG, "onClick: mSORT " + myRecipes);
+                recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
 
             }
         });
@@ -144,9 +153,16 @@ public class MyCookbookFragment extends Fragment {
         mBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "clicked on bookmark", Toast.LENGTH_SHORT).show();
-                myRecipes = mDBHelper.getBookmarkItems();
-                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+                List<MyRecipe> myRecipes = new ArrayList<>();
+                if(mDBHelper.getBookmarkItems() != null){
+                    myRecipes = mDBHelper.getBookmarkItems();
+                    Log.d(TAG, "onClick: mBookmark" + myRecipes);
+                } else {
+                    Toast.makeText(getContext(), "No items have been bookmarked.", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
             }
         });
 
@@ -155,8 +171,12 @@ public class MyCookbookFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                List<MyRecipe> myRecipes ;
                 myRecipes = mDBHelper.getAllRecipes();
-                recyclerView.setAdapter(mCookbookRecyclerViewAdapter);
+                Log.d(TAG, "onRefresh: swiperefresh" + myRecipes);
+                recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
+                Log.d(TAG, "onRefresh: " + mCookbookRecyclerViewAdapter);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 

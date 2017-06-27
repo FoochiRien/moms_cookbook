@@ -80,6 +80,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
 
         //if the user decides they want to save a recipe by clicking on the favorite button.
         // They can enter categories to go along with the above information.
+        apiCategories = mCategories.getText().toString();
         mFavApiRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +96,7 @@ public class ApiResultDetailActivity extends AppCompatActivity {
 
         //due to the limitations of the api the directions are not provided, therefore to view
         //the complete recipe the user will have to view it on the web.
-        apiCategories = mCategories.getText().toString();
+
         mApiUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

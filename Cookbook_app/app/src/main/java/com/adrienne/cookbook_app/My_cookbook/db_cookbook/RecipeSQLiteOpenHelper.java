@@ -330,19 +330,21 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
             }
         }
         cursor.close();
+
         return myrecipes;
     }
+
 
     //search the titles or categories
     public List<MyRecipe> searchByTitleOrCategory(String query) {
         SQLiteDatabase db = getReadableDatabase();
 
-        String selection = COL_TITLE + " LIKE ? OR " + COL_CATEGORY + " LIKE ?";
+        String selection = COL_TITLE + " LIKE ? OR " + COL_CATEGORY + " LIKE ? COLLATE NOCASE ";
 
         Cursor cursor = db.query(RECIPE_TABLE_NAME,
                 null,
                 selection,
-                new String[]{"%" + query + "%" + query + "%"}, null, null, null);
+                new String[]{"%" + query + "%" }, null, null, null);
 
         List<MyRecipe> myrecipes = new ArrayList<>();
 
@@ -401,6 +403,7 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
     public void removeBookmark(long id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
+//        values.remove(COL_BOOKMARKED);
         values.put(COL_BOOKMARKED, "0");
         db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = "+ id,null );
         db.close();
