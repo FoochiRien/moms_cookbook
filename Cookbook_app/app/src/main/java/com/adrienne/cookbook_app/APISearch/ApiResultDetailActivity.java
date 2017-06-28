@@ -80,13 +80,15 @@ public class ApiResultDetailActivity extends AppCompatActivity {
 
         //if the user decides they want to save a recipe by clicking on the favorite button.
         // They can enter categories to go along with the above information.
-        apiCategories = mCategories.getText().toString();
+
         mFavApiRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                apiCategories = mCategories.getText().toString();
+                Log.d(TAG, "onClick: apicategories" + apiCategories);
                 mDBHelper.addApiRecipetoCookbook(apiImage, apiRecipe, apiServing, apiCategories,
                         apiWebsite, apiUrl);
+                Log.d(TAG, "onClick: ");
                 Toast.makeText(ApiResultDetailActivity.this, "Congrats. The recipe has been added " +
                                 "to your cookbook.",
                         Toast.LENGTH_SHORT).show();

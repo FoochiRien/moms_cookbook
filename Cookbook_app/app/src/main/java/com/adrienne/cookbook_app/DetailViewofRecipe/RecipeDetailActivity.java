@@ -115,6 +115,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 return true;
             case R.id.menu_delete:
                 mDBHelper.removeRecipeFromCookbook(recipeId);
+                Log.d(TAG, "onOptionsItemSelected: delete recipe" + recipeId);
                 Toast.makeText(RecipeDetailActivity.this, "BYE, BYE, BYE. It's gone from you cookbook",
                         Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RecipeDetailActivity.this, MainActivity.class));

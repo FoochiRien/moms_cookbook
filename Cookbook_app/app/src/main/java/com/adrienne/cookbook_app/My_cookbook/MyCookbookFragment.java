@@ -125,11 +125,17 @@ public class MyCookbookFragment extends Fragment {
                 List<MyRecipe> myRecipes ;
                 boolean search = false;
                 if(actionId == EditorInfo.IME_ACTION_GO){
-                    mQueryCookbook = mQueryCookbookEditText.getText().toString();
+                    mQueryCookbook = mQueryCookbookEditText.getText().toString().trim();
                     Log.d(TAG, "onEditorAction: mquerycookbook " + mQueryCookbook);
-                    myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
-                    Log.d(TAG, "onEditorAction: results " + myRecipes);
-                    recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
+                    if(mDBHelper.searchByTitleOrCategory(mQueryCookbook) != null){
+                        myRecipes = mDBHelper.searchByTitleOrCategory(mQueryCookbook);
+                        Log.d(TAG, "onEditorAction: results " + myRecipes);
+                        recyclerView.setAdapter(new CookbookRecyclerViewAdapter(myRecipes));
+                        mQueryCookbookEditText.getText().clear();
+                    } else {
+                        Toast.makeText(getContext(), "Please re-enter your search query", Toast.LENGTH_SHORT).
+                                show();
+                    }
                     search = true;
                 }
                 return search;

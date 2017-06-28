@@ -172,8 +172,72 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
+    public void updateApiRecipetoCookbook(long id, String apiImage, String apiRecipe, String apiServing,
+                                          String apiCategories, String apiWebsite, String apiUrl,
+                                          String apiBookmarked){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IMAGE, apiImage);
+        values.put(COL_TITLE, apiRecipe);
+        values.put(COL_SERVINGS, apiServing);
+        values.put(COL_COOKTIME, "");
+        values.put(COL_CATEGORY, apiCategories);
+        values.put(COL_NOTES, "");
+        values.put(COL_SOURCETITLE, apiWebsite);
+        values.put(COL_SOURCEWEBSITE, apiUrl);
+        values.put(COL_BOOKMARKED, apiBookmarked);
+        values.put(COL_VIEW_TO_SHOW, "api");
+        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+
+    public void updateManualRecipetoCookbook(long id,String manualTitle, String manualServing,
+                                             String manualCategories, String manualCooktime,
+                                             String manualNotes, String manualBookmark,
+                                             String manualDirections, List<String> ingredients){
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_IMAGE, "");
+        values.put(COL_TITLE, manualTitle);
+        values.put(COL_SERVINGS, manualServing);
+        values.put(COL_COOKTIME, manualCooktime);
+        values.put(COL_CATEGORY, manualCategories);
+        values.put(COL_NOTES, manualNotes);
+        values.put(COL_SOURCETITLE, "");
+        values.put(COL_SOURCEWEBSITE, "");
+        values.put(COL_BOOKMARKED, manualBookmark);
+        values.put(COL_VIEW_TO_SHOW, "manual");
+        values.put(COL_DIRECTIONS, manualDirections);
+        long recipeid = db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = ?", new String[]{String.valueOf(id)});
+        for(String ingredient : ingredients)
+        {
+            updateIngredients(ingredient, recipeid);
+        }
+        db.close();
+
+    }
+
+    public void updateIngredients(String ingredient, long recipeid){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_INGREDIENTS, ingredient);
+        db.update(INGREDIENTS_TABLE_NAME,values,COL_RECIPE_ID+ " = ?", new String[]{String.valueOf(recipeid)});
+    }
+
+
 
     //REMOVE ITEM FROM COOKBOOK
+    public void removeRecipeFromCookbook(long recipeid) {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(RECIPE_TABLE_NAME, COL_ID + " = ?", new String[]{String.valueOf(recipeid)});
+        db.delete(INGREDIENTS_TABLE_NAME, COL_RECIPE_ID + " = ?", new String[] {String.valueOf(recipeid)});
+        db.close();
+
+    }
 
 
     //----Cookbook search. The user is able to search through recipes in their
@@ -378,34 +442,22 @@ public class RecipeSQLiteOpenHelper extends SQLiteOpenHelper {
         return myrecipes;
     }
 
-    public void removeRecipeFromCookbook(long recipeid) {
 
-        SQLiteDatabase db = getWritableDatabase();
-        String whereclause = recipeid + " = ? ";
 
-        db.delete(RECIPE_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_ID)});
-        db.delete(INGREDIENTS_TABLE_NAME, whereclause, new String[]{String.valueOf(COL_RECIPE_ID)});
-        db.close();
-
-    }
-
-    //ADD BOOKMARK
     public void addBookmark(long id) {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_BOOKMARKED, "1");
-        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = "+ id,null );
+        db.update(RECIPE_TABLE_NAME, values, COL_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
-
     //
     public void removeBookmark(long id) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-//        values.remove(COL_BOOKMARKED);
         values.put(COL_BOOKMARKED, "0");
-        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = "+ id,null );
+        db.update(RECIPE_TABLE_NAME,values,COL_ID+ " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 

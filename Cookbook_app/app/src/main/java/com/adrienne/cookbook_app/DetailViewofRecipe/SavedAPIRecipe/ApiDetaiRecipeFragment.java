@@ -38,12 +38,9 @@ public class ApiDetaiRecipeFragment extends Fragment {
 
     public static final String RECIPE_ID = "recipeId";
 
-    TextView mCBApiTitle, mCBApiWebsiteSource, mCBApiUrl;
+    TextView mCBApiTitle, mCBApiWebsiteSource, mCBApiUrl, mCBApiCategory;
     ImageView mCBApiImage, mEdamamSavedRecipe;
 
-
-    RecipeSQLiteOpenHelper mDBHelper;
-    MyRecipe mRecipeList;
     long mRecipeId;
 
     private OnFragmentInteractionListener mApiCookbookListener;
@@ -84,21 +81,19 @@ public class ApiDetaiRecipeFragment extends Fragment {
 
         Log.d(TAG, "onViewCreated:  recipeId" + mRecipeId);
        MyRecipe myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(mRecipeId);
-//        mDBHelper = RecipeSQLiteOpenHelper.getInstance(getContext());
-//        mRecipeList = mDBHelper.getRecipeDisplay(recipeId);
-//        Log.d(TAG, "onViewCreated: title " + );
 
             String title = myRecipes.getTitle();
             String source = myRecipes.getSourceTitle();
             final String url = myRecipes.getSourceUrl();
             String image = myRecipes.getImage();
+            String category = myRecipes.getCategory();
 
             mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
             mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
             mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
             mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
             mEdamamSavedRecipe = (ImageView) view.findViewById(R.id.edamam_saved_recipe);
-
+            mCBApiCategory = (TextView) view.findViewById(R.id.recipefromapi_categories);
 
 
             mCBApiUrl.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +108,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
             mCBApiTitle.setText(title);
             mCBApiWebsiteSource.setText(source);
             Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
+            mCBApiCategory.setText(category);
 
         mEdamamSavedRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
