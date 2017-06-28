@@ -59,8 +59,6 @@ public class CookbookRecyclerViewAdapter extends RecyclerView.Adapter<CookbookVi
             }
         });
 
-
-
     }
 
     @Override

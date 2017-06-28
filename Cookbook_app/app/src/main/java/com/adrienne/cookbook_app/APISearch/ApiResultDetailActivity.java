@@ -129,9 +129,12 @@ public class ApiResultDetailActivity extends AppCompatActivity {
         MenuItem delete = menu.findItem(R.id.menu_delete);
         MenuItem bookmark = menu.findItem(R.id.menu_bookmark);
         MenuItem searchapi = menu.findItem(R.id.menu_searchapi);
+        MenuItem edit = menu.findItem(R.id.menu_edit);
         delete.setVisible(false);
         bookmark.setVisible(false);
         searchapi.setVisible(false);
+        edit.setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 

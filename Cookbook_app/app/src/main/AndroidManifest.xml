@@ -29,6 +29,10 @@
         </activity>
         <activity android:name=".APISearch.ApiResultDetailActivity">
         </activity>
+        <activity android:name=".EditRecipe.EditManualRecipeActivity">
+        </activity>
+        <activity android:name=".EditRecipe.EditApiRecipeActivity">
+        </activity>
     </application>
 
 </manifest>

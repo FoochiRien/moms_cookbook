@@ -30,10 +30,9 @@ public class ManualEnteredRecipeFragment extends Fragment {
     public static final String RECIPE_ID = "recipeId";
 
     private OnFragmentInteractionListener mManualEnterListener;
-    private List<MyRecipe> mRecipeList;
     private List<String> recipeIngredients;
 
-    TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView;
+    TextView mTitleView, mNotesView, mCategoryView, mServingView, mCookTimeView, mDirections;
     ImageView mBookmarked;
 
     DisplayRecyclerViewAdapter mDisplayRecyclerViewAdapter;
@@ -91,6 +90,7 @@ public class ManualEnteredRecipeFragment extends Fragment {
         float cooktime2 = myRecipes.getCookTime();
         String cooktime = cooktime2 + "";
         int bookmark = myRecipes.getBookmarked();
+        String directions = myRecipes.getDirections();
 
         mTitleView = (TextView) view.findViewById(R.id.recipe_title);
         mNotesView = (TextView) view.findViewById(R.id.recipe_notes);
@@ -98,6 +98,7 @@ public class ManualEnteredRecipeFragment extends Fragment {
         mServingView = (TextView) view.findViewById(R.id.recipe_servings);
         mCookTimeView = (TextView) view.findViewById(R.id.recipe_cooktime);
         mBookmarked = (ImageView) view.findViewById(R.id.menu_bookmark);
+        mDirections = (TextView) view.findViewById(R.id.recipe_directions);
 
 
         mTitleView.setText(title);
@@ -105,6 +106,7 @@ public class ManualEnteredRecipeFragment extends Fragment {
         mCategoryView.setText(category);
         mServingView.setText(serving);
         mCookTimeView.setText(cooktime);
+        mDirections.setText(directions);
 
         Log.d(TAG, "onCreateView: RECIPE " + title);
 

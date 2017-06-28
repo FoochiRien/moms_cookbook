@@ -28,7 +28,6 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
 
     public static final String TAG = "MANUAL ENTER";
 
-    //todo enter constants
     EditText mRecipeTitle, mRecipeNotes, mRecipeCategory, mRecipeServing, mCookTime,
     mRecipeDirections;
     Button mSaveRecipe;
@@ -68,7 +67,7 @@ public class ManualEnterRecipeActivity extends AppCompatActivity {
         mRecipeDirections = (EditText) findViewById(R.id.enter_recipe_directions);
         mCookTime = (EditText) findViewById(R.id.enter_recipe_cooktime);
         mSaveRecipe = (Button) findViewById(R.id.save_recipe_button);
-        //todo ingredients
+
 
         /*Pretty straight forward data entry however, there is a recyclerview used to capture the
         * ingredients and directions. The idea was so that they could be kept in order. */

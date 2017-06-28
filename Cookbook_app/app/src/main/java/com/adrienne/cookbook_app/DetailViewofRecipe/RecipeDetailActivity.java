@@ -11,8 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.adrienne.cookbook_app.APISearch.ApiResultDetailActivity;
 import com.adrienne.cookbook_app.DetailViewofRecipe.ManualEnteredRecipe.ManualEnteredRecipeFragment;
 import com.adrienne.cookbook_app.DetailViewofRecipe.SavedAPIRecipe.ApiDetaiRecipeFragment;
+import com.adrienne.cookbook_app.EditRecipe.EditApiRecipeActivity;
+import com.adrienne.cookbook_app.EditRecipe.EditManualRecipeActivity;
 import com.adrienne.cookbook_app.MainActivity;
 import com.adrienne.cookbook_app.My_cookbook.db_cookbook.RecipeSQLiteOpenHelper;
 import com.adrienne.cookbook_app.R;
@@ -28,8 +31,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements
     //Keys for Cookbook Intent
     public static final String View_To_Show = "View";
     public static final String RECIPE_ID = "Recipe_Id";
-
-
+    public static final String EDIT_RECIPE_ID = "Recipe_Id";
+    String viewToShow;
     long recipeId = 0;
 
 
@@ -49,7 +52,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements
         //This intent comes from the cookbook fragment. This only holds the view and the recipeid.
         //the view to show inflates the proper fragment to display the content.
         Intent displayRecipeIntent = getIntent();
-        final String viewToShow = displayRecipeIntent.getStringExtra(View_To_Show);
+        viewToShow = displayRecipeIntent.getStringExtra(View_To_Show);
         recipeId = displayRecipeIntent.getLongExtra(RECIPE_ID, recipeId);
 
         Bundle bundle = new Bundle();
@@ -113,6 +116,22 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                 startActivity(new Intent(RecipeDetailActivity.this, MainActivity.class));
                 finish();
                 return true;
+            case R.id.menu_edit:
+                if(viewToShow.equals( "manual")) {
+                    Intent editRecipeIntent = new Intent(RecipeDetailActivity.this, EditManualRecipeActivity.class);
+                    editRecipeIntent.putExtra(EDIT_RECIPE_ID, recipeId);
+                    startActivity(editRecipeIntent);
+                }else if (viewToShow.equals("api")){
+                    Intent editRecipeIntent = new Intent(RecipeDetailActivity.this, EditApiRecipeActivity.class);
+                    Log.d(TAG, "onOptionsItemSelected: view to show menu edit " + viewToShow);
+                    editRecipeIntent.putExtra(EDIT_RECIPE_ID, recipeId);
+                    Log.d(TAG, "onOptionsItemSelected: menu edit " + recipeId);
+                    startActivity(editRecipeIntent);
+                }else {
+                    Toast.makeText(this, "Unable to edit.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+
             case R.id.menu_delete:
                 mDBHelper.removeRecipeFromCookbook(recipeId);
                 Log.d(TAG, "onOptionsItemSelected: delete recipe" + recipeId);
@@ -120,18 +139,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RecipeDetailActivity.this, MainActivity.class));
                 return true;
+
             case R.id.menu_bookmark:
                 //checks to see if the item is already bookmarked in the DB
                 //if so then removes item if not add item
-                //todo add visual image to page for bookmark
                 int bookmarked = mDBHelper.searchBookmark(recipeId);
                 if (bookmarked == 1) {
                     mDBHelper.removeBookmark(recipeId);
                     item.setIcon(R.drawable.ic_bookmark_item);
                     Toast.makeText(RecipeDetailActivity.this, "Removing from your Cookbook.",
                             Toast.LENGTH_LONG).show();
-
-
                 } else {
                     mDBHelper.addBookmark(recipeId);
                     item.setIcon(R.drawable.ic_bookmark_recipe);

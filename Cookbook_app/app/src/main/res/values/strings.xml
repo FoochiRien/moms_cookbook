@@ -50,5 +50,6 @@
     <string name="menu_bookmark">Bookmark</string>
     <string name="menu_delete">Delete Recipe</string>
     <string name="menu_search_api">Search Web</string>
+    <string name="menu_edit">Edit Recipe</string>
 
 </resources>
