@@ -11,10 +11,10 @@ Link for Google Play Store:
 https://play.google.com/store/apps/details?id=com.adrienne.cookbook_app
 
 <img src="images/Screen-Shot.png" width="725"/>
-<img src="images/navigationcb.png" width="300"/>
-<img src="images/mainactivitycb.png" width="300"/>
-<img src="images/manuallycb.png" width="300"/>
-<img src="images/apirecipecb.png" width="300"/>
+<img src="images/navigationcb.png" width="450"/>
+<img src="images/mainactivitycb.png" width="450"/>
+<img src="images/manuallycb.png" width="450"/>
+<img src="images/apirecipecb.png" width="450"/>
 
 
 
