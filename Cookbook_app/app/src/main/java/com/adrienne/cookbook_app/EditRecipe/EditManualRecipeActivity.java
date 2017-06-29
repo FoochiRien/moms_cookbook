@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditManualRecipeActivity extends AppCompatActivity {
+
+    //Edit recipe manually entered
+
     public static final String TAG = "EDIT MANUAL RECIPE";
     public static final String EDIT_RECIPE_ID = "Recipe_Id";
 

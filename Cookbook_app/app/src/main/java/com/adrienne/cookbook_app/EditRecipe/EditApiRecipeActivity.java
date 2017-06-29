@@ -25,6 +25,8 @@ import com.squareup.picasso.Picasso;
 
 public class EditApiRecipeActivity extends AppCompatActivity {
 
+    //Edit recipe that was saved from the API search
+
     public static final String TAG = "API MANUAL RECIPE";
     public static final String EDIT_RECIPE_ID = "Recipe_Id";
     public static final String KEY4 = "ApiRecipeKey-url";

@@ -29,10 +29,7 @@ import com.squareup.picasso.Picasso;
  */
 public class ApiDetaiRecipeFragment extends Fragment {
 
-    //We spent time trying to figure out why this one isnt working when the manual does and
-    //it uses the same method calls, but at this point I'm not sure why. It throws an error message
-    //which is actually a toast and it doesn't crash. The user isn't able to view a detail of the
-    //recipe directly they would have to do another search.
+    //Display a recipe that was saved from the API search
 
     public static final String TAG = "API COOKBOOK FRAG";
 
@@ -54,7 +51,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
     public static ApiDetaiRecipeFragment newInstance(Bundle bundle) {
         ApiDetaiRecipeFragment fragment = new ApiDetaiRecipeFragment();
         Bundle args = new Bundle();
-        args.putLong(RECIPE_ID,bundle.getLong(ManualEnteredRecipeFragment.RECIPE_ID));
+        args.putLong(RECIPE_ID, bundle.getLong(ManualEnteredRecipeFragment.RECIPE_ID));
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +62,7 @@ public class ApiDetaiRecipeFragment extends Fragment {
         if (getArguments() != null) {
             mRecipeId = getArguments().getLong(RECIPE_ID);
 
-   }
+        }
     }
 
     @Override
@@ -80,36 +77,37 @@ public class ApiDetaiRecipeFragment extends Fragment {
 
 
         Log.d(TAG, "onViewCreated:  recipeId" + mRecipeId);
-       MyRecipe myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(mRecipeId);
+        MyRecipe myRecipes = RecipeSQLiteOpenHelper.getInstance(getContext()).getRecipeDisplay(mRecipeId);
+        //sets the variables from the database
+        String title = myRecipes.getTitle();
+        String source = myRecipes.getSourceTitle();
+        final String url = myRecipes.getSourceUrl();
+        String image = myRecipes.getImage();
+        String category = myRecipes.getCategory();
+        //view from the xml
+        mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
+        mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
+        mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
+        mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
+        mEdamamSavedRecipe = (ImageView) view.findViewById(R.id.edamam_saved_recipe);
+        mCBApiCategory = (TextView) view.findViewById(R.id.recipefromapi_categories);
 
-            String title = myRecipes.getTitle();
-            String source = myRecipes.getSourceTitle();
-            final String url = myRecipes.getSourceUrl();
-            String image = myRecipes.getImage();
-            String category = myRecipes.getCategory();
-
-            mCBApiTitle = (TextView) view.findViewById(R.id.recipefromapi_detail_title);
-            mCBApiUrl = (TextView) view.findViewById(R.id.recipefromapi_detail_url);
-            mCBApiWebsiteSource = (TextView) view.findViewById(R.id.recipefromapi_detail_source);
-            mCBApiImage = (ImageView) view.findViewById(R.id.recipefromapi_detail_image);
-            mEdamamSavedRecipe = (ImageView) view.findViewById(R.id.edamam_saved_recipe);
-            mCBApiCategory = (TextView) view.findViewById(R.id.recipefromapi_categories);
-
-
-            mCBApiUrl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent displayUrl = new Intent(getContext(), WebActivity.class);
-                    displayUrl.putExtra("website", url);
-                    startActivity(displayUrl);
-                }
-            });
-
-            mCBApiTitle.setText(title);
-            mCBApiWebsiteSource.setText(source);
-            Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
-            mCBApiCategory.setText(category);
-
+        //user is able to click on the hyperlink which takes the user to a web view of the recipe
+        //inside the app
+        mCBApiUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent displayUrl = new Intent(getContext(), WebActivity.class);
+                displayUrl.putExtra("website", url);
+                startActivity(displayUrl);
+            }
+        });
+        //sets view for the recipe
+        mCBApiTitle.setText(title);
+        mCBApiWebsiteSource.setText(source);
+        Picasso.with(mCBApiImage.getContext()).load(image).fit().into(mCBApiImage);
+        mCBApiCategory.setText(category);
+        //per requirment the logo for Edamam and a link to their webpage
         mEdamamSavedRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
